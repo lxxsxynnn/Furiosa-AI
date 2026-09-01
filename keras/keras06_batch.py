@@ -2,7 +2,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
 
-#1. 데이터
+# 배치 조절해보기
+# 1. 데이터
 x = np.array([1, 2, 3, 4, 5, 6])
 y = np.array([1, 2, 3, 5, 4, 6])
 
@@ -37,24 +38,25 @@ y = np.array([1, 2, 3, 5, 4, 6])
 # batch 작다  -> 업데이트 자주, 메모리 적게 씀, 기울기 노이즈 심함, 너무 작으면 불안정
 
 # 실무 관행: 2의 거듭제곱 (32, 64, 128 ...) - GPU 메모리 구조상 효율적
+# 기본값은 32
 
 # keras 코드에서 제어 방법
 # model.fit(x, y, epochs=10, batch_size=32)
 # batch_size 생략 시 기본값 32
 # batch_size = len(x) 로 주면 지금까지처럼 데이터를 통으로 학습하는 것과 동일
 
-#2. 모델 구성
+# 2. 모델 구성
 model = Sequential()
 model.add(Dense(3, input_dim = 1))
 model.add(Dense(5))
 model.add(Dense(4))
 model.add(Dense(1))
 
-#3. 컴파일, 훈련
+# 3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
 model.fit(x, y, epochs = 300, batch_size=1)
 
-#4. 평가, 예측
+# 4. 평가, 예측
 loss = model.evaluate(x, y)
 print("loss : ", loss)
 # result = model.predict(np.array([1, 2, 3, 4, 5, 6]))
