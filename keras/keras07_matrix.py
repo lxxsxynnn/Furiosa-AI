@@ -5,7 +5,7 @@ x1 = np.array([1, 2, 3])    #(3,)
 print("x1 = ", x1.shape)
 # 데이터를 받으면 데이터 구조 먼저 확인
 # 추후에 모델 구성할 때 사용
-# model.add(Dense(3, input_dim = 1)
+# model.add(Dense(3, input_dim = 1))
 # 여기서 dim > dimension의 약자
 
 x2 = np.array([[1, 2, 3]])  # (1, 3)

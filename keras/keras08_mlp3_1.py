@@ -21,7 +21,7 @@ model.add(Dense(6))
 model.add(Dense(5))
 model.add(Dense(2))
 
-# 3. 컴파일, 학습
+# 3. 컴파일, 훈련
 model.compile(loss="mse", optimizer="adam")
 model.fit(x, y, epochs=500, batch_size=1)
 

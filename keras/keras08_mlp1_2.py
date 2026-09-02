@@ -3,12 +3,12 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
 
-# 데이터 리셰이핑
+# 데이터 행<->열 전환 (전치)
 # 1. 데이터
 x = np.array([[1, 2, 3, 4, 5],
              [6, 7, 8, 9, 10]])
-x = x.T                         # 행 <-> 렬 전환 방법 1
-# x = x.transpose()               # 행 <-> 렬 전환 방법 2
+x = x.T                         # 행 <-> 열 전환 방법 1
+# x = x.transpose()               # 행 <-> 열 전환 방법 2
 y = np.array([1, 2, 3, 4, 5])
 
 print(x.shape)  # (5, 2)

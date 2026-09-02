@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-# 데이터 리셰이핑 + 노이즈가 있는 데이터
+# 전치로 행과 열 바꾸기 + 노이즈가 있는 데이터
 # 1. 데이터
 x = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
               [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.5, 1.4, 1.3],
@@ -18,7 +18,7 @@ model.add(Dense(6))
 model.add(Dense(7))
 model.add(Dense(1))
 
-# 3. 컴파일, 학습
+# 3. 컴파일, 훈련
 model.compile(loss="mse", optimizer="adam")
 model.fit(x, y, epochs=100, batch_size=1)
 
