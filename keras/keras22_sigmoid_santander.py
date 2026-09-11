@@ -28,17 +28,17 @@ print(x.shape, y.shape) # (200000, 200) (200000,)
 
 print(np.unique(y, return_counts=True)) # (array([0, 1]), array([179902,  20098]))
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=142, train_size=0.7,
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=100, train_size=0.7,
                                                     stratify=y)
 
 # 2. 모델 구성
 model = Sequential()
-model.add(Dense(200, input_dim = 200, activation='relu'))
+model.add(Dense(400, input_dim = 200, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(200, activation='relu'))
 model.add(Dense(100, activation='relu'))
 model.add(Dense(50, activation='relu'))
-model.add(Dense(25, activation='relu'))
 model.add(Dense(10, activation='relu'))
-model.add(Dense(5, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 # 3. 컴파일, 훈련
@@ -54,10 +54,10 @@ es = EarlyStopping(monitor='val_loss',
                   )
 
 model.fit(x_train, y_train, 
-          epochs=150,
+          epochs=100,
           batch_size=32,
           verbose=1,
-          validation_split=0.3,
+          validation_split=0.2,
           callbacks=[es],
          )
 
@@ -106,5 +106,5 @@ acc_score :  0.9106666666666666
 
 6th
 5에서 추가한 layer 지우고 초기 layer 수정(model.add(Dense(200, input_dim = 200, activation='relu')))
-
+acc_score :  0.8995166666666666
 '''

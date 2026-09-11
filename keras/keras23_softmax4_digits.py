@@ -61,8 +61,8 @@ end = time.time()
 
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
-print('loss : ', result[0])
-print('acc : ', result[1])
+print('loss : ', result[0])     # loss :  0.12074317038059235
+print('acc : ', result[1])      # acc :  0.9722222089767456
 
 y_pred = model.predict(x_test)      # evaluate(채점)가 아니라 predict(예측값) - y 없이 부르면 ValueError
 
@@ -70,7 +70,7 @@ y_test = np.argmax(y_test, axis=1)
 y_pred = np.argmax(y_pred, axis=1)
 
 acc_score = accuracy_score(y_test, y_pred)
-print('acc_score : ', acc_score)
-print('time : ', round(end - start, 2), 'sec')
+print('acc_score : ', acc_score)    # acc_score :  0.9722222222222222
+print('time : ', round(end - start, 2), 'sec')  # time :  19.44 sec
 
 # acc : 1.0

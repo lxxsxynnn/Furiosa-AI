@@ -17,6 +17,21 @@ print(x.shape, y.shape)                 # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True)) # (array([1, 2, 3, 4, 5, 6, 7], dtype=int32), array([211840, 283301,  35754,   2747,   9493,  17367,  20510]))
 
 y = pd.get_dummies(y, dtype=float).values
+
+# from tensorflow.keras.utils import to_categorical
+
+# [주의] to_categorical 은 max(y) + 1 개의 컬럼을 만들어서 라벨이 1~7 이면
+#        컬럼이 0~7 인 (581012, 8) 이 되고, 0번 컬럼은 전부 0인 더미 컬럼이 됨
+# y = to_categorical(y)
+# print(y.shape)        # (581012, 8)  <- 7 이 아님!
+
+# 방법 1) 라벨을 0부터 시작하도록 직접 내려주기
+# y = to_categorical(y - 1)
+
+# 방법 2) 만든 뒤 0번 더미 컬럼을 잘라냄
+# y = to_categorical(y)
+# y = np.delete(y, 0, axis=1)   # 또는 y = y[:, 1:]
+
 print(y.shape)  # (581012, 7)
 
 x_train, x_test, y_train, y_test = train_test_split(
