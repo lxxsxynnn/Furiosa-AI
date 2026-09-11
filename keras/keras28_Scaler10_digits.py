@@ -1,4 +1,4 @@
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -31,7 +31,10 @@ x_train, x_test, y_train, y_test = train_test_split(
 print(x_train.shape, x_test.shape)
 print(y_train.shape, y_test.shape)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -39,6 +42,7 @@ x_test = scaler.transform(x_test)
 # 2. 모델 구성
 model = Sequential()
 model.add(Dense(100, input_dim=64, activation='relu'))
+model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
@@ -62,13 +66,14 @@ model.fit(x_train, y_train,
           epochs=1000,
           validation_split=0.2,
           callbacks=[es],
+          batch_size=1,
           )
 end = time.time()
 
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
-print('loss : ', result[0]) # loss :  0.12074317038059235 > loss :  0.16659173369407654
-print('acc : ', result[1])  # acc :  0.9722222089767456 > acc :  0.9527778029441833
+print('loss : ', result[0]) # loss :  0.12074317038059235 > loss :  0.16659173369407654 > loss :  0.21784964203834534 > loss :  0.13220874965190887 > loss :  0.15623657405376434
+print('acc : ', result[1])  # acc :  0.9722222089767456 > acc :  0.9527778029441833 > acc :  0.9638888835906982 > acc :  0.9666666388511658 > acc :  0.9583333134651184
 
 y_pred = model.predict(x_test)      # evaluate(채점)가 아니라 predict(예측값) - y 없이 부르면 ValueError
 
@@ -76,7 +81,7 @@ y_test = np.argmax(y_test, axis=1)
 y_pred = np.argmax(y_pred, axis=1)
 
 acc_score = accuracy_score(y_test, y_pred)
-print('acc_score : ', acc_score)    # acc_score :  0.9722222222222222 > acc_score :  0.9527777777777777
-print('time : ', round(end - start, 2), 'sec')  # time :  19.44 sec > time :  13.09 sec
+print('acc_score : ', acc_score)    # acc_score :  0.9722222222222222 > acc_score :  0.9527777777777777 > acc_score :  0.9638888888888889 > acc_score :  0.9666666666666667 > acc_score :  0.9583333333333334
+print('time : ', round(end - start, 2), 'sec')  # time :  19.44 sec > time :  13.09 sec > time :  12.65 sec > time :  66.63 sec > time :  118.22 sec
 
 # acc : 1.0

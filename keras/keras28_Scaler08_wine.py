@@ -2,7 +2,7 @@ from sklearn.datasets import load_wine
 import time
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -27,7 +27,10 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -62,8 +65,8 @@ end=time.time()
 # acc = 0.95
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
-print('loss : ', result[0])             # loss :  0.1102718710899353 > loss :  0.15907396376132965
-print('acc : ', round(result[1], 2))    # acc :  0.97 > acc :  0.97
+print('loss : ', result[0])             # loss :  0.1102718710899353 > loss :  0.15907396376132965 > loss :  0.01845845952630043 > loss :  0.17973817884922028 > loss :  0.5687209367752075
+print('acc : ', round(result[1], 2))    # acc :  0.97 > acc :  0.97 > acc :  1.0 > acc :  0.94 > acc :  0.97
 
 y_predict = model.predict(x_test)
 
@@ -71,5 +74,5 @@ y_test = np.argmax(y_test, axis=1)
 y_predict = np.argmax(y_predict, axis=1)
 
 accuracy_score = accuracy_score(y_test, y_predict)
-print('acc_score : ', accuracy_score)               # acc_score :  0.9722222222222222 > acc_score :  0.9722222222222222
-print('걸린 시간: ', round(end - start, 2), 'sec')   # 걸린 시간:  119.74 sec > 걸린 시간:  25.08 sec
+print('acc_score : ', accuracy_score)               # acc_score :  0.9722222222222222 > acc_score :  0.9722222222222222 > acc_score :  0.9444444444444444 > acc_score :  0.9722222222222222
+print('걸린 시간: ', round(end - start, 2), 'sec')   # 걸린 시간:  119.74 sec > 걸린 시간:  25.08 sec > 걸린 시간:  17.56 sec > 걸린 시간:  35.82 sec > 걸린 시간:  84.35 sec

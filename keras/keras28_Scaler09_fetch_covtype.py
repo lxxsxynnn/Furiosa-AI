@@ -1,4 +1,4 @@
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 from sklearn.datasets import fetch_covtype
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -31,7 +31,10 @@ x_train, x_test, y_train, y_test = train_test_split(
 print(x_train.shape, x_test.shape)  # (464809, 54) (116203, 54)
 print(y_train.shape, y_test.shape)  # (464809, 7) (116203, 7)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -69,8 +72,8 @@ end = time.time()
 # acc : 0.93
 # 4. 예측, 훈련
 result = model.evaluate(x_test, y_test)
-print('loss : ', result[0])             # loss :  0.25401097536087036 > loss :  0.258330762386322
-print('acc : ', round(result[1], 2))    # acc :  0.9 > acc :  0.9
+print('loss : ', result[0])             # loss :  0.25401097536087036 > loss :  0.258330762386322 > loss :  0.1799730509519577 > loss :  0.29170480370521545 > loss :  0.190575510263443
+print('acc : ', round(result[1], 2))    # acc :  0.9 > acc :  0.9 > acc :  0.93 > acc :  0.88 > acc :  0.93
 
 y_pred = model.predict(x_test)
 
@@ -78,5 +81,5 @@ y_test = np.argmax(y_test, axis=1)
 y_pred = np.argmax(y_pred, axis=1)
 
 accuracy_score = accuracy_score(y_test, y_pred)
-print('acc_score : ', accuracy_score)           # acc_score :  0.8998562859822896 > acc_score :  0.8967410479935974
-print('time : ', round(end - start, 2), 'sec')  # time :  339.34 sec > time :  165.86 sec
+print('acc_score : ', accuracy_score)           # acc_score :  0.8998562859822896 > acc_score :  0.8967410479935974 > acc_score :  0.9308623701625603 > acc_score :  0.8831269416452243 > acc_score :  0.9272824281645052
+print('time : ', round(end - start, 2), 'sec')  # time :  339.34 sec > time :  165.86 sec > time :  140.38 sec > time :  150.72 sec > time :  156.62 sec

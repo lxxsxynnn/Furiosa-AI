@@ -5,7 +5,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -37,7 +37,10 @@ submission = pd.read_csv(path + "submission.csv" , index_col= 0)
 
 x_train, x_test, y_train, y_test= train_test_split(x,y,train_size=0.8, test_size=0.2)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -64,13 +67,13 @@ y_predict = model.predict(x_test, batch_size = 32)
 from sklearn.metrics import r2_score, mean_squared_error
 
 r2 = r2_score(y_test, y_predict)
-print("r2: ", r2)       # r2:  0.5478045283437636
+print("r2: ", r2)       # r2:  0.5478045283437636 > r2:  0.6103055441264447 > r2:  0.6292878346003269 > r2:  0.6336122314019996
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse: ", mse)     # mse:  2897.433709913176
+print("mse: ", mse)     # mse:  2897.433709913176 > mse:  2493.6254346785436 > mse:  2465.0449849240085 > mse:  2354.969142325336
 
 def RMSE(y_test, y_predict):  # RMSE 함수 정의
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("RMSE : ", rmse)  # RMSE :  53.827815392352456
+print("RMSE : ", rmse)  # RMSE :  53.827815392352456 > RMSE :  49.93621365981349 > RMSE :  49.64921937879798 > RMSE :  48.52802429859819

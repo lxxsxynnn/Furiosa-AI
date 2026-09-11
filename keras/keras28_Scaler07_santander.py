@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler,RobustScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import time
@@ -32,7 +32,10 @@ print(np.unique(y, return_counts=True)) # (array([0, 1]), array([179902,  20098]
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=100, train_size=0.7,
                                                     stratify=y)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -70,8 +73,8 @@ model.fit(x_train, y_train,
 # # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
 
-print('loss : ', loss[0])           # loss :  0.21817214787006378 > loss :  0.23302412033081055
-print('acc : ', round(loss[1], 4))  # acc :  0.9298 > acc :  0.9138
+print('loss : ', loss[0])           # loss :  0.21817214787006378 > loss :  0.23302412033081055 > loss :  0.24374833703041077 > loss :  0.24049828946590424 > loss :  0.24047037959098816
+print('acc : ', round(loss[1], 4))  # acc :  0.9298 > acc :  0.9138 > acc :  0.9111 > acc :  0.9118 > acc :  0.9113
 
 y_predict = model.predict(x_test)
 
@@ -80,7 +83,7 @@ print(y_predict)
 
 acc_score = accuracy_score(y_test, y_predict)
 
-print('acc_score : ', acc_score)        # acc_score :  0.935672514619883 > acc_score :  0.9138
+print('acc_score : ', acc_score)        # acc_score :  0.935672514619883 > acc_score :  0.9138 > acc_score :  0.91105 > acc_score :  0.91175 > acc_score :  0.9112833333333333
 
 # y_submit = model.predict(test_csv)
 # submission_csv['target'] = np.round(y_submit).astype(int)

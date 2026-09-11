@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import time
@@ -39,7 +39,10 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=y,         # 범주형 데이터에서는 불균형하게 나눠지는 걸 막기 위한 기능이 있음 / y를 기준으로 동일한 비율로 데이터를 잘라줌
 )
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -81,8 +84,8 @@ end_time = time.time()
 loss = model.evaluate(x_test, y_test)
 # print("loss : ", loss)  # loss :  [0.21258428692817688, 0.9356725215911865] > 뒤에 오는 게 accuracy
 print("==============================")
-print('loss : ', loss[0])           # loss :  0.21817214787006378 > loss :  0.13046050071716309
-print('acc : ', round(loss[1], 4))  # acc :  0.9298 > acc :  0.9708
+print('loss : ', loss[0])           # loss :  0.21817214787006378 > loss :  0.13046050071716309 > loss :  0.09471716731786728 > loss :  0.15890160202980042
+print('acc : ', round(loss[1], 4))  # acc :  0.9298 > acc :  0.9708 > acc :  0.9649 > acc :  0.9532
 
 y_predict = model.predict(x_test)
 # print(y_predict[:10])
@@ -96,6 +99,6 @@ print(y_predict[:10])
 
 acc_score = accuracy_score(y_test, y_predict)
 
-print('acc_score : ', acc_score)        # acc_score :  0.935672514619883 > acc_score :  0.9707602339181286
+print('acc_score : ', acc_score)        # acc_score :  0.935672514619883 > acc_score :  0.9707602339181286 > acc_score :  0.9824561403508771 > acc_score :  0.9649122807017544 > acc_score :  0.9532163742690059
 
-print("걸린 시간: ", round(end_time - start_time, 2), " 초")    # 걸린 시간:  8.49  초 > 걸린 시간:  4.05  초
+print("걸린 시간: ", round(end_time - start_time, 2), " 초")    # 걸린 시간:  8.49  초 > 걸린 시간:  4.05  초 > 걸린 시간:  2.64  초 > 걸린 시간:  6.18  초 > 걸린 시간:  3.01  초

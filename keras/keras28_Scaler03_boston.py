@@ -1,7 +1,7 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.datasets import boston_housing
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -11,7 +11,10 @@ import numpy as np
 print(x_train.shape, x_test.shape)  # (404, 13) (102, 13)
 print(y_train.shape, y_test.shape)  # (404,) (102,)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -32,4 +35,4 @@ hist = model.fit(x_train, y_train, epochs=1000, batch_size=1,
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
-print("loss : ", loss)      # loss : 22.92780113220215 (1000, 1) > loss :  21.666061401367188
+print("loss : ", loss)      # loss : 22.92780113220215 (1000, 1) > loss :  21.666061401367188 > loss :  22.37421226501465 > loss :  22.24776840209961 > loss :  20.788009643554688

@@ -2,7 +2,7 @@ from sklearn.datasets import load_diabetes
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 import numpy as np
 
 # 스케일링 효과 확인해보기 - 당뇨
@@ -15,7 +15,10 @@ print(x.shape, y.shape)     # (442, 10) (442,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.75, random_state=45)
 
-scaler = MinMaxScaler()
+# scaler = MinMaxScaler()
+# scaler = StandardScaler()
+# scaler = MaxAbsScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -37,4 +40,4 @@ hist = model.fit(x_train, y_train, epochs=640, batch_size=16,
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
-print("loss : " , loss)     # loss : 2383.88232421875 (0.75, 45, 640, 16) > loss :  2508.04541015625
+print("loss : " , loss)     # loss : 2383.88232421875 (0.75, 45, 640, 16) > loss :  2508.04541015625 > loss :  2502.38232421875 > loss :  2496.962890625 > loss :  2504.193115234375
