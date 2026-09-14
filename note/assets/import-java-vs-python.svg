@@ -1,0 +1,73 @@
+<svg width="600" viewBox="0 0 680 520" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  .c1 { fill:rgb(0, 0, 0); stroke:none; font-size:16px; font-weight:400; }
+  .c2 { fill:rgb(230, 241, 251); stroke:rgb(24, 95, 165); font-size:16px; font-weight:400; }
+  .c3 { fill:rgb(12, 68, 124); stroke:none; font-size:14px; font-weight:500; }
+  .c4 { fill:rgb(24, 95, 165); stroke:none; font-size:12px; font-weight:400; }
+  .c5 { fill:none; stroke:rgb(137, 135, 129); font-size:16px; font-weight:400; }
+  .c6 { fill:rgb(82, 81, 78); stroke:none; font-size:12px; font-weight:400; }
+  .c7 { fill:rgb(250, 236, 231); stroke:rgb(153, 60, 29); font-size:16px; font-weight:400; }
+  .c8 { fill:rgb(113, 43, 19); stroke:none; font-size:14px; font-weight:500; }
+  .c9 { fill:rgb(153, 60, 29); stroke:none; font-size:12px; font-weight:400; }
+</style>
+<title>자바와 파이썬의 import 방식 비교</title>
+<desc>자바는 컴파일 시점에 이름만 매핑하고, 파이썬은 import 시 모듈 코드를 실제로 실행한다는 차이를 보여주는 구조 비교 다이어그램</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<g class="c1">
+<rect x="40" y="40" width="280" height="440" rx="16" stroke-width="0.5" class="c2"/>
+<text x="180" y="70" text-anchor="middle" class="c3">Java</text>
+<text x="180" y="88" text-anchor="middle" class="c4">import java.util.*;</text>
+</g>
+<g class="c1">
+<rect x="60" y="110" width="240" height="60" rx="8" stroke-width="0.5" class="c2"/>
+<text x="180" y="132" text-anchor="middle" class="c3">컴파일러</text>
+<text x="180" y="150" text-anchor="middle" class="c4">이름 -&gt; 클래스 매핑만 등록</text>
+</g>
+<line x1="180" y1="170" x2="180" y2="200" marker-end="url(#arrow)" class="c5"/>
+<g class="c1">
+<rect x="60" y="200" width="240" height="90" rx="8" stroke-width="0.5" class="c2"/>
+<text x="180" y="222" text-anchor="middle" class="c3">java.util 패키지</text>
+<text x="180" y="240" text-anchor="middle" class="c4">ArrayList, HashMap...</text>
+<text x="180" y="258" text-anchor="middle" class="c4">파일 단위로 이미 분리됨</text>
+<text x="180" y="276" text-anchor="middle" class="c4">이름 충돌 위험 낮음</text>
+</g>
+<line x1="180" y1="290" x2="180" y2="320" marker-end="url(#arrow)" class="c5"/>
+<g class="c1">
+<rect x="60" y="320" width="240" height="60" rx="8" stroke-width="0.5" class="c2"/>
+<text x="180" y="342" text-anchor="middle" class="c3">실행 시점</text>
+<text x="180" y="360" text-anchor="middle" class="c4">쓰는 이름만 그때 로드</text>
+</g>
+<text x="180" y="410" text-anchor="middle" class="c6">* 는 "이름표만" 미리 다 등록</text>
+<text x="180" y="430" text-anchor="middle" class="c6">코드 실행과 무관</text>
+<text x="180" y="460" text-anchor="middle" class="c6">-&gt; 와일드카드가 비교적 안전</text>
+<g class="c1">
+<rect x="360" y="40" width="280" height="440" rx="16" stroke-width="0.5" class="c7"/>
+<text x="500" y="70" text-anchor="middle" class="c8">Python</text>
+<text x="500" y="88" text-anchor="middle" class="c9">from tensorflow.keras.models import Sequential</text>
+</g>
+<g class="c1">
+<rect x="380" y="110" width="240" height="60" rx="8" stroke-width="0.5" class="c7"/>
+<text x="500" y="132" text-anchor="middle" class="c8">import 실행</text>
+<text x="500" y="150" text-anchor="middle" class="c9">모듈 코드를 실제로 실행</text>
+</g>
+<line x1="500" y1="170" x2="500" y2="200" marker-end="url(#arrow)" class="c5"/>
+<g class="c1">
+<rect x="380" y="200" width="240" height="90" rx="8" stroke-width="0.5" class="c7"/>
+<text x="500" y="222" text-anchor="middle" class="c8">tensorflow 전체</text>
+<text x="500" y="240" text-anchor="middle" class="c9">수천 개 서브모듈 존재</text>
+<text x="500" y="258" text-anchor="middle" class="c9">평평한(flat) 이름 공간</text>
+<text x="500" y="276" text-anchor="middle" class="c9">이름 충돌 위험 높음</text>
+</g>
+<line x1="500" y1="290" x2="500" y2="320" marker-end="url(#arrow)" class="c5"/>
+<g class="c1">
+<rect x="380" y="320" width="240" height="60" rx="8" stroke-width="0.5" class="c7"/>
+<text x="500" y="342" text-anchor="middle" class="c8">필요한 것만 명시</text>
+<text x="500" y="360" text-anchor="middle" class="c9">Sequential 하나만 로드</text>
+</g>
+<text x="500" y="410" text-anchor="middle" class="c6">import는 "실제 실행" 그 자체</text>
+<text x="500" y="430" text-anchor="middle" class="c6">*로 다 끌어오면 무겁고 위험</text>
+<text x="500" y="460" text-anchor="middle" class="c6">-&gt; 필요한 것만 명시적으로 import</text>
+</svg>

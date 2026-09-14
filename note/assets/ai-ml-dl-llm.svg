@@ -1,0 +1,25 @@
+<svg width="440" viewBox="0 0 440 248" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  rect { stroke-width: 2; }
+  text { font-size: 15px; font-weight: 600; fill: #1a1a1a; }
+  .ai  { fill: #EEF2FF; stroke: #4C6EF5; }
+  .ml  { fill: #F3F0FF; stroke: #7048E8; }
+  .dl  { fill: #FFF0F6; stroke: #E64980; }
+  .llm { fill: #FFF4E6; stroke: #F76707; }
+</style>
+<title>AI, ML, DL, LLM의 포함 관계</title>
+<desc>AI 안에 ML, ML 안에 DL, DL 안에 LLM이 들어가는 4중 포함 관계를 중첩된 사각형으로 나타낸 다이어그램</desc>
+
+<rect class="ai"  x="20" y="16"  width="400" height="216" rx="14"/>
+<text x="40" y="40">AI (인공지능)</text>
+
+<rect class="ml"  x="38" y="54"  width="364" height="160" rx="14"/>
+<text x="58" y="78">ML (머신러닝)</text>
+
+<rect class="dl"  x="56" y="92"  width="328" height="104" rx="14"/>
+<text x="76" y="116">DL (딥러닝)</text>
+
+<rect class="llm" x="74" y="130" width="292" height="48"  rx="14"/>
+<text x="94" y="154">LLM (거대 언어모델)</text>
+</svg>
