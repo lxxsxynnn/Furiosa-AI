@@ -9,7 +9,7 @@ import datetime
 import numpy as np
 import pandas as pd
 
-# Drop Out 실습해보기 - 코브라 타입
+# Drop Out 실습해보기 - 산림 피복 유형
 # 1. 데이터
 datasets = fetch_covtype()
 x = datasets.data
@@ -92,7 +92,6 @@ files = sorted(glob.glob(save_path + 'k33_' + date + '09_fetch_covtype_*.keras')
 for f in files[:-1]:
     os.remove(f)
 
-# acc : 0.93
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
 
@@ -114,7 +113,7 @@ acc_score :  0.9311377503162569
 
 >>
 
-loss :  0.5783030986785889
-acc :  0.7611111402511597
-acc_score :  0.7611111111111111
+loss :  0.38224494457244873
+acc :  0.85
+acc_score :  0.8505374215811984
 '''

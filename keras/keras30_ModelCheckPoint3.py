@@ -8,7 +8,7 @@ import time
 
 path = 'C:\study\_save\keras30/'
 
-# 최고의 가중치 저장하기(ModelCheckPoint)
+# 체크포인트 파일명 만들기 - 캘리포니아 주택
 # 1. 데이터
 datasets = fetch_california_housing()
 x = datasets.data

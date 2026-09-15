@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.model_selection import train_test_split
 # from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
@@ -46,9 +46,13 @@ x_train, x_test, y_train, y_test= train_test_split(x,y,train_size=0.8, test_size
 # 2. 모델 구성
 model = Sequential()
 model.add(Dense(64, input_dim=9))
+model.add(Dropout(0.2))
 model.add(Dense(256))
+model.add(Dropout(0.3))
 model.add(Dense(128))
+model.add(Dropout(0.3))
 model.add(Dense(64))
+model.add(Dropout(0.2))
 model.add(Dense(32))
 model.add(Dense(1))
 
@@ -112,8 +116,15 @@ print("mse : ", mse)        # mse :  2854.9820443159433
 print("RMSE : ", rmse)      # RMSE :  53.43203200624082
 
 '''
-loss :  2782.370361328125
-r2 :  0.5868576861270498
-mse :  2782.370499184162
-RMSE :  52.74818005565843
+loss :  2854.98193359375
+r2 :  0.5760759078633605
+mse :  2854.9820443159433
+RMSE :  53.43203200624082
+
+>>
+
+loss :  2884.355224609375
+r2 :  0.5717144546277286
+mse :  2884.3549223991245
+RMSE :  53.706190726946225
 '''

@@ -9,6 +9,7 @@ import datetime
 import numpy as np
 import pandas as pd
 
+# 최고 가중치 저장하기 - 산림 피복 유형
 # 1. 데이터
 datasets = fetch_covtype()
 x = datasets.data
@@ -87,7 +88,6 @@ files = sorted(glob.glob(save_path + 'k31_' + date + '09_fetch_covtype_*.keras')
 for f in files[:-1]:
     os.remove(f)
 
-# acc : 0.93
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
 print('loss : ', result[0])

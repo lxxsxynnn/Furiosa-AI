@@ -5,6 +5,7 @@ from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.models import load_model
 import numpy as np
 
+# 최고 가중치 불러오기 - 손글씨 숫자
 # 1. 데이터
 datasets = load_digits()
 x = datasets['data']

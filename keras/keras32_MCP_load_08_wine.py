@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import load_model
 from sklearn.metrics import accuracy_score
 
+# 최고 가중치 불러오기 - 와인
 # 1 . 데이터
 datasets = load_wine()
 x = datasets.data

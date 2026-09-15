@@ -9,6 +9,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import datetime
 import numpy as np
 
+# 최고 가중치 저장하기 - 손글씨 숫자
 # 1. 데이터
 datasets = load_digits()
 x = datasets['data']

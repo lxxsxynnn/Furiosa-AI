@@ -6,6 +6,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler,Rob
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+# 최고 가중치 불러오기 - 산탄데르
 # 1. 데이터
 data_path = "C:/study/_data/kaggle_santander/"
 

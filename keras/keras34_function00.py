@@ -24,8 +24,14 @@ output1 = Dense(1)(drop2)
 model2 = Model(inputs=input1, outputs=output1)
 
 model2.summary()
+
 '''
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
 │ input_layer_1 (InputLayer)           │ (None, 3)                   │               0 │
 
 함수형 모델은 인풋 파라미터에 대해 명시가 되어있음
+
+모델 1과 모델 2는 기능적으로 동일하고 표현 방식만 다름
+
+나중에 좀 더 유연하거나 복잡한 모델 만들 때 함수형 모델을 사용하게 될 것
 '''

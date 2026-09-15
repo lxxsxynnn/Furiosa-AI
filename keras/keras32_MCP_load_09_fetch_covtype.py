@@ -6,6 +6,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 import pandas as pd
 
+# 최고 가중치 불러오기 - 산림 피복 유형
 # 1. 데이터
 datasets = fetch_covtype()
 x = datasets.data
@@ -42,7 +43,6 @@ model = load_model(save_path + 'k31_0914_1447_09_fetch_covtype_0189-0.1841.keras
 
 # 3. 컴파일, 훈련
 
-# acc : 0.93
 # 4. 평가, 예측
 result = model.evaluate(x_test, y_test)
 print('loss : ', result[0])

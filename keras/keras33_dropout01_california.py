@@ -65,13 +65,13 @@ mcp = ModelCheckpoint(
     verbose=1,
 )
 
-start_timne = time.time()
+start_time = time.time()
 hist = model.fit(x_train, y_train,
                  epochs=1000, batch_size=32,
           validation_split=0.2,
           callbacks=[es, mcp],  
          )  # 성능이 붙어있는 상태
-end_timne = time.time()
+end_time = time.time()
 
 # 이번 실행에서 생긴 체크포인트 중 최고(마지막 저장) 파일만 남김
 import glob, os

@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score
 import datetime
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
+# 최고 가중치 저장하기 - 산탄데르
 # 1. 데이터
 data_path = "C:/study/_data/kaggle_santander/"
 

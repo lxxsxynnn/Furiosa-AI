@@ -8,7 +8,7 @@ import time
 
 path = 'C:\study\_save\keras30/'
 
-# 최고의 가중치 저장하기(ModelCheckPoint)
+# 최고 가중치 불러오기(ModelCheckPoint) - 캘리포니아 주택
 # 1. 데이터
 datasets = fetch_california_housing()
 x = datasets.data
@@ -53,13 +53,13 @@ model = load_model(path + 'keras30_mcp1.keras')
 #     verbose=1,
 # )
 
-# start_timne = time.time()
+# start_time = time.time()
 # hist = model.fit(x_train, y_train,
 #                  epochs=1000, batch_size=32,
 #           validation_split=0.2,
 #           callbacks=[es, mcp],  
 #          )  # 성능이 붙어있는 상태
-# end_timne = time.time()
+# end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)

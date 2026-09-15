@@ -9,6 +9,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import accuracy_score
 
+# 최고 가중치 저장하기 - 와인
 # 1 . 데이터
 datasets = load_wine()
 x = datasets.data
