@@ -27,14 +27,6 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=y,
 )
 
-# scaler = MinMaxScaler()
-# scaler = StandardScaler()
-# scaler = MaxAbsScaler()
-# scaler = RobustScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
-
 # 2. 모델 구성
 # model = Sequential()
 # model.add(Dense(100, input_dim=64, activation='relu'))
