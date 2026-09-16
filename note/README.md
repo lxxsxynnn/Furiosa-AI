@@ -14,13 +14,16 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day08](day08_0909_keras.ipynb) | 09/09 | 클래스 인스턴스화·메서드 체이닝, 다중분류, 원핫 인코딩, softmax, argmax | `keras/keras23_softmax1_OneHot_iris.py` ~ `keras23_softmax4_digits.py` |
 | [day09](day09_0910_keras.ipynb) | 09/10 | 판다스→넘파이, 이진을 다중으로 풀기, `summary()`와 파라미터 개수, `input_shape`, 스케일링과 그 순서 | `keras/keras24_kaggle_santander.py` ~ `keras28_Scaler10_digits.py` |
 | [day10](day10_0911_keras.ipynb) | 09/11 | 스케일링의 목적, 스케일러 4종(MinMax·Standard·MaxAbs·Robust)과 이상치, 모델 저장·불러오기 | `keras/keras29_1_save_model.py` ~ `keras29_4_load_model2.py` |
+| [day11](day11_0914_keras.ipynb) | 09/14 | 파일명 문자열 만들기, 가중치 저장·불러오기, ModelCheckpoint, 체크포인트 이력 남기기, Dropout, 함수형 모델 | `keras/keras29_5_save_weights.py` ~ `keras34_function00.py` |
+| [day12](day12_0915_keras.ipynb) | 09/15 | GPU 환경 구축(TF 2.9 버전 조합), CPU·GPU 실행 시간 비교, 모델 종류와 데이터 차원, CNN(이미지 수치화, `Conv2D`, MNIST, 이미지 스케일링) | `keras/keras35_gpu_test00.py` ~ `keras36_cnn3_mnist.py` |
+| [day13](day13_0916_keras.ipynb) | 09/16 | `Flatten`, `Conv2D`의 filters 인자, padding, strides, MaxPooling | `keras/keras36_cnn1.py` ~ `keras39_MaxPooling_0.py` |
 
 ## 주제별 찾아보기
 
 **기초 개념**
 - 학습(training) vs 추론(inference), NPU — day03 §1
 - 학습이 "반복"인 이유, 경사 하강법 — day01 §3
-- 순전파(forward) / 역전파(backward) — day01 §3-1
+- 순전파(forward) / 역전파(backward) — day01 §3-3
 - AI > ML > DL > LLM 포함 관계 — day01 §4
 - 하이퍼파라미터란 — day01 §8, §9
 - 회귀와 분류의 차이 — day04 §1
@@ -41,6 +44,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - MinMaxScaler 공식 `(x-MIN)/(MAX-MIN)` — day09 §4
 - 부동소수점 오차 `1.0000000000000002` — day09 §4 cf)
 - 스케일링의 목적 — 크기만으로 우위를 갖지 못하게 — day10 §1
+- GPU 환경 구축 — 드라이버·CUDA·cuDNN·numpy 버전 조합, `nvidia-smi`·`nvcc -V` — day12 §1
+- CPU·GPU 실행 시간 비교 — 작은 Dense 모델은 CPU가 빠른 경우가 많음 — day12 §2
+- DNN·RNN·CNN과 입력 데이터 차원 (2·3·4차원) — day12 §3
+- 이미지 수치화 `(장수, 세로, 가로, 채널)` — day12 §4
 
 **Keras API**
 - 코딩 4단계 (데이터 → 모델 → compile/fit → evaluate/predict) — day01 §5
@@ -67,6 +74,18 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `model.save()` / `load_model()` — `.keras` 포맷 — day10 §5
 - 저장 시점(`fit` 전/후)에 따라 달라지는 것 — day10 §5
 - 불러온 모델에 `compile`이 필요한 경우 — day10 §5
+- `save_weights` / `load_weights` — `.weights.h5`, 구조·compile 없음 — day11 §1
+- `ModelCheckpoint` — 훈련 중 최고 지점을 파일로 저장 — day11 §2
+- `restore_best_weights`(메모리) vs 체크포인트(파일) — day11 §2
+- 체크포인트 파일명에 `{epoch}`·`{val_loss}` 넣기 — day11 §0
+- `Dropout` — 배치마다 랜덤하게 노드를 꺼서 과적합 줄이기 — day11 §3
+- 함수형 모델 `Input` / `Model` — `Sequential`과 연결 방식 비교 — day11 §4
+- `Conv2D` — `kernel_size`(자르는 크기)와 `filters`(필터 개수 = 출력 채널 수) — day12 §4
+- `Conv2D` 층별 Output Shape·Param # 계산 — day12 §4
+- `Flatten` — Conv 출력을 한 줄로 펴서 `Dense`에 연결, 파라미터 0 — day13 §1
+- `padding` — `valid`/`same`, 가장자리 정보와 크기 유지 — day13 §3
+- `strides` — 필터 이동 칸수, 출력 크기 축소와 정보 손실 — day13 §4
+- `MaxPooling2D` — 구역별 최댓값만 남겨 크기를 절반으로, 파라미터 0 — day13 §5
 
 **데이터 다루기**
 - 실전 데이터셋 불러오기 (`load_` vs `fetch_`, Bunch 객체) — day03 §4
@@ -112,6 +131,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - reshape와 `-1` — day02 §3
 - reshape vs 전치(`.T`) 차이 — day02 §3 cf)
 - `input_dim`은 열(특성) 개수 — day02 §3
+- `mnist.load_data()` — train/test로 나눠 반환, `(60000, 28, 28)`, `plt.imshow`로 확인 — day12 §4
+- 이미지 스케일링 `/255.`(0~1)과 `(x-127.5)/127.5`(-1~1) — day12 §4
+- `pd.value_counts`는 pandas 3.0에서 삭제 → `pd.Series(y).value_counts()` — day12 §4
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
@@ -167,14 +189,19 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 속성 `.values` vs 메서드 `.to_numpy()` — day09 §0
 - `def` / `return` 기본 문법 — day04 §0
 - 윈도우 경로에서 `\\`와 `/` — day04 §5
+- `datetime.datetime` — 모듈과 클래스 이름이 같음 — day11 §0
+- `''.join([...])`로 문자열 이어붙이기 — day11 §0
+- 포맷 지정자 `{:04d}` / `{:.4f}`, `4f`와 `.4f`의 차이 — day11 §0
 
 ## 작성 규칙
 
 - 노트북 제목은 `#`, 대단원은 `##`, 소단원은 `###`
-- 섹션 제목은 **`키워드 - 핵심 주장`** 형태로 (예: `### 노이즈 - loss가 0이 될 수 없는 이유`)
-  - 키워드를 앞에 두어 목차만 훑어도 무엇을 다루는지 보이게 하고, 대시 뒤에 결론을 남깁니다
-  - 서술형 제목(`### 왜 굳이 바꾸나`, `### 값이 달라지는 경우`)은 쓰지 않습니다
-  - 곁가지는 `cf)`, 함정은 `주의)`를 키워드 앞에 붙입니다
+- 요약이 아니라 **개념·설명 위주**로 씁니다. 섹션 안의 순서는 개념 한 줄 → **필요한 이유** → **종류·규칙**(번호) → 설명·예제
+  - 종류·규칙은 `1. 이름 : 설명` 형태로 번호를 매기고, 세부 설명은 `-` 하위 목록으로
+  - 실습 결과표에는 **결과 해석**(왜 그런 결과인지)을 붙입니다
+- 섹션 번호: 대단원 `## N. 개념명`, 소단원 `### N-M. 개념명` (예: `### 3-3. 순전파(Forward)와 역전파(Backward)`)
+  - 곁가지는 `cf)`, 함정은 `주의)`, 예외는 `예외)`를 개념명 앞에 붙입니다
+  - README의 `§N` 참조가 깨지지 않도록 대단원 번호는 바꾸면 README도 같이 고칩니다
 - 실행 결과는 저장하지 않고, 기대값을 코드 주석으로 적습니다
-- 다이어그램은 `assets/`에 SVG 파일로 두고 이미지로 참조 (노트북에 인라인 HTML/SVG를 넣지 않음)
+- 그림은 `assets/`에 두고 이미지로 참조. 직접 그린 다이어그램은 SVG, 캡처·사진은 PNG (노트북에 인라인 HTML/SVG를 넣지 않음)
 - 줄바꿈은 `<br/>` 대신 빈 줄(문단 구분)로
