@@ -2,13 +2,12 @@ import time
 import numpy as np
 from keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten
+from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPool2D
 from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
-# acc : 0.67
-# cnn 실습해보기 - cifar10 데이터셋
+# MaxPooling 실습해보기 - cifar10 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
@@ -29,10 +28,12 @@ print(y_train.shape, y_test.shape)      # (50000, 100) (10000, 100)
 
 model = Sequential()
 model.add(Conv2D(64, (3, 3), activation='relu', input_shape=(32, 32, 3)))
-model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(Dropout(0.2))
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
+model.add(MaxPool2D())
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
+model.add(MaxPool2D())
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(Flatten())
 model.add(Dense(units=128, activation='relu'))
 model.add(Dropout(0.2))
@@ -61,8 +62,8 @@ end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
-print('loss : ', loss[0])                                   # loss :  0.9024870991706848
-print('acc : ', loss[1])                                    # acc :  0.6912000179290771
+print('loss : ', loss[0])                                   # loss :  0.9024870991706848m > 0.696505069732666
+print('acc : ', loss[1])                                    # acc :  0.6912000179290771 > 0.7620000243186951
 
 y_predict = model.predict(x_test)
 
@@ -70,5 +71,5 @@ y_predict = np.argmax(y_predict, axis=1)
 y_test = np.argmax(y_test, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
-print('accuray_score : ', acc_score)                        # accuray_score :  0.6912
-print('time : ', round(end_time - start_time, 2), 'sec')    # time :  700.39 sec
+print('accuray_score : ', acc_score)                        # accuray_score :  0.6912 > 0.762
+print('time : ', round(end_time - start_time, 2), 'sec')    # time :  700.39 sec > 182.96 sec
