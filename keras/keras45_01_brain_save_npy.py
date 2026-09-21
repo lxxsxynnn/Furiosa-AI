@@ -55,7 +55,7 @@ print(x_test.shape, y_test.shape)       # (120, 150, 150, 1) (120,)
 print(np.unique(y_train, return_counts=True))   # (array([0., 1.]), array([80, 80]))
 
 # 2. npy로 저장
-np_path = 'C:/study/_data/kaggle_cat_dog_npy/'
+np_path = 'C:/study/_save/numpy/kaggle_cat_dog_npy/'
 os.makedirs(np_path, exist_ok=True)
 
 start2 = time.time()

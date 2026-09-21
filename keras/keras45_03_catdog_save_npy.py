@@ -79,7 +79,7 @@ print(round(x_train.nbytes / 1024**3, 2), 'GB')     # 0.89 GB
 print(np.unique(y_train, return_counts=True))   # (array([0., 1.]), array([4000, 4005]))
 
 # 2. npy로 저장
-np_path = 'C:/study/_data/kaggle_cat_dog_npy/'
+np_path = 'C:/study/_save/numpy/kaggle_cat_dog_npy/'
 os.makedirs(np_path, exist_ok=True)
 
 start2 = time.time()

@@ -4,7 +4,7 @@ import tensorflow as tf
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, GlobalAveragePooling2D, Dropout, MaxPool2D, BatchNormalization
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -16,7 +16,7 @@ tf.random.set_seed(337)
 # ImageDataGenerator도 flow_from_directory도 없음 > 이미지 폴더를 아예 건드리지 않는다
 
 # 1. 데이터
-np_path = 'C:/study/_data/kaggle_cat_dog_npy/'
+np_path = 'C:/study/_save/numpy/kaggle_cat_dog_npy/'
 
 start1 = time.time()
 
@@ -68,10 +68,17 @@ es = EarlyStopping(monitor='val_loss',
                    restore_best_weights=True,
                   )
 
+mcp = ModelCheckpoint(
+    monitor='val_loss',
+    mode='min',
+    save_best_only=True,
+    filepath=np_path + 'keras45_04_catdog.keras'
+)
+
 start2 = time.time()
 model.fit(x_train, y_train, epochs=30,
           batch_size=32,
-          callbacks=[es],
+          callbacks=[es, mcp],
           validation_data=(x_val, y_val),   # 위에서 stratify로 갈라둔 검증셋
           verbose=1,
           )

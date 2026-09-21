@@ -19,6 +19,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day13](day13_0916_keras.ipynb) | 09/16 | `Flatten`, `Conv2D`의 filters 인자, padding, strides, MaxPooling | `keras/keras36_cnn1.py` ~ `keras39_MaxPooling_0.py` |
 | [day14](day14_0917_keras.ipynb) | 09/17 | Conv2D 파라미터 개수 계산, Global Average Pooling, DNN으로 이미지 처리, 2차원 데이터를 CNN으로 처리 | `keras/keras39_MaxPooling0.py` ~ `keras42_cnn10_digits.py` |
 | [day15](day15_0918_keras.ipynb) | 09/18 | ImageDataGenerator와 증폭, fill_mode, 폴더 구조로 x·y 만들기, batch_size와 Iterator, 제너레이터를 모델에 먹이는 법 | `keras/keras44_ImageDataGenerator1.py` ~ `keras44_ImageDataGenerator3_CatDog.py` |
+| [day16](day16_0921_keras.ipynb) | 09/21 | train/test 분리가 없는 데이터, `class_mode`, 출력층과 loss의 짝, 타입별 인덱싱, 이미지 한 장으로 예측, `flow`로 증폭 | `keras/keras46_01_save_npy_horse.py` ~ `keras50_flow1.py` |
 
 ## 주제별 찾아보기
 
@@ -100,6 +101,17 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 제너레이터를 모델에 먹이는 두 가지 방법 (통째로 꺼내기 / 그대로 넘기기) — day15 §1-6
 - 이름이 같은 `batch_size` 두 개 — 꺼내는 단위 vs 갱신 단위 — day15 §1-7 주의)
 - 제너레이터에서 검증 데이터 나누기 — 비율 지정이 통하지 않는 이유 — day15 §1-8
+- train/test 분리가 없는 데이터 — 상위 폴더를 넘겨 통째로 읽고 `train_test_split` — day16 §1
+- `batch_size`가 작으면 정렬된 상태에서 잘려 뒤쪽 클래스가 통째로 빠짐 — day16 §1-1 주의)
+- `class_mode` 3종 (`binary`/`categorical`/`sparse`)과 y의 형태 — day16 §1-3
+- 출력층 노드 수·활성화·loss·`class_mode`의 짝 — day16 §1-4
+- 노드 1개에 softmax를 못 쓰는 이유 — 항상 1.0이라 기울기가 0 — day16 §1-5
+- 예측값을 라벨로 되돌리기 (`round` / `argmax`) — day16 §1-6
+- `target_size` 정하기 — 디테일·원본 크기·메모리 — day16 §1-7
+- 이미지 한 장으로 예측 — `load_img` → `img_to_array` → 차원 증가 — day16 §3
+- 예측할 이미지도 학습 때와 같은 전처리 — 스케일이 다르면 에러 없이 결과만 이상해짐 — day16 §3-2 주의)
+- `flow`와 `flow_from_directory` — 배열을 받느냐 폴더를 받느냐 — day16 §4-1
+- 증폭 이터레이터는 꺼낼 때마다 새 이미지 — day16 §4-2 주의)
 
 **데이터 다루기**
 - 실전 데이터셋 불러오기 (`load_` vs `fetch_`, Bunch 객체) — day03 §4
@@ -152,6 +164,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 훈련 데이터만 증폭하고 테스트는 스케일링만 하는 이유 — day15 §1-3
 - `batch_size`와 Iterator — 인덱스는 이미지 번호가 아니라 배치 번호 — day15 §1-5
 - 평가용 데이터는 섞지 않는다 — 예측 순서와 정답 순서 — day15 §1-9 주의)
+- 튜플 언패킹 — 묶여 나온 값을 변수에 나눠 담기 — day16 §1-2
+- 타입별 인덱싱 — 문자열·생성기·튜플·배열에서 `[0]`이 꺼내는 것이 각각 다름 — day16 §2
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
@@ -219,6 +233,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
   - 실습 결과표에는 **결과 해석**(왜 그런 결과인지)을 붙입니다
 - 섹션 번호: 대단원 `## N. 개념명`, 소단원 `### N-M. 개념명` (예: `### 3-3. 순전파(Forward)와 역전파(Backward)`)
   - 곁가지는 `cf)`, 함정은 `주의)`, 예외는 `예외)`를 개념명 앞에 붙입니다
+  - 제목은 명사형·동명사형으로 끝냅니다. 서술형 문장은 `cf)`·`주의)`·`예외)`를 붙일 때만 씁니다
   - README의 `§N` 참조가 깨지지 않도록 대단원 번호는 바꾸면 README도 같이 고칩니다
 - 실행 결과는 저장하지 않고, 기대값을 코드 주석으로 적습니다
 - 그림은 `assets/`에 두고 이미지로 참조. 직접 그린 다이어그램은 SVG, 캡처·사진은 PNG (노트북에 인라인 HTML/SVG를 넣지 않음)

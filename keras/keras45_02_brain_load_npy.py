@@ -16,7 +16,7 @@ tf.random.set_seed(337)
 # ImageDataGenerator도 flow_from_directory도 없음 > 이미지 폴더를 아예 건드리지 않는다
 
 # 1. 데이터
-np_path = 'C:/study/_data/kaggle_cat_dog_npy/'
+np_path = 'C:/study/_save/numpy/kaggle_cat_dog_npy/'
 
 start1 = time.time()
 
