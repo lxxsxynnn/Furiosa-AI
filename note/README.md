@@ -17,6 +17,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day11](day11_0914_keras.ipynb) | 09/14 | 파일명 문자열 만들기, 가중치 저장·불러오기, ModelCheckpoint, 체크포인트 이력 남기기, Dropout, 함수형 모델 | `keras/keras29_5_save_weights.py` ~ `keras34_function00.py` |
 | [day12](day12_0915_keras.ipynb) | 09/15 | GPU 환경 구축(TF 2.9 버전 조합), CPU·GPU 실행 시간 비교, 모델 종류와 데이터 차원, CNN(이미지 수치화, `Conv2D`, MNIST, 이미지 스케일링) | `keras/keras35_gpu_test00.py` ~ `keras36_cnn3_mnist.py` |
 | [day13](day13_0916_keras.ipynb) | 09/16 | `Flatten`, `Conv2D`의 filters 인자, padding, strides, MaxPooling | `keras/keras36_cnn1.py` ~ `keras39_MaxPooling_0.py` |
+| [day14](day14_0917_keras.ipynb) | 09/17 | Conv2D 파라미터 개수 계산, Global Average Pooling, DNN으로 이미지 처리, 2차원 데이터를 CNN으로 처리 | `keras/keras39_MaxPooling0.py` ~ `keras42_cnn10_digits.py` |
+| [day15](day15_0918_keras.ipynb) | 09/18 | ImageDataGenerator와 증폭, fill_mode, 폴더 구조로 x·y 만들기, batch_size와 Iterator, 제너레이터를 모델에 먹이는 법 | `keras/keras44_ImageDataGenerator1.py` ~ `keras44_ImageDataGenerator3_CatDog.py` |
 
 ## 주제별 찾아보기
 
@@ -86,6 +88,18 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `padding` — `valid`/`same`, 가장자리 정보와 크기 유지 — day13 §3
 - `strides` — 필터 이동 칸수, 출력 크기 축소와 정보 손실 — day13 §4
 - `MaxPooling2D` — 구역별 최댓값만 남겨 크기를 절반으로, 파라미터 0 — day13 §5
+- Conv2D 파라미터 개수 `f × (n × n × c + b)`, c는 앞 층의 filters — day14 §1
+- `GlobalAveragePooling2D` — 특징맵마다 평균 하나, Flatten 대신 써서 Dense 파라미터 감소 — day14 §2
+- `AveragePooling2D`와 `GlobalAveragePooling2D`의 차이 — day14 §2 cf)
+- DNN으로 이미지 처리 — `reshape(-1, 28 * 28)`, 컬러는 `32 * 32 * 3` — day14 §3
+- 표 데이터를 reshape해서 `Conv2D`에 넣기 — 가능한 조건과 성능을 장담 못하는 이유 — day14 §4
+- 표 데이터를 CNN으로 바꿀 때 자주 틀리는 곳 (reshape 곱, input_shape, 작은 입력, 출력층 활성화) — day14 §4 주의)
+- `ImageDataGenerator` — 이미지를 수치화하고 변형해서 늘리는(증폭) 도구 — day15 §1
+- 증폭 옵션 8가지 (`rescale`, flip, shift, `rotation_range`, `zoom_range`, `shear_range`, `fill_mode`) — day15 §1-1
+- `fill_mode` 4종 — 변형으로 생긴 빈 공간을 채우는 방법 — day15 §1-2
+- 제너레이터를 모델에 먹이는 두 가지 방법 (통째로 꺼내기 / 그대로 넘기기) — day15 §1-6
+- 이름이 같은 `batch_size` 두 개 — 꺼내는 단위 vs 갱신 단위 — day15 §1-7 주의)
+- 제너레이터에서 검증 데이터 나누기 — 비율 지정이 통하지 않는 이유 — day15 §1-8
 
 **데이터 다루기**
 - 실전 데이터셋 불러오기 (`load_` vs `fetch_`, Bunch 객체) — day03 §4
@@ -134,6 +148,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `mnist.load_data()` — train/test로 나눠 반환, `(60000, 28, 28)`, `plt.imshow`로 확인 — day12 §4
 - 이미지 스케일링 `/255.`(0~1)과 `(x-127.5)/127.5`(-1~1) — day12 §4
 - `pd.value_counts`는 pandas 3.0에서 삭제 → `pd.Series(y).value_counts()` — day12 §4
+- 폴더 구조로 x와 y 만들기 — 하위 폴더 이름이 라벨이 됨 — day15 §1-4
+- 훈련 데이터만 증폭하고 테스트는 스케일링만 하는 이유 — day15 §1-3
+- `batch_size`와 Iterator — 인덱스는 이미지 번호가 아니라 배치 번호 — day15 §1-5
+- 평가용 데이터는 섞지 않는다 — 예측 순서와 정답 순서 — day15 §1-9 주의)
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
