@@ -2,3 +2,10 @@
 __pycache__/
 _data/
 _save/
+
+# 로컬 참조 문서 (커밋하지 않음)
+note/cnn_tuning.md
+note/assets/cnn-pipeline.svg
+note/assets/cnn-block-flow.svg
+note/assets/loss-diagnosis.svg
+note/assets/augment-flow.svg

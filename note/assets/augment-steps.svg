@@ -1,0 +1,119 @@
+<svg width="800" viewBox="0 0 840 420" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .step { font-size: 13px; font-weight: 600; }
+  .desc { font-size: 11.5px; fill: #52514e; }
+  .num  { font-size: 12px; font-weight: 600; }
+  .orig { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.6; }
+  .aug  { fill: #FFF0F6; stroke: #E64980; stroke-width: 1.6; }
+  .tag  { fill: #FFF4E6; stroke: #F76707; stroke-width: 1.6; }
+  .arrow { stroke: #898781; stroke-width: 1.8; fill: none; }
+</style>
+<title>사진 10장에서 5장을 뽑아 변형한 뒤 원본에 이어붙이는 과정</title>
+<desc>번호표를 뽑아 그 번호의 사진을 꺼내고, 변형 기계를 통과시킨 뒤 원본 뒤에 이어붙여 10장이 15장이 된다. 같은 3번이 두 번 뽑혀도 변형이 달라 서로 다른 사진이 된다.</desc>
+<defs>
+<marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<text x="20" y="40" class="desc">원본 사진첩</text>
+<text x="20" y="75" class="step">사진 10장</text>
+
+<text x="20" y="139" class="step">① 번호표 뽑기</text>
+<text x="20" y="203" class="step">② 그 번호 꺼내기</text>
+<text x="20" y="267" class="step">③ 변형 기계 통과</text>
+<text x="20" y="331" class="step">④ 뒤에 이어붙이기</text>
+
+<path d="M158 86 V 120" class="arrow" marker-end="url(#a3)"/>
+<path d="M158 150 V 178" class="arrow" marker-end="url(#a3)"/>
+<path d="M158 214 V 242" class="arrow" marker-end="url(#a3)"/>
+<path d="M158 278 V 306" class="arrow" marker-end="url(#a3)"/>
+
+<rect x="168" y="52" width="34" height="34" rx="4" class="orig" stroke-width="3"/>
+<text x="185" y="74" text-anchor="middle" class="num">0</text>
+<rect x="208" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="225" y="74" text-anchor="middle" class="num">1</text>
+<rect x="248" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="265" y="74" text-anchor="middle" class="num">2</text>
+<rect x="288" y="52" width="34" height="34" rx="4" class="orig" stroke-width="3"/>
+<text x="305" y="74" text-anchor="middle" class="num">3</text>
+<rect x="328" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="345" y="74" text-anchor="middle" class="num">4</text>
+<rect x="368" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="385" y="74" text-anchor="middle" class="num">5</text>
+<rect x="408" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="425" y="74" text-anchor="middle" class="num">6</text>
+<rect x="448" y="52" width="34" height="34" rx="4" class="orig" stroke-width="3"/>
+<text x="465" y="74" text-anchor="middle" class="num">7</text>
+<rect x="488" y="52" width="34" height="34" rx="4" class="orig" stroke-width="3"/>
+<text x="505" y="74" text-anchor="middle" class="num">8</text>
+<rect x="528" y="52" width="34" height="34" rx="4" class="orig"/>
+<text x="545" y="74" text-anchor="middle" class="num">9</text>
+<rect x="168" y="122" width="34" height="22" rx="11" class="tag"/>
+<text x="185" y="138" text-anchor="middle" class="num">3</text>
+<rect x="208" y="122" width="34" height="22" rx="11" class="tag"/>
+<text x="225" y="138" text-anchor="middle" class="num">7</text>
+<rect x="248" y="122" width="34" height="22" rx="11" class="tag"/>
+<text x="265" y="138" text-anchor="middle" class="num">3</text>
+<rect x="288" y="122" width="34" height="22" rx="11" class="tag"/>
+<text x="305" y="138" text-anchor="middle" class="num">0</text>
+<rect x="328" y="122" width="34" height="22" rx="11" class="tag"/>
+<text x="345" y="138" text-anchor="middle" class="num">8</text>
+<rect x="168" y="180" width="34" height="34" rx="4" class="orig"/>
+<text x="185" y="202" text-anchor="middle" class="num">3</text>
+<rect x="208" y="180" width="34" height="34" rx="4" class="orig"/>
+<text x="225" y="202" text-anchor="middle" class="num">7</text>
+<rect x="248" y="180" width="34" height="34" rx="4" class="orig"/>
+<text x="265" y="202" text-anchor="middle" class="num">3</text>
+<rect x="288" y="180" width="34" height="34" rx="4" class="orig"/>
+<text x="305" y="202" text-anchor="middle" class="num">0</text>
+<rect x="328" y="180" width="34" height="34" rx="4" class="orig"/>
+<text x="345" y="202" text-anchor="middle" class="num">8</text>
+<rect x="168" y="244" width="34" height="34" rx="4" class="aug"/>
+<text x="185" y="266" text-anchor="middle" class="num">3'</text>
+<rect x="208" y="244" width="34" height="34" rx="4" class="aug"/>
+<text x="225" y="266" text-anchor="middle" class="num">7'</text>
+<rect x="248" y="244" width="34" height="34" rx="4" class="aug"/>
+<text x="265" y="266" text-anchor="middle" class="num">3"</text>
+<rect x="288" y="244" width="34" height="34" rx="4" class="aug"/>
+<text x="305" y="266" text-anchor="middle" class="num">0'</text>
+<rect x="328" y="244" width="34" height="34" rx="4" class="aug"/>
+<text x="345" y="266" text-anchor="middle" class="num">8'</text>
+<rect x="168" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="185" y="330" text-anchor="middle" class="num">0</text>
+<rect x="208" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="225" y="330" text-anchor="middle" class="num">1</text>
+<rect x="248" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="265" y="330" text-anchor="middle" class="num">2</text>
+<rect x="288" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="305" y="330" text-anchor="middle" class="num">3</text>
+<rect x="328" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="345" y="330" text-anchor="middle" class="num">4</text>
+<rect x="368" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="385" y="330" text-anchor="middle" class="num">5</text>
+<rect x="408" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="425" y="330" text-anchor="middle" class="num">6</text>
+<rect x="448" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="465" y="330" text-anchor="middle" class="num">7</text>
+<rect x="488" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="505" y="330" text-anchor="middle" class="num">8</text>
+<rect x="528" y="308" width="34" height="34" rx="4" class="orig"/>
+<text x="545" y="330" text-anchor="middle" class="num">9</text>
+<rect x="568" y="308" width="34" height="34" rx="4" class="aug"/>
+<text x="585" y="330" text-anchor="middle" class="num">3'</text>
+<rect x="608" y="308" width="34" height="34" rx="4" class="aug"/>
+<text x="625" y="330" text-anchor="middle" class="num">7'</text>
+<rect x="648" y="308" width="34" height="34" rx="4" class="aug"/>
+<text x="665" y="330" text-anchor="middle" class="num">3"</text>
+<rect x="688" y="308" width="34" height="34" rx="4" class="aug"/>
+<text x="705" y="330" text-anchor="middle" class="num">0'</text>
+<rect x="728" y="308" width="34" height="34" rx="4" class="aug"/>
+<text x="745" y="330" text-anchor="middle" class="num">8'</text>
+
+<text x="382" y="138" class="desc">아직 사진이 아니라 번호만 고른 것</text>
+<text x="382" y="202" class="desc">여기까지는 원본 그대로. 변형 안 됨</text>
+<text x="382" y="266" class="desc">3이 두 번 뽑혔지만 3′과 3″은 다르게 변형됨</text>
+
+<line x1="20" y1="372" x2="820" y2="372" stroke="#d6d4cf" stroke-width="1"/>
+<text x="20" y="394" class="desc">원본 10장은 그대로 남고 뒤에 5장이 붙어 15장이 된다. 정답도 같은 번호로 꺼내 같이 붙이며, 변형되지 않는다</text>
+</svg>
