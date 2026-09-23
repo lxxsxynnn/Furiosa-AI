@@ -20,6 +20,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day14](day14_0917_keras.ipynb) | 09/17 | Conv2D 파라미터 개수 계산, Global Average Pooling, DNN으로 이미지 처리, 2차원 데이터를 CNN으로 처리 | `keras/keras39_MaxPooling0.py` ~ `keras42_cnn10_digits.py` |
 | [day15](day15_0918_keras.ipynb) | 09/18 | ImageDataGenerator와 증폭, fill_mode, 폴더 구조로 x·y 만들기, batch_size와 Iterator, 제너레이터를 모델에 먹이는 법 | `keras/keras44_ImageDataGenerator1.py` ~ `keras44_ImageDataGenerator3_CatDog.py` |
 | [day16](day16_0921_keras.ipynb) | 09/21 | train/test 분리가 없는 데이터, `class_mode`, 출력층과 loss의 짝, 타입별 인덱싱, 이미지 한 장으로 예측, `flow`로 증폭 | `keras/keras46_01_save_npy_horse.py` ~ `keras50_flow1.py` |
+| [day17](day17_0922_keras.ipynb) | 09/22 | 증폭으로 훈련셋 늘리기, `randint`와 `choice`, 검증셋을 증폭 전에 나누는 이유, 데이터셋마다 다른 x·y 형태 | `keras/keras50_flow2_next.py` ~ `keras51_augment4_cifar100.py` |
+| [day18](day18_0923_keras.ipynb) | 09/23 | `learning_rate` 직접 지정, `ReduceLROnPlateau`, RNN 도입(순환·timesteps·입력 차원) | `keras/keras52_optimizer01_california.py` ~ `keras53_ReduceLR15_man_woman.py` |
 
 ## 주제별 찾아보기
 
@@ -112,6 +114,38 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 예측할 이미지도 학습 때와 같은 전처리 — 스케일이 다르면 에러 없이 결과만 이상해짐 — day16 §3-2 주의)
 - `flow`와 `flow_from_directory` — 배열을 받느냐 폴더를 받느냐 — day16 §4-1
 - 증폭 이터레이터는 꺼낼 때마다 새 이미지 — day16 §4-2 주의)
+- 데이터 증폭 — 원본에서 뽑아 변형한 뒤 원본에 이어붙임 — day17 §1
+- 증폭 절차 5단계 — 번호 뽑기 → 꺼내기 → 변형 → 이어붙이기 — day17 §1-1
+- 검증셋은 증폭 전에 나눔 — 검증 비율 지정은 뒷부분을 떼어가므로 전부 증폭본이 됨 — day17 §1 주의)
+- 증폭 옵션 — 데이터에 있을 법한 변형만. 위아래 반전은 방향 없는 데이터에만 — day17 §1-3
+- 데이터셋마다 다른 x·y 형태 — 흑백은 3차원·`(N,)`, 컬러는 4차원·`(N, 1)` — day17 §3
+- 원핫 인코딩 위치 — 증폭본을 붙인 뒤 한 번만, test는 다시 학습시키지 않음 — day17 §3-2
+- `BatchNormalization`과 `Dropout` 순서 — 꺼진 상태의 통계를 배우면 예측 때와 안 맞음 — day17 §3 주의)
+- w와 loss의 관계 — U자의 바닥(꼭짓점)이 최적의 w. 변곡점과 다름 — day17 §4-1
+- 갱신식 — 미분은 방향만 알려주고 거리는 알려주지 않음 — day17 §4-2
+- `learning_rate` — 보폭. 작으면 느리고 크면 바닥에서 진동 — day17 §4-3
+- 지역 최저점 — 출발 위치에 따라 다른 곳에 도착. 튜닝이 필요한 이유 — day17 §4-4
+- 자동 미분 — 역전파를 손으로 쓰지 않는 이유, BPTT — day17 §4-5
+- 튜닝 우선순위 — 데이터 > 짝 > 구조 > 규제 > 학습 설정 — day17 §4-7
+- 경사하강법 — loss가 낮아지는 쪽으로 조금씩 내려가는 방법 — day17 §4
+- `learning_rate` 직접 지정 — 문자열은 기본값, 객체는 값을 정할 수 있음 — day18 §1-1
+- `lr`이 너무 크면 찍기 수준 — 다중분류 loss가 `ln(클래스 수)` 근처면 학습 안 된 것 — day18 §1 주의)
+- `ReduceLROnPlateau` — `val_loss`가 안 좋아지면 `lr`을 줄여주는 콜백 — day18 §2
+- `ReduceLROnPlateau`와 `EarlyStopping`의 `patience` — 줄여볼 기회를 주려면 차이를 둠 — day18 §2-2
+- RNN — 한 칸씩 넣으며 앞 결과를 다음 칸에 함께 넣는 순환 구조 — day18 §3
+- `timesteps` — 시퀀스를 몇 칸으로 끊을지. `timestamp`와 다른 말 — day18 §3-2
+- 모델별 입력 차원 — DNN 2차원 / RNN 3차원 / CNN 4차원 — day18 §3-3
+- `input_shape=(3, 1)`과 `input_length=3, input_dim=1`은 같은 뜻 — day18 §3-3
+- RNN 출력은 2차원이라 `Flatten` 없이 `Dense`에 바로 연결 — day18 §3-3
+- 예측할 입력도 훈련 x와 같은 3차원으로 — day18 §4-3
+- RNN의 가중치 두 벌 — 입력 가중치와 순환 가중치 — day18 §3-4
+- RNN 파라미터 개수 `units × (feature + units + 1)` — timesteps는 들어가지 않음 — day18 §3-4
+- 옛날 입력일수록 순환 가중치가 여러 번 곱해짐 — 긴 시퀀스에 약한 이유 — day18 §3-4
+- LSTM — cell state라는 기억 전용 통로를 따로 둬서 앞부분을 덜 잊음 — day18 §3-5
+- LSTM 파라미터는 SimpleRNN의 4배, GRU는 3배 — day18 §3-5
+- 시계열 데이터는 y가 없음 — 앞 몇 개로 다음 하나를 맞히도록 잘라서 만듦 — day18 §4
+- 자르면 행이 `전체 길이 - timesteps`로 줄어듦 — day18 §4-1
+- `timesteps` 선택 — 며칠치를 볼지 정하는 순간 문제가 정의됨 — day18 §4-2
 
 **데이터 다루기**
 - 실전 데이터셋 불러오기 (`load_` vs `fetch_`, Bunch 객체) — day03 §4
@@ -166,6 +200,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 평가용 데이터는 섞지 않는다 — 예측 순서와 정답 순서 — day15 §1-9 주의)
 - 튜플 언패킹 — 묶여 나온 값을 변수에 나눠 담기 — day16 §1-2
 - 타입별 인덱싱 — 문자열·생성기·튜플·배열에서 `[0]`이 꺼내는 것이 각각 다름 — day16 §2
+- `randint`와 `choice` — 중복을 끌 수 있느냐의 차이 — day17 §1-2
+- 팬시 인덱싱 — 대괄호에 번호 목록을 넣어 여러 개를 한 번에 꺼내기 — day17 §2-1
+- 메서드 체이닝 — `.flow(...).next()`는 두 줄을 한 줄로 붙인 것 — day17 §2-2
+- `np.concatenate`의 괄호가 두 겹인 이유 — 재료를 묶음으로 받음 — day17 §2-3
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4

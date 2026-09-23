@@ -1,0 +1,83 @@
+<svg width="860" viewBox="0 0 900 410" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .sec  { font-size: 13px; font-weight: 600; fill: #52514e; }
+  .lbl  { font-size: 12.5px; font-weight: 600; }
+  .sub  { font-size: 11px; fill: #52514e; }
+  .big  { font-size: 16px; font-weight: 600; }
+  .mid  { font-size: 14px; font-weight: 600; }
+  .mono { font-size: 12.5px; font-family: Consolas, "Courier New", monospace; }
+  .note { font-size: 11.5px; fill: #52514e; }
+  .nx   { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.8; }
+  .nh   { fill: #FFF0F6; stroke: #E64980; stroke-width: 1.8; }
+  .nb   { fill: #F1F3F5; stroke: #868E96; stroke-width: 1.8; }
+  .nt   { fill: #E6FCF5; stroke: #0CA678; stroke-width: 2; }
+  .ax   { stroke: #4C6EF5; stroke-width: 1.5; fill: none; }
+  .ah   { stroke: #E64980; stroke-width: 1.5; fill: none; }
+  .ab   { stroke: #868E96; stroke-width: 1.5; fill: none; }
+  .cx   { fill: #1864AB; }
+  .ch   { fill: #C2255C; }
+  .cb   { fill: #495057; }
+</style>
+<title>RNN 파라미터 개수가 units 곱하기 (feature + units + 1)인 이유</title>
+<desc>units 하나에는 입력이 feature 개수만큼, 앞 결과가 units 개수만큼, 바이어스 하나가 들어온다. 그런 units이 units 개수만큼 있으므로 전체 파라미터는 units 곱하기 괄호 feature 더하기 units 더하기 1이 된다.</desc>
+<defs>
+<marker id="mx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 2L8 5L2 8" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<text x="200" y="44" text-anchor="middle" class="sec">units 하나가 받는 선</text>
+
+<!-- 입력 -->
+<text x="84" y="106" text-anchor="end" class="lbl cx">입력</text>
+<text x="84" y="122" text-anchor="end" class="sub">feature 개수만큼</text>
+<circle cx="120" cy="98" r="13" class="nx"/>
+<circle cx="120" cy="132" r="13" class="nx"/>
+
+<!-- 앞 결과 -->
+<text x="84" y="212" text-anchor="end" class="lbl ch">앞 결과</text>
+<text x="84" y="228" text-anchor="end" class="sub">units 개수만큼</text>
+<circle cx="120" cy="196" r="13" class="nh"/>
+<circle cx="120" cy="228" r="13" class="nh"/>
+<circle cx="120" cy="260" r="13" class="nh"/>
+
+<!-- 바이어스 -->
+<text x="84" y="318" text-anchor="end" class="lbl cb">바이어스</text>
+<text x="84" y="334" text-anchor="end" class="sub">1 개</text>
+<rect x="107" y="300" width="26" height="26" rx="4" class="nb"/>
+
+<path d="M134 100 L 298.7 191" class="ax" marker-end="url(#mx)"/>
+<path d="M134 133 L 295.6 197" class="ax" marker-end="url(#mx)"/>
+<path d="M134 197 L 294 204" class="ah" marker-end="url(#mx)"/>
+<path d="M134 228 L 294 208" class="ah" marker-end="url(#mx)"/>
+<path d="M134 259 L 295.6 215" class="ah" marker-end="url(#mx)"/>
+<path d="M135 310 L 298.7 221" class="ab" marker-end="url(#mx)"/>
+
+<circle cx="320" cy="206" r="26" class="nt"/>
+<text x="320" y="211" text-anchor="middle" class="lbl">units</text>
+<text x="320" y="258" text-anchor="middle" class="sub">이 units 하나</text>
+
+<text x="200" y="372" text-anchor="middle" class="mid">들어오는 선  =  feature + units + 1</text>
+
+<line x1="404" y1="40" x2="404" y2="384" stroke="#d6d4cf" stroke-width="1"/>
+
+<text x="440" y="44" class="sec">그런 units이 units 개수만큼 있음</text>
+
+<text x="440" y="94" class="big">units × ( feature + units + 1 )</text>
+
+<text x="440" y="136" class="big">= units×feature + units×units + units</text>
+<text x="452" y="158" class="lbl cx">입력 가중치</text>
+<text x="574" y="158" class="lbl ch">순환 가중치</text>
+<text x="700" y="158" class="lbl cb">바이어스</text>
+
+<text x="440" y="212" class="sec">가중치 모양</text>
+<text x="440" y="238" class="mono cx">kernel             (feature, units)</text>
+<text x="440" y="260" class="mono ch">recurrent_kernel   (units, units)</text>
+<text x="440" y="282" class="mono cb">bias               (units,)</text>
+
+<text x="440" y="328" class="sec">한 칸의 계산</text>
+<text x="440" y="356" class="mono">결과 = 입력×<tspan class="cx">입력 가중치</tspan> + 앞 결과×<tspan class="ch">순환 가중치</tspan> + <tspan class="cb">바이어스</tspan></text>
+
+<line x1="40" y1="384" x2="860" y2="384" stroke="#d6d4cf" stroke-width="1"/>
+<text x="40" y="404" class="note">SimpleRNN(10)에 입력 (3, 1)이면 units 10개, feature 1개이므로 10 × (1 + 10 + 1) = 120. timesteps 3은 식에 들어가지 않음</text>
+</svg>
