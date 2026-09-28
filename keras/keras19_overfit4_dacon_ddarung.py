@@ -70,16 +70,16 @@ y_predict = model.predict(x_test, batch_size = 32)
 from sklearn.metrics import r2_score, mean_squared_error
 
 r2 = r2_score(y_test, y_predict)
-print("r2: ", r2)
+print("r2: ", r2)   # r2:  0.5532213527199192
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse: ", mse)
+print("mse: ", mse) # mse:  3620.1995981707137
 
 def RMSE(y_test, y_predict):  # RMSE 함수 정의
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("RMSE : ", rmse)
+print("RMSE : ", rmse)  # RMSE :  60.16809452002543
 
 # 시각화
 plt.figure(figsize=(9, 6))

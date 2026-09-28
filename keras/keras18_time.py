@@ -60,18 +60,18 @@ end_time = time.time()      # 현재 시간 반환(끝 시간)
 y_predict = model.predict(x_test)
 
 r2 = r2_score(y_test, y_predict)
-print("r2 : ", r2)
+print("r2 : ", r2)      # r2 :  0.21301603317260742
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse : ", mse)
+print("mse : ", mse)    # mse :  27101.35546875
 
 def RMSE(y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("rmse : ", rmse)
+print("rmse : ", rmse)  # rmse :  164.6248932232
 
-print("걸린 시간: ", round(end_time - start_time, 2), " 초")    # 걸린 시간:  3.9  초
+print("걸린 시간: ", round(end_time - start_time, 2), " 초")    # 걸린 시간:  18.86  초
 
 # y_submit = model.predict(test_csv)
 # submission['count'] = y_submit

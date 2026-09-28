@@ -58,16 +58,16 @@ model.fit(x_train, y_train, epochs=500, batch_size=8, validation_split=0.2)
 y_predict = model.predict(x_test)
 
 r2 = r2_score(y_test, y_predict)
-print("r2 : ", r2)
+print("r2 : ", r2)      # r2 :  0.23180419206619263
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse : ", mse)
+print("mse : ", mse)    # mse :  26454.34765625
 
 def RMSE(y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("rmse : ", rmse)
+print("rmse : ", rmse)  # rmse :  162.64792545941063
 
 # y_submit = model.predict(test_csv)
 # submission['count'] = y_submit

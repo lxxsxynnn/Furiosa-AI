@@ -28,4 +28,4 @@ model.fit(x, y, epochs= 1000)
 # 4. 평가 예측
 result = model.predict(np.array([4]))
 # model.predict -> 최적의(마지막) 훈련값 대입해서 계산
-print("4의 예측값 : ", result)
+print("4의 예측값 : ", result)      # 4의 예측값 :  [[0.09622377]]

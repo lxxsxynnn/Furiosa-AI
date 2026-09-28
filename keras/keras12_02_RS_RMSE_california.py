@@ -27,20 +27,20 @@ model.fit(x_train, y_train, epochs=1000, batch_size=10)
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
-print("loss : ", loss)      # loss :  0.5714614391326904 (1000번 시행, 배치 10, 랜덤시드 121)
+print("loss : ", loss)      # loss :  0.565815806388855 (1000번 시행, 배치 10, 랜덤시드 121)
 
 y_predict = model.predict(x_test, batch_size = 32)
 
 from sklearn.metrics import r2_score, mean_squared_error
 
 r2 = r2_score(y_test, y_predict)
-print("r2: ", r2)
+print("r2: ", r2)   # r2:  0.5737740429927274
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse: ", mse)
+print("mse: ", mse) # mse:  0.5658158938826583
 
 def RMSE(y_test, y_predict):  #RMSE 함수 정의
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("RMSE : ", rmse)
+print("RMSE : ", rmse)  # RMSE :  0.7522073476659599

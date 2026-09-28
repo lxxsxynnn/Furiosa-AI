@@ -20,6 +20,14 @@ model.fit(x, y, epochs = 2000)
 
 # 4. 평가, 예측
 loss = model.evaluate(x, y)
-print("loss : ", loss)
-# result = model.predict(np.array([1, 2, 3, 4, 5, 6]))
-# print("예측값 : ", result)
+print("loss : ", loss)      # loss :  0.3231370449066162
+result = model.predict(np.array([1, 2, 3, 4, 5, 6]))
+print("예측값 : ", result)
+'''
+예측값 :  [[1.146818 ]
+ [2.088135 ]
+ [3.0312352]
+ [3.9721708]
+ [4.912004 ]
+ [5.857384 ]]
+ '''

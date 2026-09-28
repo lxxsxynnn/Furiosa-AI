@@ -66,9 +66,6 @@ test_csv = test_csv.fillna(test_csv.mean()) # pandas dataset 형태 / fillna() :
 # print(test_csv.info())
 # print(test_csv.shape)   # (715, 9)
 
-
-
-
 # exit()
 
 #2. 모델 구성

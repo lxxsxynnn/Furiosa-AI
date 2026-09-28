@@ -23,19 +23,19 @@ model.fit(x_train, y_train, epochs=500, batch_size=2)
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test)       # 매 epoch마다 train 값과 train 예측값의 차이를 갖고 loss를 계산하고 있음, 여기 있는 값은 test 값과 test 예측값의 차이
-print("loss : ", loss)      # loss : 24.472475051879883 (500, 2)
+print("loss : ", loss)      # loss :  27.206693649291992
 
 y_predict = model.predict(x_test)          # 예측값 생성
 
 from sklearn.metrics import r2_score, mean_squared_error
 r2 = r2_score(y_test, y_predict)           # 원값과 예측값 비교
-print("r2 : ", r2)
+print("r2 : ", r2)      # r2 :  0.6731687078511437
 
 mse = mean_squared_error(y_test, y_predict)
-print("mse: ", mse)
+print("mse: ", mse)     # mse:  27.206694575169923
 
 def RMSE(y_test, y_predict):  #RMSE 함수 정의
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
-print("RMSE : ", rmse)
+print("RMSE : ", rmse)  # RMSE :  5.21600369777188
