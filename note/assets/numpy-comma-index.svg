@@ -1,0 +1,136 @@
+<svg width="860" viewBox="0 0 900 644" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .sec  { font-size: 13px; font-weight: 600; fill: #52514e; }
+  .lbl  { font-size: 11.5px; font-weight: 600; }
+  .num  { font-size: 11.5px; }
+  .note { font-size: 11.5px; fill: #52514e; }
+  .cell { fill: #F8F9FA; stroke: #868E96; stroke-width: 1.2; }
+  .hl   { fill: #FFF0F6; stroke: #E64980; stroke-width: 1.5; }
+  .res  { fill: #E6FCF5; stroke: #0CA678; stroke-width: 1.4; }
+  .ring { fill: none; stroke: #E64980; stroke-width: 2; stroke-dasharray: 5 3; }
+  .brk  { fill: none; stroke-width: 1.4; }
+  .ar   { stroke: #898781; stroke-width: 1.8; fill: none; }
+  .c0   { fill: #1864AB; }  .c0s { stroke: #4C6EF5; }
+  .c1   { fill: #C2255C; }  .c1s { stroke: #E64980; }
+  .c2   { fill: #E8590C; }  .c2s { stroke: #F76707; stroke-width: 1.8; fill: none; }
+  .c3   { fill: #087F5B; }
+</style>
+<title>콤마 인덱싱은 축마다 고를 것을 한 번에 지정하고, 대괄호를 이어 붙이면 같은 축에 두 번 접근한다</title>
+<desc>4묶음 3줄 2특성 배열에서 arr 대괄호 콜론 콤마 마이너스1은 묶음마다 마지막 줄을 모아 4행 2열이 되고, arr 대괄호 콜론 대괄호 마이너스1은 마지막 묶음 전체라 3행 2열이 된다.</desc>
+<defs>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<text x="40" y="44" class="sec">축 세 개 : arr.shape = (4, 3, 2)</text>
+<text x="415" y="72" text-anchor="middle" class="lbl c0">0번 축 · 묶음 4개</text>
+<path d="M150 92 V 84 H 680 V 92" class="brk c0s"/>
+<rect x="150" y="100" width="40" height="26" class="cell"/><text x="170" y="117" text-anchor="middle" class="num">0</text>
+<rect x="190" y="100" width="40" height="26" class="cell"/><text x="210" y="117" text-anchor="middle" class="num">1</text>
+<rect x="150" y="126" width="40" height="26" class="cell"/><text x="170" y="143" text-anchor="middle" class="num">2</text>
+<rect x="190" y="126" width="40" height="26" class="cell"/><text x="210" y="143" text-anchor="middle" class="num">3</text>
+<rect x="150" y="152" width="40" height="26" class="cell"/><text x="170" y="169" text-anchor="middle" class="num">4</text>
+<rect x="190" y="152" width="40" height="26" class="cell"/><text x="210" y="169" text-anchor="middle" class="num">5</text>
+<text x="190" y="196" text-anchor="middle" class="note">[0]</text>
+<rect x="300" y="100" width="40" height="26" class="cell"/><text x="320" y="117" text-anchor="middle" class="num">6</text>
+<rect x="340" y="100" width="40" height="26" class="cell"/><text x="360" y="117" text-anchor="middle" class="num">7</text>
+<rect x="300" y="126" width="40" height="26" class="cell"/><text x="320" y="143" text-anchor="middle" class="num">8</text>
+<rect x="340" y="126" width="40" height="26" class="cell"/><text x="360" y="143" text-anchor="middle" class="num">9</text>
+<rect x="300" y="152" width="40" height="26" class="cell"/><text x="320" y="169" text-anchor="middle" class="num">10</text>
+<rect x="340" y="152" width="40" height="26" class="cell"/><text x="360" y="169" text-anchor="middle" class="num">11</text>
+<text x="340" y="196" text-anchor="middle" class="note">[1]</text>
+<rect x="450" y="100" width="40" height="26" class="cell"/><text x="470" y="117" text-anchor="middle" class="num">12</text>
+<rect x="490" y="100" width="40" height="26" class="cell"/><text x="510" y="117" text-anchor="middle" class="num">13</text>
+<rect x="450" y="126" width="40" height="26" class="cell"/><text x="470" y="143" text-anchor="middle" class="num">14</text>
+<rect x="490" y="126" width="40" height="26" class="cell"/><text x="510" y="143" text-anchor="middle" class="num">15</text>
+<rect x="450" y="152" width="40" height="26" class="cell"/><text x="470" y="169" text-anchor="middle" class="num">16</text>
+<rect x="490" y="152" width="40" height="26" class="cell"/><text x="510" y="169" text-anchor="middle" class="num">17</text>
+<text x="490" y="196" text-anchor="middle" class="note">[2]</text>
+<rect x="600" y="100" width="40" height="26" class="cell"/><text x="620" y="117" text-anchor="middle" class="num">18</text>
+<rect x="640" y="100" width="40" height="26" class="cell"/><text x="660" y="117" text-anchor="middle" class="num">19</text>
+<rect x="600" y="126" width="40" height="26" class="cell"/><text x="620" y="143" text-anchor="middle" class="num">20</text>
+<rect x="640" y="126" width="40" height="26" class="cell"/><text x="660" y="143" text-anchor="middle" class="num">21</text>
+<rect x="600" y="152" width="40" height="26" class="cell"/><text x="620" y="169" text-anchor="middle" class="num">22</text>
+<rect x="640" y="152" width="40" height="26" class="cell"/><text x="660" y="169" text-anchor="middle" class="num">23</text>
+<text x="640" y="196" text-anchor="middle" class="note">[3]</text>
+<path d="M146 100 H 138 V 178 H 146" class="brk c1s"/>
+<text x="130" y="143" text-anchor="end" class="lbl c1">1번 축 · 줄 3개</text>
+<path d="M700 113 H 686" class="c2s" marker-end="url(#g)"/>
+<text x="706" y="117" class="lbl c2">2번 축 · 특성 2개</text>
+<text x="40" y="222" class="note">대괄호 안에 축 순서대로 콤마로 적음 — arr[묶음, 줄, 특성]</text>
+<line x1="40" y1="244" x2="860" y2="244" stroke="#d6d4cf" stroke-width="1"/>
+<text x="40" y="272" class="sec">arr[:, -1] — 묶음마다 마지막 줄</text>
+<rect x="150" y="296" width="40" height="26" class="cell"/><text x="170" y="313" text-anchor="middle" class="num">0</text>
+<rect x="190" y="296" width="40" height="26" class="cell"/><text x="210" y="313" text-anchor="middle" class="num">1</text>
+<rect x="150" y="322" width="40" height="26" class="cell"/><text x="170" y="339" text-anchor="middle" class="num">2</text>
+<rect x="190" y="322" width="40" height="26" class="cell"/><text x="210" y="339" text-anchor="middle" class="num">3</text>
+<rect x="150" y="348" width="40" height="26" class="hl"/><text x="170" y="365" text-anchor="middle" class="num">4</text>
+<rect x="190" y="348" width="40" height="26" class="hl"/><text x="210" y="365" text-anchor="middle" class="num">5</text>
+<rect x="300" y="296" width="40" height="26" class="cell"/><text x="320" y="313" text-anchor="middle" class="num">6</text>
+<rect x="340" y="296" width="40" height="26" class="cell"/><text x="360" y="313" text-anchor="middle" class="num">7</text>
+<rect x="300" y="322" width="40" height="26" class="cell"/><text x="320" y="339" text-anchor="middle" class="num">8</text>
+<rect x="340" y="322" width="40" height="26" class="cell"/><text x="360" y="339" text-anchor="middle" class="num">9</text>
+<rect x="300" y="348" width="40" height="26" class="hl"/><text x="320" y="365" text-anchor="middle" class="num">10</text>
+<rect x="340" y="348" width="40" height="26" class="hl"/><text x="360" y="365" text-anchor="middle" class="num">11</text>
+<rect x="450" y="296" width="40" height="26" class="cell"/><text x="470" y="313" text-anchor="middle" class="num">12</text>
+<rect x="490" y="296" width="40" height="26" class="cell"/><text x="510" y="313" text-anchor="middle" class="num">13</text>
+<rect x="450" y="322" width="40" height="26" class="cell"/><text x="470" y="339" text-anchor="middle" class="num">14</text>
+<rect x="490" y="322" width="40" height="26" class="cell"/><text x="510" y="339" text-anchor="middle" class="num">15</text>
+<rect x="450" y="348" width="40" height="26" class="hl"/><text x="470" y="365" text-anchor="middle" class="num">16</text>
+<rect x="490" y="348" width="40" height="26" class="hl"/><text x="510" y="365" text-anchor="middle" class="num">17</text>
+<rect x="600" y="296" width="40" height="26" class="cell"/><text x="620" y="313" text-anchor="middle" class="num">18</text>
+<rect x="640" y="296" width="40" height="26" class="cell"/><text x="660" y="313" text-anchor="middle" class="num">19</text>
+<rect x="600" y="322" width="40" height="26" class="cell"/><text x="620" y="339" text-anchor="middle" class="num">20</text>
+<rect x="640" y="322" width="40" height="26" class="cell"/><text x="660" y="339" text-anchor="middle" class="num">21</text>
+<rect x="600" y="348" width="40" height="26" class="hl"/><text x="620" y="365" text-anchor="middle" class="num">22</text>
+<rect x="640" y="348" width="40" height="26" class="hl"/><text x="660" y="365" text-anchor="middle" class="num">23</text>
+<path d="M694 361 H 730" class="ar" marker-end="url(#g)"/>
+<rect x="740" y="296" width="40" height="26" class="res"/><text x="760" y="313" text-anchor="middle" class="num">4</text>
+<rect x="780" y="296" width="40" height="26" class="res"/><text x="800" y="313" text-anchor="middle" class="num">5</text>
+<rect x="740" y="322" width="40" height="26" class="res"/><text x="760" y="339" text-anchor="middle" class="num">10</text>
+<rect x="780" y="322" width="40" height="26" class="res"/><text x="800" y="339" text-anchor="middle" class="num">11</text>
+<rect x="740" y="348" width="40" height="26" class="res"/><text x="760" y="365" text-anchor="middle" class="num">16</text>
+<rect x="780" y="348" width="40" height="26" class="res"/><text x="800" y="365" text-anchor="middle" class="num">17</text>
+<rect x="740" y="374" width="40" height="26" class="res"/><text x="760" y="391" text-anchor="middle" class="num">22</text>
+<rect x="780" y="374" width="40" height="26" class="res"/><text x="800" y="391" text-anchor="middle" class="num">23</text>
+<text x="780" y="418" text-anchor="middle" class="lbl c3">(4, 2)</text>
+<text x="40" y="410" class="note">0번 축은 전부( : ), 1번 축은 마지막( -1 ). 줄이 4개 모임</text>
+<line x1="40" y1="432" x2="860" y2="432" stroke="#d6d4cf" stroke-width="1"/>
+<text x="40" y="460" class="sec">arr[:][-1] — 마지막 묶음 전체</text>
+<rect x="150" y="484" width="40" height="26" class="cell"/><text x="170" y="501" text-anchor="middle" class="num">0</text>
+<rect x="190" y="484" width="40" height="26" class="cell"/><text x="210" y="501" text-anchor="middle" class="num">1</text>
+<rect x="150" y="510" width="40" height="26" class="cell"/><text x="170" y="527" text-anchor="middle" class="num">2</text>
+<rect x="190" y="510" width="40" height="26" class="cell"/><text x="210" y="527" text-anchor="middle" class="num">3</text>
+<rect x="150" y="536" width="40" height="26" class="cell"/><text x="170" y="553" text-anchor="middle" class="num">4</text>
+<rect x="190" y="536" width="40" height="26" class="cell"/><text x="210" y="553" text-anchor="middle" class="num">5</text>
+<rect x="300" y="484" width="40" height="26" class="cell"/><text x="320" y="501" text-anchor="middle" class="num">6</text>
+<rect x="340" y="484" width="40" height="26" class="cell"/><text x="360" y="501" text-anchor="middle" class="num">7</text>
+<rect x="300" y="510" width="40" height="26" class="cell"/><text x="320" y="527" text-anchor="middle" class="num">8</text>
+<rect x="340" y="510" width="40" height="26" class="cell"/><text x="360" y="527" text-anchor="middle" class="num">9</text>
+<rect x="300" y="536" width="40" height="26" class="cell"/><text x="320" y="553" text-anchor="middle" class="num">10</text>
+<rect x="340" y="536" width="40" height="26" class="cell"/><text x="360" y="553" text-anchor="middle" class="num">11</text>
+<rect x="450" y="484" width="40" height="26" class="cell"/><text x="470" y="501" text-anchor="middle" class="num">12</text>
+<rect x="490" y="484" width="40" height="26" class="cell"/><text x="510" y="501" text-anchor="middle" class="num">13</text>
+<rect x="450" y="510" width="40" height="26" class="cell"/><text x="470" y="527" text-anchor="middle" class="num">14</text>
+<rect x="490" y="510" width="40" height="26" class="cell"/><text x="510" y="527" text-anchor="middle" class="num">15</text>
+<rect x="450" y="536" width="40" height="26" class="cell"/><text x="470" y="553" text-anchor="middle" class="num">16</text>
+<rect x="490" y="536" width="40" height="26" class="cell"/><text x="510" y="553" text-anchor="middle" class="num">17</text>
+<rect x="600" y="484" width="40" height="26" class="hl"/><text x="620" y="501" text-anchor="middle" class="num">18</text>
+<rect x="640" y="484" width="40" height="26" class="hl"/><text x="660" y="501" text-anchor="middle" class="num">19</text>
+<rect x="600" y="510" width="40" height="26" class="hl"/><text x="620" y="527" text-anchor="middle" class="num">20</text>
+<rect x="640" y="510" width="40" height="26" class="hl"/><text x="660" y="527" text-anchor="middle" class="num">21</text>
+<rect x="600" y="536" width="40" height="26" class="hl"/><text x="620" y="553" text-anchor="middle" class="num">22</text>
+<rect x="640" y="536" width="40" height="26" class="hl"/><text x="660" y="553" text-anchor="middle" class="num">23</text>
+<rect x="596" y="480" width="88" height="86" rx="5" class="ring"/>
+<path d="M694 523 H 730" class="ar" marker-end="url(#g)"/>
+<rect x="740" y="484" width="40" height="26" class="res"/><text x="760" y="501" text-anchor="middle" class="num">18</text>
+<rect x="780" y="484" width="40" height="26" class="res"/><text x="800" y="501" text-anchor="middle" class="num">19</text>
+<rect x="740" y="510" width="40" height="26" class="res"/><text x="760" y="527" text-anchor="middle" class="num">20</text>
+<rect x="780" y="510" width="40" height="26" class="res"/><text x="800" y="527" text-anchor="middle" class="num">21</text>
+<rect x="740" y="536" width="40" height="26" class="res"/><text x="760" y="553" text-anchor="middle" class="num">22</text>
+<rect x="780" y="536" width="40" height="26" class="res"/><text x="800" y="553" text-anchor="middle" class="num">23</text>
+<text x="780" y="580" text-anchor="middle" class="lbl c3">(3, 2)</text>
+<text x="40" y="598" class="note">arr[:] 가 배열 전체를 꺼내고 거기에 [-1] 을 함. 결국 arr[-1] 과 같음</text>
+<text x="40" y="616" class="note">축을 건너뛴 것이 아니라 0번 축에 두 번 접근한 것</text>
+</svg>
