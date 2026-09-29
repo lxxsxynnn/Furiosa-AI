@@ -23,6 +23,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day17](day17_0922_keras.ipynb) | 09/22 | 증폭으로 훈련셋 늘리기, `randint`와 `choice`, 검증셋을 증폭 전에 나누는 이유, 데이터셋마다 다른 x·y 형태 | `keras/keras50_flow2_next.py` ~ `keras51_augment4_cifar100.py` |
 | [day18](day18_0923_keras.ipynb) | 09/23 | `learning_rate` 직접 지정, `ReduceLROnPlateau`, RNN 도입(순환·timesteps·입력 차원) | `keras/keras52_optimizer01_california.py` ~ `keras53_ReduceLR15_man_woman.py` |
 | [day19](day19_0928_keras.ipynb) | 09/28 | `split_x`로 수열 자르기, 콤마 인덱싱 | `keras/keras55_LSTM2_scale.py` ~ `keras56_split1.py` |
+| [day20](day20_0929_keras.ipynb) | 09/29 | 모델별 입력·출력 차원, `return_sequences`와 RNN 쌓기, 가중치 초기화 난수, `drop`, 예측 시점과 데이터 누수 | `keras/keras56_split3.py` ~ `keras58_kaggle_jena.py` |
 
 ## 주제별 찾아보기
 
@@ -136,6 +137,20 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - RNN — 한 칸씩 넣으며 앞 결과를 다음 칸에 함께 넣는 순환 구조 — day18 §3
 - `timesteps` — 시퀀스를 몇 칸으로 끊을지. `timestamp`와 다른 말 — day18 §3-2
 - 모델별 입력 차원 — DNN 2차원 / RNN 3차원 / CNN 4차원 — day18 §3-3
+- 모델별 입력·출력 차원 한눈에 — `input_shape`은 데이터 구조보다 하나 적음 — day20 §1
+- `return_sequences` — 마지막 칸만 내보낼지 칸마다 내보낼지 — day20 §2
+- RNN을 쌓으려면 앞 층에 `return_sequences=True`, 마지막 층은 끔 — day20 §2
+- 쌓으면 앞 층의 `units`가 다음 층의 `feature`가 됨 — day20 §2-1
+- 쌓았을 때 영향 범위는 삼각형 — 같은 칸 안은 Dense처럼 전부, 칸 사이는 앞에서 뒤로만 — day20 §2-2
+- `drop`은 라벨만 받음 — 위치로 자르려면 `iloc` — day20 §3-1
+- `index`는 행 이름, `columns`는 열 이름 — 지우려는 축에서 뽑음 — day20 §3-2
+- `drop`은 원본을 바꾸지 않음 — `inplace`와 재대입의 차이 — day20 §3 cf)
+- 예측 시점을 정하면 x와 y를 그만큼 어긋나게 자름 — day20 §4
+- jena 실습 순서 — 정답 빼두기 → 어긋나게 자르기 → 스케일링 → 창 — day20 §4-1
+- 정답 구간의 앞 구간도 빼야 함 — 그 행들의 정답이 정답 구간 안에 있음 — day20 §4-2
+- 창 개수에서 필요한 행 수 거꾸로 구하기 — `창 길이 + 창 개수 - 1` — day20 §4-3
+- 스케일링은 창을 만들기 전 2차원일 때 — day20 §4 cf)
+- 창을 만들면 데이터가 창 길이배로 늘어남 — 5.86 GB — day20 §4 cf)
 - `input_shape=(3, 1)`과 `input_length=3, input_dim=1`은 같은 뜻 — day18 §3-3
 - RNN 출력은 2차원이라 `Flatten` 없이 `Dense`에 바로 연결 — day18 §3-3
 - 예측할 입력도 훈련 x와 같은 3차원으로 — day18 §4-3

@@ -1,0 +1,82 @@
+<svg width="860" viewBox="0 0 900 692" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .sec  { font-size: 13px; font-weight: 600; fill: #52514e; }
+  .w    { font-size: 14px; font-weight: 600; }
+  .io   { font-size: 12.5px; font-weight: 600; }
+  .lbl  { font-size: 12px; font-weight: 600; }
+  .sml  { font-size: 10.5px; font-weight: 600; }
+  .note { font-size: 11.5px; fill: #52514e; }
+  .cell { fill: #F8F9FA; stroke: #868E96; stroke-width: 1.8; }
+  .res  { fill: #E6FCF5; stroke: #0CA678; stroke-width: 1.6; }
+  .px   { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.6; }
+  .ar   { stroke: #898781; stroke-width: 1.8; fill: none; }
+  .ax   { stroke: #4C6EF5; stroke-width: 2; fill: none; }
+  .ah   { stroke: #E64980; stroke-width: 2; fill: none; }
+  .ay   { stroke: #0CA678; stroke-width: 2; fill: none; }
+  .cx   { fill: #1864AB; } .cy2 { fill: #087F5B; } .c3 { fill: #087F5B; }
+  .t3   { fill: #0CA678; } .t2 { fill: #F76707; } .t1 { fill: #4C6EF5; }
+</style>
+<title>return_sequences를 켜면 칸마다 결과가 나와 3차원이 되고, 그것을 다음 RNN 층이 받는다</title>
+<desc>기본값은 마지막 칸의 결과 하나만 내보내 2차원이 되고, return_sequences를 켜면 칸마다 결과가 나와 timesteps 축이 남은 3차원이 된다. 두 층을 쌓으면 1층의 칸별 출력이 2층의 입력 시퀀스가 되고, 마지막 층만 기본값으로 두어 Dense에 연결한다.</desc>
+<defs>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<text x="40" y="44" class="sec">return_sequences 없음 (기본) — 마지막 칸만 내보냄</text>
+<rect x="260" y="76" width="76" height="46" rx="6" class="cell"/><text x="298" y="104" text-anchor="middle" class="w">h₁</text>
+<rect x="430" y="76" width="76" height="46" rx="6" class="cell"/><text x="468" y="104" text-anchor="middle" class="w">h₂</text>
+<rect x="600" y="76" width="76" height="46" rx="6" class="cell"/><text x="638" y="104" text-anchor="middle" class="w">h₃</text>
+<path d="M336 99 H 426" class="ah" marker-end="url(#g)"/>
+<path d="M506 99 H 596" class="ah" marker-end="url(#g)"/>
+<path d="M676 99 H 724" class="ar" marker-end="url(#g)"/>
+<text x="736" y="104" class="lbl c3">(N, 10)  2차원</text>
+<text x="40" y="146" class="note">h₃ 하나만 나오므로 timesteps 축이 사라짐. Dense에 바로 연결됨</text>
+<line x1="40" y1="170" x2="860" y2="170" stroke="#d6d4cf" stroke-width="1"/>
+<text x="40" y="198" class="sec">return_sequences=True — 칸마다 내보냄</text>
+<rect x="268" y="224" width="60" height="30" rx="5" class="res"/><text x="298" y="244" text-anchor="middle" class="io cy2">y₁</text>
+<path d="M298 274 V 258" class="ay" marker-end="url(#g)"/>
+<rect x="438" y="224" width="60" height="30" rx="5" class="res"/><text x="468" y="244" text-anchor="middle" class="io cy2">y₂</text>
+<path d="M468 274 V 258" class="ay" marker-end="url(#g)"/>
+<rect x="608" y="224" width="60" height="30" rx="5" class="res"/><text x="638" y="244" text-anchor="middle" class="io cy2">y₃</text>
+<path d="M638 274 V 258" class="ay" marker-end="url(#g)"/>
+<rect x="260" y="274" width="76" height="46" rx="6" class="cell"/><text x="298" y="302" text-anchor="middle" class="w">h₁</text>
+<rect x="430" y="274" width="76" height="46" rx="6" class="cell"/><text x="468" y="302" text-anchor="middle" class="w">h₂</text>
+<rect x="600" y="274" width="76" height="46" rx="6" class="cell"/><text x="638" y="302" text-anchor="middle" class="w">h₃</text>
+<path d="M336 297 H 426" class="ah" marker-end="url(#g)"/>
+<path d="M506 297 H 596" class="ah" marker-end="url(#g)"/>
+<text x="736" y="302" class="lbl c3">(N, 3, 10)  3차원</text>
+<text x="40" y="344" class="note">칸마다 결과가 나와 timesteps 축이 남음. 이 3차원을 다음 RNN이 받을 수 있음</text>
+<line x1="40" y1="368" x2="860" y2="368" stroke="#d6d4cf" stroke-width="1"/>
+<text x="40" y="396" class="sec">쌓기 — 1층의 칸별 출력이 2층의 입력 시퀀스가 됨</text>
+<rect x="260" y="430" width="76" height="46" rx="6" class="cell"/><text x="298" y="458" text-anchor="middle" class="w">h₁</text>
+<rect x="430" y="430" width="76" height="46" rx="6" class="cell"/><text x="468" y="458" text-anchor="middle" class="w">h₂</text>
+<rect x="600" y="430" width="76" height="46" rx="6" class="cell"/><text x="638" y="458" text-anchor="middle" class="w">h₃</text>
+<path d="M336 453 H 426" class="ah" marker-end="url(#g)"/>
+<path d="M506 453 H 596" class="ah" marker-end="url(#g)"/>
+<text x="240" y="448" text-anchor="end" class="lbl">2층 LSTM(5)</text>
+<text x="240" y="464" text-anchor="end" class="sml cx">return_sequences 없음</text>
+<path d="M676 453 H 724" class="ar" marker-end="url(#g)"/>
+<rect x="732" y="436" width="86" height="34" rx="6" class="px"/><text x="775" y="458" text-anchor="middle" class="io cx">Dense</text>
+<path d="M298 518 V 480" class="ay" marker-end="url(#g)"/>
+<path d="M468 518 V 480" class="ay" marker-end="url(#g)"/>
+<path d="M638 518 V 480" class="ay" marker-end="url(#g)"/>
+<rect x="260" y="518" width="76" height="46" rx="6" class="cell"/><text x="298" y="546" text-anchor="middle" class="w">h₁</text>
+<rect x="430" y="518" width="76" height="46" rx="6" class="cell"/><text x="468" y="546" text-anchor="middle" class="w">h₂</text>
+<rect x="600" y="518" width="76" height="46" rx="6" class="cell"/><text x="638" y="546" text-anchor="middle" class="w">h₃</text>
+<path d="M336 541 H 426" class="ah" marker-end="url(#g)"/>
+<path d="M506 541 H 596" class="ah" marker-end="url(#g)"/>
+<text x="240" y="536" text-anchor="end" class="lbl">1층 LSTM(10)</text>
+<text x="240" y="552" text-anchor="end" class="sml cy2">return_sequences=True</text>
+<text x="736" y="546" class="lbl c3">(N, 3, 10)</text>
+<path d="M298 600 V 568" class="ax" marker-end="url(#g)"/>
+<text x="298" y="620" text-anchor="middle" class="io t1">나는</text>
+<path d="M468 600 V 568" class="ax" marker-end="url(#g)"/>
+<text x="468" y="620" text-anchor="middle" class="io t2">밥을</text>
+<path d="M638 600 V 568" class="ax" marker-end="url(#g)"/>
+<text x="638" y="620" text-anchor="middle" class="io t3">먹었다</text>
+<text x="40" y="654" class="note">timesteps는 3으로 그대로 가고 feature만 바뀜. 앞 층의 units가 다음 층의 feature가 됨</text>
+<text x="40" y="672" class="note">1층  4 × 10 × (1 + 10 + 1) = 480</text>
+<text x="320" y="672" class="note">2층  4 × 5 × (10 + 5 + 1) = 320</text>
+</svg>
