@@ -12,7 +12,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import accuracy_score
 
 
-# 데이터 증폭하기 - cifar100 데이터셋
+# 옵티마이저 - cifar100 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 print(x_train.shape, y_train.shape) # (50000, 32, 32, 3) (50000, 1)

@@ -2,6 +2,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, GRU
 
+# RNN 모델(LSTM, GRU) Summary, Parameter 계산해보기
 # 1. 데이터
 datasets = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
@@ -26,8 +27,8 @@ print(x.shape)  # (7, 3, 1)
 # 2. 모델 구성
 model = Sequential()
 # model.add(SimpleRNN(units=10, input_shape=(3, 1)))
-# model.add(LSTM(units=10, input_shape=(3, 1)))   # RNN 모델 중 가장 강력한 모델
-model.add(GRU(10, input_shape=(3, 1)))
+model.add(LSTM(units=10, input_shape=(3, 1)))   # RNN 모델 중 가장 강력한 모델
+# model.add(GRU(10, input_shape=(3, 1)))
 model.add(Dense(7, activation='relu'))
 model.add(Dense(1))
 

@@ -8,6 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import accuracy_score
 
+# ReduceLR - 성별 구분
 # 1. 데이터
 np_path = 'C:/study/_save/numpy/man-woman_npy/'
 

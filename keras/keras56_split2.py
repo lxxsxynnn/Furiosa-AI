@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 from tensorflow.keras.callbacks import EarlyStopping
 
+# 시계열 데이터 가공해보기 - 2개 이상의 데이터에서 하나의 값만 알고 싶을 때
 # 1. 데이터
 a = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
              [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]]).T

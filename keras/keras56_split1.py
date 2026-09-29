@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 from tensorflow.keras.callbacks import EarlyStopping
 
+# 시계열 데이터 가공하기
 # 1. 데이터
 a = np.array(range(1, 11))
 size = 5    # timestep size

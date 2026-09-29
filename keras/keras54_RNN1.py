@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN
 from tensorflow.keras.callbacks import EarlyStopping
 
+# Simple RNN 모델 사용해보기
 # 1. 데이터
 datasets = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 

@@ -9,6 +9,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import accuracy_score
 
+# 옵티마이저 - 성별 구분
 # 1. 데이터
 np_path = 'C:/study/_save/numpy/man-woman_npy/'
 
