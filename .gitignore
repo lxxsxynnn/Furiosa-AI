@@ -2,6 +2,7 @@
 __pycache__/
 _data/
 _save/
+.env
 
 # 로컬 참조 문서 (커밋하지 않음)
 note/cnn_tuning.md
