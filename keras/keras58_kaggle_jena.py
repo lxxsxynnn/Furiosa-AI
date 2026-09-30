@@ -97,7 +97,7 @@ fit_end = time.time()
 
 # 4. 평가, 예측
 results = model.evaluate(x_test, y_test)
-print('loss : ', results)
+print('loss : ', results)   # loss :  6550.81005859375
 
 x_predict = data[-431:-144].drop(data.columns[-1], axis=1)      # 287행 -> 창 144개
 x_predict = scaler.transform(x_predict)     # 훈련과 같은 스케일러
@@ -105,4 +105,13 @@ x_predict = split(x_predict, size)
 y_predict = model.predict(x_predict)
 
 print('predict : ', y_predict)
-print('훈련 소요 시간: ', round(fit_end - fit_start, 2), '초')
+'''
+predict :  [[183.5618  183.55917 183.55647 ... 183.55864 183.5614  183.55756]
+ [183.1354  183.13301 183.13022 ... 183.1323  183.13515 183.13147]
+ [183.11699 183.11469 183.1121  ... 183.11363 183.11667 183.11298]
+ ...
+ [183.39137 183.37018 183.33865 ... 183.37015 183.39377 183.3615 ]
+ [183.88489 183.86002 183.82564 ... 183.86665 183.88728 183.85732]
+ [184.48993 184.4739  184.43866 ... 184.4689  184.49573 184.45544]]
+'''
+print('훈련 소요 시간: ', round(fit_end - fit_start, 2), '초')  # 훈련 소요 시간:  3613.48 초
