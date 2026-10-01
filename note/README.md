@@ -23,7 +23,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day17](day17_0922_keras.ipynb) | 09/22 | 증폭으로 훈련셋 늘리기, `randint`와 `choice`, 검증셋을 증폭 전에 나누는 이유, 데이터셋마다 다른 x·y 형태 | `keras/keras50_flow2_next.py` ~ `keras51_augment4_cifar100.py` |
 | [day18](day18_0923_keras.ipynb) | 09/23 | `learning_rate` 직접 지정, `ReduceLROnPlateau`, RNN 도입(순환·timesteps·입력 차원) | `keras/keras52_optimizer01_california.py` ~ `keras53_ReduceLR15_man_woman.py` |
 | [day19](day19_0928_keras.ipynb) | 09/28 | `split_x`로 수열 자르기, 콤마 인덱싱 | `keras/keras55_LSTM2_scale.py` ~ `keras56_split1.py` |
-| [day20](day20_0929_keras.ipynb) | 09/29 | 모델별 입력·출력 차원, `return_sequences`와 RNN 쌓기, 가중치 초기화 난수, `drop`, 예측 시점과 데이터 누수 | `keras/keras56_split3.py` ~ `keras58_kaggle_jena.py` |
+| [day20](day20_0929_keras.ipynb) | 09/29 | 모델별 입력·출력 차원, `return_sequences`와 RNN 쌓기, 가중치 초기화 난수, `drop`, 예측 시점과 데이터 누수 | `keras/keras56_split3.py` ~ `keras58_kaggle_jena1.py` |
+| [day21](day21_0930_keras.ipynb) | 09/30 | `Bidirectional` | `keras/keras58_kaggle_jena2.py` ~ `keras59_Bidirectional3_jena.py` |
+| [day21 RAG](day21_0930_rag.ipynb) | 09/30 | 채팅 모델과 `AIMessage`, `PromptTemplate`, LCEL 체인, 출력 파서 | `RAG/rag01_add_api_keys.py` ~ `rag09_output_parser02.py` |
 
 ## 주제별 찾아보기
 
@@ -160,6 +162,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 옛날 입력일수록 순환 가중치가 여러 번 곱해짐 — 긴 시퀀스에 약한 이유 — day18 §3-4
 - LSTM — cell state라는 기억 전용 통로를 따로 둬서 앞부분을 덜 잊음 — day18 §3-5
 - LSTM 파라미터는 SimpleRNN의 4배, GRU는 3배 — day18 §3-5
+- `Bidirectional` — RNN을 순방향·역방향 두 벌로 돌려 이어 붙이는 래퍼 레이어 — day21 §1
+- `Bidirectional` 파라미터·출력은 한 방향의 2배 — day21 §1-1
+- `input_shape`는 안쪽 RNN이 아니라 `Bidirectional`에 — day21 §1 cf)
 - 시계열 데이터는 y가 없음 — 앞 몇 개로 다음 하나를 맞히도록 잘라서 만듦 — day18 §4
 - 자르면 행이 `전체 길이 - timesteps`로 줄어듦 — day18 §4-1
 - `timesteps` 선택 — 며칠치를 볼지 정하는 순간 문제가 정의됨 — day18 §4-2
@@ -228,6 +233,14 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `arr[:, -1]`과 `arr[:][-1]`은 다름 — 뒤는 0번 축에 두 번 접근한 것 — day19 §2-1
 - 리스트는 줄 길이가 달라도 되지만 배열은 안 됨 — `inhomogeneous shape` — day19 §2-2
 - RNN 계열 층은 activation이 이미 들어 있음 — 따로 넣지 않음 — day19 §2 cf)
+
+**LangChain**
+- 채팅 모델 클래스 — 회사가 달라도 `invoke`로 같게 부름, `base_url`로 호환 서버 연결 — day21 RAG §1
+- `invoke` 한 번은 독립된 요청 — 이전 질문을 기억하지 않음 — day21 RAG §1
+- `AIMessage` — `content`·`.text`·`response_metadata`·`usage_metadata` — day21 RAG §1-1
+- `PromptTemplate` — `{변수}` 자리를 dict로 채움, 여러 줄로 역할·형식 지정 — day21 RAG §2
+- LCEL `prompt | model | output_parser` — 단계별 입출력 — day21 RAG §3
+- `StrOutputParser` — `AIMessage`에서 텍스트만 문자열로 — day21 RAG §4
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
