@@ -1,0 +1,60 @@
+<svg width="860" viewBox="0 70 900 300" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .sec  { font-size: 13px; font-weight: 600; fill: #52514e; }
+  .w    { font-size: 14px; font-weight: 600; }
+  .io   { font-size: 12.5px; font-weight: 600; }
+  .lbl  { font-size: 12px; font-weight: 600; }
+  .sml  { font-size: 10.5px; font-weight: 600; fill: #52514e; }
+  .note { font-size: 11.5px; fill: #52514e; }
+  .mono { font-family: Consolas, "JetBrains Mono", monospace; }
+  .pad  { fill: #F1F3F5; stroke: #ADB5BD; stroke-width: 1.4; stroke-dasharray: 4 3; }
+  .px   { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.6; }
+  .ar   { stroke: #898781; stroke-width: 1.6; fill: none; }
+  .ah   { stroke: #E64980; stroke-width: 2; fill: none; }
+  .axis { stroke: #868E96; stroke-width: 1.2; fill: none; }
+  .grid { stroke: #CED4DA; stroke-width: 1; fill: none; stroke-dasharray: 3 4; }
+  .cb { fill: #3B5BDB; } .cg { fill: #0C8599; } .co { fill: #D9480F; } .c3 { fill: #087F5B; }
+</style>
+<defs>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<title>패딩을 앞에 채우면 RNN이 실제 단어를 마지막에 읽는다</title>
+<desc>너무 재미있다를 길이 5로 맞춘다. pre는 [0, 0, 0, 2, 3]이라 실제 단어를 마지막에 읽고 바로 출력하고, post는 [2, 3, 0, 0, 0]이라 실제 단어를 읽은 뒤 0을 세 칸 더 읽고 출력한다.</desc>
+<text x="40" y="106" class="sec">padding='pre'</text>
+<text x="40" y="124" class="note">기본값. 앞을 0으로 채움</text>
+<rect x="220" y="90" width="64" height="40" rx="6" class="pad"/><text x="252" y="116" text-anchor="middle" class="w mono">0</text>
+<path d="M284 110 H 321" class="ah" marker-end="url(#g)"/>
+<rect x="325" y="90" width="64" height="40" rx="6" class="pad"/><text x="357" y="116" text-anchor="middle" class="w mono">0</text>
+<path d="M389 110 H 426" class="ah" marker-end="url(#g)"/>
+<rect x="430" y="90" width="64" height="40" rx="6" class="pad"/><text x="462" y="116" text-anchor="middle" class="w mono">0</text>
+<path d="M494 110 H 531" class="ah" marker-end="url(#g)"/>
+<rect x="535" y="90" width="64" height="40" rx="6" class="px"/><text x="567" y="116" text-anchor="middle" class="w mono">2</text>
+<text x="567" y="148" text-anchor="middle" class="sml cb">너무</text>
+<path d="M599 110 H 636" class="ah" marker-end="url(#g)"/>
+<rect x="640" y="90" width="64" height="40" rx="6" class="px"/><text x="672" y="116" text-anchor="middle" class="w mono">3</text>
+<text x="672" y="148" text-anchor="middle" class="sml cb">재미있다</text>
+<path d="M704 110 H 744" class="ar" marker-end="url(#g)"/>
+<text x="752" y="115" class="lbl c3">출력</text>
+<text x="672" y="170" text-anchor="middle" class="note">실제 단어를 마지막에 읽고 바로 출력</text>
+<text x="40" y="236" class="sec">padding='post'</text>
+<text x="40" y="254" class="note">뒤를 0으로 채움</text>
+<rect x="220" y="220" width="64" height="40" rx="6" class="px"/><text x="252" y="246" text-anchor="middle" class="w mono">2</text>
+<text x="252" y="278" text-anchor="middle" class="sml cb">너무</text>
+<path d="M284 240 H 321" class="ah" marker-end="url(#g)"/>
+<rect x="325" y="220" width="64" height="40" rx="6" class="px"/><text x="357" y="246" text-anchor="middle" class="w mono">3</text>
+<text x="357" y="278" text-anchor="middle" class="sml cb">재미있다</text>
+<path d="M389 240 H 426" class="ah" marker-end="url(#g)"/>
+<rect x="430" y="220" width="64" height="40" rx="6" class="pad"/><text x="462" y="246" text-anchor="middle" class="w mono">0</text>
+<path d="M494 240 H 531" class="ah" marker-end="url(#g)"/>
+<rect x="535" y="220" width="64" height="40" rx="6" class="pad"/><text x="567" y="246" text-anchor="middle" class="w mono">0</text>
+<path d="M599 240 H 636" class="ah" marker-end="url(#g)"/>
+<rect x="640" y="220" width="64" height="40" rx="6" class="pad"/><text x="672" y="246" text-anchor="middle" class="w mono">0</text>
+<path d="M704 240 H 744" class="ar" marker-end="url(#g)"/>
+<text x="752" y="245" class="lbl c3">출력</text>
+<path d="M430 270 V 278 H 704 V 270" stroke="#C2255C" stroke-width="1.4" fill="none"/>
+<text x="567" y="296" text-anchor="middle" class="note">실제 단어를 읽은 뒤 0을 3칸 더 읽음</text>
+<text x="567" y="313" text-anchor="middle" class="note">그동안 순환 가중치가 계속 곱해져 앞 단어의 영향이 줄어듦</text>
+<text x="40" y="352" class="note">RNN은 마지막 칸의 결과만 내보내므로, 실제 단어가 마지막 칸에 오는 pre가 기본값</text>
+</svg>

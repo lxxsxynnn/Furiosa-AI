@@ -26,6 +26,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day20](day20_0929_keras.ipynb) | 09/29 | 모델별 입력·출력 차원, `return_sequences`와 RNN 쌓기, 가중치 초기화 난수, `drop`, 예측 시점과 데이터 누수 | `keras/keras56_split3.py` ~ `keras58_kaggle_jena1.py` |
 | [day21](day21_0930_keras.ipynb) | 09/30 | `Bidirectional` | `keras/keras58_kaggle_jena2.py` ~ `keras59_Bidirectional3_jena.py` |
 | [day21 RAG](day21_0930_rag.ipynb) | 09/30 | 채팅 모델과 `AIMessage`, `PromptTemplate`, LCEL 체인, 출력 파서 | `RAG/rag01_add_api_keys.py` ~ `rag09_output_parser02.py` |
+| [day22](day22_1001_keras.ipynb) | 10/01 | 임베딩(토큰화 → 정수 인코딩 → 임베딩), 원핫의 한계, `Embedding` 층과 파라미터, `Tokenizer`, 원핫 전 모양, 패딩 | `keras2/keras60_Tokenizer1.py` ~ `keras61_Embedding04_important.py` |
+| [day22 RAG](day22_1001_rag.ipynb) | 10/01 | 임베딩 모델(`OpenAIEmbeddings`, `embed_query`, 차원), 코사인 유사도 | `RAG/rag10_Embedding01.py` ~ `rag10_Embedding02.py` |
 
 ## 주제별 찾아보기
 
@@ -46,6 +48,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 다중분류 (라벨 3개 이상) — day08 §1
 - 원핫 인코딩이 필요한 이유, 라벨 간 거리 — day08 §2
 - 원핫과 임베딩의 차이 — day08 §2 cf)
+- 임베딩 — 토큰화 → 정수 인코딩 → 임베딩, 수치화는 정수 인코딩에서 이미 됨 — day22 §1
+- 원핫의 한계 — 칸 대부분이 0, 단어 수만큼 칸이 늘어남 > 임베딩. 패딩의 0은 남음 — day22 §1-1
+- `Embedding` 층 — `(N, 문장 길이)` > `(N, 문장 길이, output_dim)`, 파라미터 `input_dim × output_dim` — day22 §1-2
+- `Tokenizer` — `fit_on_texts`·`word_index`·`texts_to_sequences`, 많이 나온 단어가 앞 번호 — day22 §2
+- 원핫 전 모양 — 단어를 샘플 축으로, 도구마다 받는 차원 (`get_dummies` 1차원, `OneHotEncoder` 2차원) — day22 §2-1
+- 패딩 `pad_sequences` — 앞에 채우는 이유(RNN은 마지막 칸 결과), `maxlen`, `truncating` — day22 §3
 - softmax의 합이 항상 1인 이유 — day08 §4
 - 이진분류를 다중분류로 풀 수 있다 — day09 §1
 - 파라미터(w·b) 개수 세는 공식 — day09 §2
@@ -241,6 +249,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `PromptTemplate` — `{변수}` 자리를 dict로 채움, 여러 줄로 역할·형식 지정 — day21 RAG §2
 - LCEL `prompt | model | output_parser` — 단계별 입출력 — day21 RAG §3
 - `StrOutputParser` — `AIMessage`에서 텍스트만 문자열로 — day21 RAG §4
+- 임베딩 모델 `OpenAIEmbeddings` — 문장 하나를 벡터 하나로, small 1536·large 3072, `dimensions`로 줄이기 — day22 RAG §1
+- keras `Embedding`과 비교 — 단어마다 학습 vs 문장 전체를 학습된 모델이 — day22 RAG §1-1
+- 코사인 유사도 — `(A · B) / (|A| × |B|)`, 방향이 같으면 1·수직 0·정반대 -1, 길이는 보지 않음 — day22 RAG §1-2
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
@@ -303,7 +314,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 ## 작성 규칙
 
 - 노트북 제목은 `#`, 대단원은 `##`, 소단원은 `###`
-- 요약이 아니라 **개념·설명 위주**로 씁니다. 섹션 안의 순서는 개념 한 줄 → **필요한 이유** → **종류·규칙**(번호) → 설명·예제
+- 요약이 아니라 **개념·설명 위주**로 씁니다. 섹션 안의 순서는 개념 한 줄 → 필요한 이유 → **종류·규칙**(번호) → 설명·예제
+  - 필요한 이유는 `**필요한 이유**` 라벨 없이 문장으로 바로 씁니다
   - 종류·규칙은 `1. 이름 : 설명` 형태로 번호를 매기고, 세부 설명은 `-` 하위 목록으로
   - 실습 결과표에는 **결과 해석**(왜 그런 결과인지)을 붙입니다
 - 섹션 번호: 대단원 `## N. 개념명`, 소단원 `### N-M. 개념명` (예: `### 3-3. 순전파(Forward)와 역전파(Backward)`)
