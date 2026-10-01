@@ -3,7 +3,7 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 
 # 파라미터 개수 세는 방법
-# 2. 모델
+# 2. 모델 구성
 model = Sequential()
 model.add(Dense(3, input_dim=1))    # Param: 6
 model.add(Dense(4))                 # Param: 16

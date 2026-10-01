@@ -26,7 +26,7 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-# 2. 모델링
+# 2. 모델 구성
 # model = Sequential()
 # model.add(Dense(32, input_dim = 30, activation='relu'))
 # model.add(Dropout(0.2))

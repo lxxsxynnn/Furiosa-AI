@@ -17,7 +17,7 @@ x_predict = np.array([50, 60, 70])
 x = x.reshape(-1, 3, 1)
 y = y.reshape(-1, 1)
 
-# 2. 모델
+# 2. 모델 구성
 model = Sequential()
 model.add(LSTM(units=10, input_shape=(3, 1), return_sequences=True))
 model.add(LSTM(5))

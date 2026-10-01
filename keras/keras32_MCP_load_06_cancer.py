@@ -24,7 +24,7 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-# 2. 모델링
+# 2. 모델 구성
 save_path = 'C:/study/_save/keras31/'
 model = load_model(save_path + 'k31_0914_1428_06_cancer_0005-0.0840.keras')
 

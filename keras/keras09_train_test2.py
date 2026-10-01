@@ -20,7 +20,7 @@ y_train = y[:7]     # 0은 항상 시작이기 때문에 생략도 가능
 x_test = x[7:10]
 y_test = y[7:]
 
-# 2. 모델
+# 2. 모델 구성
 model = Sequential()
 model.add(Dense(5, input_dim=1))
 model.add(Dense(6))
