@@ -28,6 +28,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day21 RAG](day21_0930_rag.ipynb) | 09/30 | 채팅 모델과 `AIMessage`, `PromptTemplate`, LCEL 체인, 출력 파서 | `RAG/rag01_add_api_keys.py` ~ `rag09_output_parser02.py` |
 | [day22](day22_1001_keras.ipynb) | 10/01 | 임베딩(토큰화 → 정수 인코딩 → 임베딩), 원핫의 한계, `Embedding` 층과 파라미터, `Tokenizer`, 원핫 전 모양, 패딩 | `keras2/keras60_Tokenizer1.py` ~ `keras61_Embedding04_important.py` |
 | [day22 RAG](day22_1001_rag.ipynb) | 10/01 | 임베딩 모델(`OpenAIEmbeddings`, `embed_query`, 차원), 코사인 유사도 | `RAG/rag10_Embedding01.py` ~ `rag10_Embedding02.py` |
+| [day23](day23_1002_keras.ipynb) | 10/02 | `reuters`·`imdb` 텍스트 데이터셋, 패딩 길이 정하기, 텍스트 분류 모델, 모델별 차원(Embedding 포함), 텐서플로와 넘파이, `sparse_categorical_crossentropy`, DNN·CNN을 RNN으로 | `keras2/keras62_1_reuters.py` ~ `keras64_LSTM14_cifar100.py` |
+| [day23 RAG](day23_1002_rag.ipynb) | 10/02 | 의미 검색(키워드 검색과 비교), 벡터 저장소 Chroma·FAISS | |
 
 ## 주제별 찾아보기
 
@@ -54,6 +56,15 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `Tokenizer` — `fit_on_texts`·`word_index`·`texts_to_sequences`, 많이 나온 단어가 앞 번호 — day22 §2
 - 원핫 전 모양 — 단어를 샘플 축으로, 도구마다 받는 차원 (`get_dummies` 1차원, `OneHotEncoder` 2차원) — day22 §2-1
 - 패딩 `pad_sequences` — 앞에 채우는 이유(RNN은 마지막 칸 결과), `maxlen`, `truncating` — day22 §3
+- `reuters`·`imdb` — 정수 인코딩된 텍스트 데이터셋, `num_words`, 특수 번호 0·1·2, `test_split`은 reuters만 — day23 §1
+- 패딩 길이 정하기 — 최대·평균 길이를 보고 `maxlen` — day23 §1-1
+- `load_data(maxlen=)`은 빼고 `pad_sequences(maxlen=)`은 자름 — day23 §1 cf)
+- 텍스트 분류 모델 — `Embedding` 뒤에 LSTM·GRU·Bidirectional·Flatten으로 2차원 — day23 §2
+- 모델별 차원에 Embedding 추가 — x 2 → output 3, Embedding만 차원이 늘어남 — day23 §2-1
+- 3·4차원 출력에 바로 붙인 `Dense` — 마지막 축에만 적용돼 차원이 남고 `fit`에서 에러 — day23 §2 cf)
+- 텐서플로와 넘파이 — 전처리는 넘파이, 학습은 텐서 — day23 §3
+- `sparse_categorical_crossentropy` — y 원핫 없이 라벨 그대로, 정답에 argmax 하지 않음 — day23 §4
+- DNN·CNN을 RNN으로 — `(N, 특성)` → `(N, 특성, 1)`, `(N, 세로, 가로, 채널)` → `(N, 세로, 가로 × 채널)` — day23 §5
 - softmax의 합이 항상 1인 이유 — day08 §4
 - 이진분류를 다중분류로 풀 수 있다 — day09 §1
 - 파라미터(w·b) 개수 세는 공식 — day09 §2
@@ -252,6 +263,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 임베딩 모델 `OpenAIEmbeddings` — 문장 하나를 벡터 하나로, small 1536·large 3072, `dimensions`로 줄이기 — day22 RAG §1
 - keras `Embedding`과 비교 — 단어마다 학습 vs 문장 전체를 학습된 모델이 — day22 RAG §1-1
 - 코사인 유사도 — `(A · B) / (|A| × |B|)`, 방향이 같으면 1·수직 0·정반대 -1, 길이는 보지 않음 — day22 RAG §1-2
+- 의미 검색 — 단어가 달라도 뜻이 비슷한 문서를 찾음, 키워드 검색과 비교 — day23 RAG §1
+- 벡터 저장소 — Chroma(컬렉션, 벡터 + 원문 + 메타데이터), FAISS(인덱스, 대규모 검색 속도), LangChain에서는 둘 다 `VectorStore` — day23 RAG §1-1
 
 **학습 방법론**
 - 과적합(overfitting)이 생기는 이유 — day02 §4
