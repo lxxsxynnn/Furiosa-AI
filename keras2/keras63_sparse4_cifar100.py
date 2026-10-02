@@ -11,8 +11,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.metrics import accuracy_score
 
-
-# ReduceLR - cifar100 데이터셋
+# sparse_categorical_crossentropy(y 원핫 없이 다중분류) - cifar100 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 print(x_train.shape, y_train.shape) # (50000, 32, 32, 3) (50000, 1)
@@ -53,14 +52,8 @@ x_test = x_test / 255.
 x_train = np.concatenate((x_train, xy_augmented[0]))
 y_train = np.concatenate((y_train, xy_augmented[1]))
 
-print(np.unique(y_train, return_counts=True))   # 원핫 전에 찍어야 클래스 분포가 보임
-
-ohe = OneHotEncoder(sparse_output=False)
-y_train = ohe.fit_transform(y_train)
-y_val = ohe.transform(y_val)
-y_test = ohe.transform(y_test)
-
-print(y_train.shape, y_val.shape, y_test.shape)     # (65000, 100) (10000, 100) (10000, 100)
+print(np.unique(y_train, return_counts=True))
+print(y_train.shape, y_val.shape, y_test.shape)     # (65000,) (10000,) (10000,)
 
 # 2. 모델 구성
 model = Sequential()
@@ -78,7 +71,7 @@ model.add(Dense(units=256, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 # 3. 컴파일, 훈련
-model.compile(loss='categorical_crossentropy',
+model.compile(loss='sparse_categorical_crossentropy',
               optimizer=Adam(learning_rate=0.0009),
               metrics=['acc']
               )
@@ -108,14 +101,12 @@ end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
-print('loss : ', loss[0])                                   # loss :  3.5501203536987305 > 2.002082109451294
-print('acc : ', loss[1])                                    # acc :   0.1632000058889389 > 0.4668999910354614
+print('loss : ', loss[0])                                   # loss :  2.002082109451294 > 2.050534963607788
+print('acc : ', loss[1])                                    # acc :   0.4668999910354614 > 0.4584999978542328
 
 y_predict = model.predict(x_test)
-
 y_predict = np.argmax(y_predict, axis=1)
-y_test = np.argmax(y_test, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
-print('accuray_score : ', acc_score)                        # accuray_score :  0.1632 > 0.4669
-print('time : ', round(end_time - start_time, 2), 'sec')    # time :  5220.75 sec > 2205.06 sec
+print('accuray_score : ', acc_score)                        # accuray_score :  0.4669 > 0.4585
+print('time : ', round(end_time - start_time, 2), 'sec')    # time :  2205.06 sec > 1411.8 sec

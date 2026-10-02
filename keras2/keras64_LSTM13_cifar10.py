@@ -4,13 +4,13 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Dropout, GlobalAveragePooling2D, MaxPool2D, BatchNormalization
+from tensorflow.keras.layers import Dense, Dropout, LSTM, BatchNormalization
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
-# ReduceLR - cifar10 데이터셋
+# CNN 모델을 RNN으로 바꿔보기 - cifar10 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
@@ -51,6 +51,10 @@ x_test = x_test / 255.
 x_train = np.concatenate((x_train, xy_augmented[0]))
 y_train = np.concatenate((y_train, xy_augmented[1]))
 
+x_train = x_train.reshape(-1, 32, 32 * 3)
+x_test = x_test.reshape(-1, 32, 32 * 3)
+x_val = x_val.reshape(-1, 32, 32 * 3)
+
 ohe = OneHotEncoder(sparse_output=False)
 y_train = ohe.fit_transform(y_train)
 y_val = ohe.transform(y_val)
@@ -60,18 +64,15 @@ print(y_train.shape, y_val.shape, y_test.shape)     # (65000, 10) (10000, 10) (1
 
 # 2. 모델 구성
 model = Sequential()
-model.add(Conv2D(64, (3, 3), activation='relu', input_shape=(32, 32, 3)))
+model.add(LSTM(64, input_shape=(32, 32 * 3)))
 model.add(BatchNormalization())
-model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same'))
+model.add(Dense(64))
 model.add(BatchNormalization())
 model.add(Dropout(0.2))
-model.add(MaxPool2D())
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
+model.add(Dense(128))
 model.add(BatchNormalization())
-model.add(MaxPool2D())
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
-model.add(GlobalAveragePooling2D())
-model.add(Dense(units=128, activation='relu'))
+model.add(Dense(128))
+model.add(Dense(128))
 model.add(Dropout(0.2))
 model.add(Dense(10, activation='softmax'))
 
@@ -106,8 +107,8 @@ end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
-print('loss : ', loss[0])                                   # loss :  0.7857664823532104 > 0.7717275023460388
-print('acc : ', loss[1])                                    # acc :  0.7635999917984009 > 0.775600016117096
+print('loss : ', loss[0])                                   # loss :  0.7717275023460388 > 1.6344542503356934
+print('acc : ', loss[1])                                    # acc :  0.775600016117096 > 0.3849000036716461
 
 y_predict = model.predict(x_test)
 
@@ -115,5 +116,5 @@ y_predict = np.argmax(y_predict, axis=1)
 y_test = np.argmax(y_test, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
-print('accuray_score : ', acc_score)                        # accuray_score :  0.7636 > 0.7756
-print('time : ', round(end_time - start_time, 2), 'sec')    # time :  855.48 sec > 1129.9 sec
+print('accuray_score : ', acc_score)                        # accuray_score :  0.7756 > 0.3849
+print('time : ', round(end_time - start_time, 2), 'sec')    # time :  1129.9 sec > 258.38 sec

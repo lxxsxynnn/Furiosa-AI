@@ -6,13 +6,13 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import cifar100
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Dropout, GlobalAveragePooling2D, MaxPool2D
+from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.metrics import accuracy_score
 
 
-# ReduceLR - cifar100 데이터셋
+# CNN 모델을 RNN으로 바꿔보기 - cifar100 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 print(x_train.shape, y_train.shape) # (50000, 32, 32, 3) (50000, 1)
@@ -53,6 +53,10 @@ x_test = x_test / 255.
 x_train = np.concatenate((x_train, xy_augmented[0]))
 y_train = np.concatenate((y_train, xy_augmented[1]))
 
+x_train = x_train.reshape(-1, 32, 32 * 3)
+x_test = x_test.reshape(-1, 32, 32 * 3)
+x_val = x_val.reshape(-1, 32, 32 * 3)
+
 print(np.unique(y_train, return_counts=True))   # 원핫 전에 찍어야 클래스 분포가 보임
 
 ohe = OneHotEncoder(sparse_output=False)
@@ -64,17 +68,13 @@ print(y_train.shape, y_val.shape, y_test.shape)     # (65000, 100) (10000, 100) 
 
 # 2. 모델 구성
 model = Sequential()
-model.add(Conv2D(128, (2, 2), activation='relu', input_shape=(32, 32, 3)))
-model.add(Conv2D(256, kernel_size=(2, 2), activation='relu', padding='same'))
+model.add(LSTM(128, input_shape=(32, 32 * 3)))
+model.add(Dense(256))
 model.add(Dropout(0.2))
-model.add(MaxPool2D())
-model.add(Conv2D(512, kernel_size=(2, 2), activation='relu', padding='same'))
-model.add(MaxPool2D())
-model.add(Conv2D(256, kernel_size=(2, 2), activation='relu', padding='same'))
-model.add(MaxPool2D())
-model.add(GlobalAveragePooling2D())
+model.add(Dense(512))
+model.add(Dense(256))
 model.add(Dropout(0.3))
-model.add(Dense(units=256, activation='relu'))
+model.add(Dense(units=256))
 model.add(Dense(100, activation='softmax'))
 
 # 3. 컴파일, 훈련
@@ -108,8 +108,8 @@ end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
-print('loss : ', loss[0])                                   # loss :  3.5501203536987305 > 2.002082109451294
-print('acc : ', loss[1])                                    # acc :   0.1632000058889389 > 0.4668999910354614
+print('loss : ', loss[0])                                   # loss :  2.002082109451294 > 2.9894537925720215
+print('acc : ', loss[1])                                    # acc :   0.4668999910354614 > 0.27639999985694885
 
 y_predict = model.predict(x_test)
 
@@ -117,5 +117,5 @@ y_predict = np.argmax(y_predict, axis=1)
 y_test = np.argmax(y_test, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
-print('accuray_score : ', acc_score)                        # accuray_score :  0.1632 > 0.4669
-print('time : ', round(end_time - start_time, 2), 'sec')    # time :  5220.75 sec > 2205.06 sec
+print('accuray_score : ', acc_score)                        # accuray_score :  0.4669 > 0.2764
+print('time : ', round(end_time - start_time, 2), 'sec')    # time :  2205.06 sec > 204.3 sec

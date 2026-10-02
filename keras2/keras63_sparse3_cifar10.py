@@ -10,7 +10,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
-# ReduceLR - cifar10 데이터셋
+# sparse_categorical_crossentropy(y 원핫 없이 다중분류) - cifar10 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
@@ -21,8 +21,8 @@ data_gen = ImageDataGenerator(
     fill_mode='nearest',
 )
 
-print(x_train.shape, y_train.shape) # (50000, 32, 32, 3) (50000, 1)
-print(x_test.shape, y_test.shape)   # (10000, 32, 32, 3) (10000, 1)
+print(x_train.shape, y_train.shape) # (45000, 32, 32, 3) (45000, 1)
+print(x_test.shape, y_test.shape)   # (5000, 32, 32, 3) (5000, 1)
 
 x_train, x_val, y_train, y_val = train_test_split(
     x_train, y_train,
@@ -33,7 +33,7 @@ x_train, x_val, y_train, y_val = train_test_split(
 print(x_train.shape, x_val.shape)   # (40000, 32, 32, 3) (10000, 32, 32, 3)
 
 augment_size = 25000
-randidx = np.random.randint(x_train.shape[0], size=augment_size)   # 40000개 중에 25000개 랜덤뽑기
+randidx = np.random.randint(x_train.shape[0], size=augment_size)   # 45000개 중에 25000개 랜덤뽑기
 
 x_augmented = x_train[randidx].copy()    # (25000, 32, 32, 3)
 y_augmented = y_train[randidx].copy()    # (25000, 1)
@@ -51,12 +51,7 @@ x_test = x_test / 255.
 x_train = np.concatenate((x_train, xy_augmented[0]))
 y_train = np.concatenate((y_train, xy_augmented[1]))
 
-ohe = OneHotEncoder(sparse_output=False)
-y_train = ohe.fit_transform(y_train)
-y_val = ohe.transform(y_val)
-y_test = ohe.transform(y_test)
-
-print(y_train.shape, y_val.shape, y_test.shape)     # (65000, 10) (10000, 10) (10000, 10)
+print(y_train.shape, y_val.shape, y_test.shape)     # (70000, 1) (5000, 1) (10000, 1)
 
 # 2. 모델 구성
 model = Sequential()
@@ -76,7 +71,7 @@ model.add(Dropout(0.2))
 model.add(Dense(10, activation='softmax'))
 
 # 3. 컴파일, 훈련
-model.compile(loss='categorical_crossentropy',
+model.compile(loss='sparse_categorical_crossentropy',
               optimizer=Adam(learning_rate=0.019),
               metrics=['acc']
               )
@@ -106,14 +101,12 @@ end_time = time.time()
 
 # 4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
-print('loss : ', loss[0])                                   # loss :  0.7857664823532104 > 0.7717275023460388
-print('acc : ', loss[1])                                    # acc :  0.7635999917984009 > 0.775600016117096
+print('loss : ', loss[0])                                   # loss :  0.7717275023460388 > 0.7936123013496399
+print('acc : ', loss[1])                                    # acc :  0.775600016117096 > 0.7612000107765198
 
 y_predict = model.predict(x_test)
-
 y_predict = np.argmax(y_predict, axis=1)
-y_test = np.argmax(y_test, axis=1)
 
 acc_score = accuracy_score(y_test, y_predict)
-print('accuray_score : ', acc_score)                        # accuray_score :  0.7636 > 0.7756
-print('time : ', round(end_time - start_time, 2), 'sec')    # time :  855.48 sec > 1129.9 sec
+print('accuray_score : ', acc_score)                        # accuray_score :  0.7756 > 0.7612
+print('time : ', round(end_time - start_time, 2), 'sec')    # time :  1129.9 sec > 314.15 sec
