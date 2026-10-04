@@ -28,7 +28,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day21 RAG](day21_0930_rag.ipynb) | 09/30 | 채팅 모델과 `AIMessage`, `PromptTemplate`, LCEL 체인, 출력 파서 | `RAG/rag01_add_api_keys.py` ~ `rag09_output_parser02.py` |
 | [day22](day22_1001_keras.ipynb) | 10/01 | 임베딩(토큰화 → 정수 인코딩 → 임베딩), 원핫의 한계, `Embedding` 층과 파라미터, `Tokenizer`, 원핫 전 모양, 패딩 | `keras2/keras60_Tokenizer1.py` ~ `keras61_Embedding04_important.py` |
 | [day22 RAG](day22_1001_rag.ipynb) | 10/01 | 임베딩 모델(`OpenAIEmbeddings`, `embed_query`, 차원), 코사인 유사도 | `RAG/rag10_Embedding01.py` ~ `rag10_Embedding02.py` |
-| [day23](day23_1002_keras.ipynb) | 10/02 | `reuters`·`imdb` 텍스트 데이터셋, 패딩 길이 정하기, 텍스트 분류 모델, 모델별 차원(Embedding 포함), 텐서플로와 넘파이, `sparse_categorical_crossentropy`, DNN·CNN을 RNN으로 | `keras2/keras62_1_reuters.py` ~ `keras64_LSTM14_cifar100.py` |
+| [day23](day23_1002_keras.ipynb) | 10/02 | `reuters`·`imdb` 텍스트 데이터셋, 패딩 길이 정하기, 텍스트 분류 모델, 모델별 차원(Embedding 포함), 텐서플로와 넘파이, `sparse_categorical_crossentropy`, DNN·CNN을 RNN으로, `Reshape` 층 | `keras2/keras62_1_reuters.py` ~ `keras65_Reshape2.py` |
 | [day23 RAG](day23_1002_rag.ipynb) | 10/02 | 의미 검색(키워드 검색과 비교), 벡터 저장소 Chroma·FAISS | |
 
 ## 주제별 찾아보기
@@ -65,6 +65,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 텐서플로와 넘파이 — 전처리는 넘파이, 학습은 텐서 — day23 §3
 - `sparse_categorical_crossentropy` — y 원핫 없이 라벨 그대로, 정답에 argmax 하지 않음 — day23 §4
 - DNN·CNN을 RNN으로 — `(N, 특성)` → `(N, 특성, 1)`, `(N, 세로, 가로, 채널)` → `(N, 세로, 가로 × 채널)` — day23 §5
+- `Reshape` 층 — 모델 안에서 모양 변경, 파라미터 0, 원소 개수 유지, `LSTM` 앞에서는 timesteps 축을 정함 — day23 §6
 - softmax의 합이 항상 1인 이유 — day08 §4
 - 이진분류를 다중분류로 풀 수 있다 — day09 §1
 - 파라미터(w·b) 개수 세는 공식 — day09 §2
