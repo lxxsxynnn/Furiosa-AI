@@ -30,6 +30,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day22 RAG](day22_1001_rag.ipynb) | 10/01 | 임베딩 모델(`OpenAIEmbeddings`, `embed_query`, 차원), 코사인 유사도 | `RAG/rag10_Embedding01.py` ~ `rag10_Embedding02.py` |
 | [day23](day23_1002_keras.ipynb) | 10/02 | `reuters`·`imdb` 텍스트 데이터셋, 패딩 길이 정하기, 텍스트 분류 모델, 모델별 차원(Embedding 포함), 텐서플로와 넘파이, `sparse_categorical_crossentropy`, DNN·CNN을 RNN으로, `Reshape` 층 | `keras2/keras62_1_reuters.py` ~ `keras65_Reshape2.py` |
 | [day23 RAG](day23_1002_rag.ipynb) | 10/02 | 의미 검색(키워드 검색과 비교), 벡터 저장소 Chroma·FAISS | |
+| [day24](day24_1006_keras.ipynb) | 10/06 | RNN 데이터를 `Reshape`로 접어 `Conv2D`에, `Conv1D`, RNN 모델을 Conv1D로(`GlobalAveragePooling1D`) | `keras2/keras66_jena_CNN.py` ~ `keras67_Conv1D_3_jena.py` |
+| [day24 RAG](day24_1006_rag.ipynb) | 10/06 | 문서 분할(`TextLoader`, `RecursiveCharacterTextSplitter`), 여러 파일 불러오기, 청크 임베딩(`embed_query`·`embed_documents`), Chroma 저장·불러오기·`get`, 유사도 검색, Retriever | `RAG/rag11_Chroma01_save.py` ~ `rag12_Chroma03_save.py` |
 
 ## 주제별 찾아보기
 
@@ -185,6 +187,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 3·4차원 출력에 바로 붙인 `Dense` — 마지막 축에만 적용돼 차원이 남고 `fit`에서 에러 — [day23 §2 cf)](day23_1002_keras.ipynb)
 - DNN·CNN을 RNN으로 — `(N, 특성)` → `(N, 특성, 1)`, `(N, 세로, 가로, 채널)` → `(N, 세로, 가로 × 채널)` — [day23 §5](day23_1002_keras.ipynb)
 - `Reshape` 층 — 모델 안에서 모양 변경, 파라미터 0, 원소 개수 유지, `LSTM` 앞에서는 timesteps 축을 정함 — [day23 §6](day23_1002_keras.ipynb)
+- RNN 데이터를 `Conv2D`로 — `Reshape((12, 12, 13))`로 144칸을 접음, 세로 이웃이 12칸 떨어진 시점이라 순서가 섞임 — [day24 §1](day24_1006_keras.ipynb)
 
 ### 모델 층
 
@@ -215,6 +218,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - Conv2D 파라미터 개수 `f × (n × n × c + b)`, c는 앞 층의 filters — [day14 §1](day14_0917_keras.ipynb)
 - `GlobalAveragePooling2D` — 특징맵마다 평균 하나, Flatten 대신 써서 Dense 파라미터 감소 — [day14 §2](day14_0917_keras.ipynb)
 - `AveragePooling2D`와 `GlobalAveragePooling2D`의 차이 — [day14 §2 cf)](day14_0917_keras.ipynb)
+- `Conv1D` — 커널이 시간 축으로만 이동, `kernel_size`는 `n`, 특성이 채널 자리, 파라미터 `filters × (n × 특성 + 1)` — [day24 §2](day24_1006_keras.ipynb)
+- RNN 모델을 `Conv1D`로 — 같은 `input_shape`, 3차원 출력을 `Flatten`·`GlobalAveragePooling1D`로 편 뒤 `Dense` — [day24 §2-1](day24_1006_keras.ipynb)
 
 #### RNN·LSTM·GRU
 - RNN — 한 칸씩 넣으며 앞 결과를 다음 칸에 함께 넣는 순환 구조 — [day18 §3](day18_0923_keras.ipynb)
@@ -360,6 +365,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 메서드 체이닝 `a.b().c()` — [day08 §0](day08_0909_keras.ipynb)
 - 튜플 언패킹 — 묶여 나온 값을 변수에 나눠 담기 — [day16 §1-2](day16_0921_keras.ipynb)
 - 메서드 체이닝 — `.flow(...).next()`는 두 줄을 한 줄로 붙인 것 — [day17 §2-2](day17_0922_keras.ipynb)
+- 제너레이터 — `( ... for ...)`는 print하면 `<generator object>`, `list()`로 꺼내야 값이 보임 — [day24 RAG §1-2](day24_1006_rag.ipynb)
 
 #### 문자열·경로
 - 윈도우 경로에서 `\\`와 `/` — [day04 §5](day04_0903_keras.ipynb)
@@ -413,12 +419,29 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - LCEL `prompt | model | output_parser` — 단계별 입출력 — [day21 RAG §3](day21_0930_rag.ipynb)
 - `StrOutputParser` — `AIMessage`에서 텍스트만 문자열로 — [day21 RAG §4](day21_0930_rag.ipynb)
 
-#### 임베딩·검색
+#### 문서 분할
+- 문서 분할 — 긴 문서를 검색 단위인 청크로, `TextLoader` → `Document` → `load_and_split` — [day24 RAG §1](day24_1006_rag.ipynb)
+- `RecursiveCharacterTextSplitter` — `separators` 순서대로 자르고 `chunk_size`를 넘는 조각만 다시 자름, 짧은 조각은 합침, `chunk_size`는 상한이라 길이가 제각각 — [day24 RAG §1-1](day24_1006_rag.ipynb)
+- `chunk_overlap` — 앞 청크 끝부분을 다음 청크 앞에 겹침, 끝의 100자 이하 조각만 넘어감 — [day24 RAG §1-1](day24_1006_rag.ipynb)
+- 여러 파일 불러오기 — `glob` → `data += loader.load()` → `split_documents`, `append`면 리스트가 겹침 — [day24 RAG §1-2](day24_1006_rag.ipynb)
+- 합치기와 겹침 — 합치기는 짧은 조각을 청크 하나로 묶음(중복 없음), 겹침은 앞 청크 끝을 다음 청크에 한 번 더 넣음 — [day24 RAG §1 cf)](day24_1006_rag.ipynb)
+
+#### 임베딩
 - 임베딩 모델 `OpenAIEmbeddings` — 문장 하나를 벡터 하나로, small 1536·large 3072, `dimensions`로 줄이기 — [day22 RAG §1](day22_1001_rag.ipynb)
 - keras `Embedding`과 비교 — 단어마다 학습 vs 문장 전체를 학습된 모델이 — [day22 RAG §1-1](day22_1001_rag.ipynb)
 - 코사인 유사도 — `(A · B) / (|A| × |B|)`, 방향이 같으면 1·수직 0·정반대 -1, 길이는 보지 않음 — [day22 RAG §1-2](day22_1001_rag.ipynb)
+- 청크 임베딩 — 청크 하나가 벡터 하나, 청크 N개 → `(N, dimensions)` — [day24 RAG §2](day24_1006_rag.ipynb)
+- `embed_query`와 `embed_documents` — 문자열 하나 → 벡터 하나 / 문자열 리스트 → 벡터 리스트 — [day24 RAG §2](day24_1006_rag.ipynb)
+
+#### 벡터 DB·검색
 - 의미 검색 — 단어가 달라도 뜻이 비슷한 문서를 찾음, 키워드 검색과 비교 — [day23 RAG §1](day23_1002_rag.ipynb)
 - 벡터 저장소 — Chroma(컬렉션, 벡터 + 원문 + 메타데이터), FAISS(인덱스, 대규모 검색 속도), LangChain에서는 둘 다 `VectorStore` — [day23 RAG §1-1](day23_1002_rag.ipynb)
+- Chroma 저장·불러오기 — `from_documents`는 임베딩해서 추가, `Chroma()`는 연결만, 같은 모델·`collection_name` — [day24 RAG §3](day24_1006_rag.ipynb)
+- `db.get()` — `ids`·`documents`·`metadatas`, 벡터는 `include=['embeddings']` — [day24 RAG §3-1](day24_1006_rag.ipynb)
+- `_collection.count()` — 컬렉션에 들어 있는 전체 청크 수, 실행할 때마다 누적 — [day24 RAG §3-1](day24_1006_rag.ipynb)
+- 저장을 다시 실행하면 같은 청크가 새 id로 쌓임 — 검색 결과에 중복 — [day24 RAG §3 cf)](day24_1006_rag.ipynb)
+- `similarity_search` — 질문과 가까운 청크 `k`개(기본 4)를 `Document` 리스트로 — [day24 RAG §4](day24_1006_rag.ipynb)
+- Retriever — `as_retriever(search_kwargs={"k": 2})`로 만들고 `invoke`로 검색, LCEL 체인에 연결, 답이 없어도 `k`개를 돌려줌 — [day24 RAG §5](day24_1006_rag.ipynb)
 
 ## 작성 규칙
 

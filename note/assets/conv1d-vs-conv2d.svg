@@ -1,0 +1,104 @@
+<svg width="860" viewBox="0 0 860 360" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .title { font-size: 15px; font-weight: 600; }
+  .shape { font-size: 14px; font-weight: 600; }
+  .lbl   { font-size: 12.5px; font-weight: 600; }
+  .note  { font-size: 12.5px; fill: #52514e; }
+  .sml   { font-size: 11px; fill: #52514e; }
+  .mono  { font-family: Consolas, "JetBrains Mono", monospace; }
+  .num   { font-size: 9px; fill: #52514e; font-family: Consolas, monospace; }
+  .numk  { font-size: 9px; font-weight: 700; fill: #C2255C; font-family: Consolas, monospace; }
+  .nums  { font-size: 8px; fill: #868E96; font-family: Consolas, monospace; }
+  .numb  { font-size: 8px; font-weight: 700; fill: #1a1a1a; font-family: Consolas, monospace; }
+  .in    { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.6; }
+  .ln    { stroke: #4C6EF5; stroke-opacity: 0.35; stroke-width: 1; }
+  .lno   { stroke: #F76707; stroke-opacity: 0.35; stroke-width: 1; }
+  .ker   { fill: #E64980; fill-opacity: 0.16; stroke: #E64980; stroke-width: 2.4; }
+  .kc    { fill: #FFDEEB; stroke: #E64980; stroke-width: 1.2; }
+  .kb    { fill: #DBE4FF; stroke: #4C6EF5; stroke-width: 1.2; }
+  .out   { fill: #FFF4E6; stroke: #F76707; stroke-width: 1.6; }
+  .dim   { fill: #F8F9FA; stroke: #DEE2E6; stroke-width: 1; }
+  .mv    { stroke: #E64980; stroke-width: 2; fill: none; }
+  .arrow { stroke: #898781; stroke-width: 2; fill: none; }
+  .div   { stroke: #CED4DA; stroke-width: 1; stroke-dasharray: 4 4; }
+</style>
+<defs>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<title>Conv2D와 Conv1D의 커널</title>
+<desc>왼쪽 Conv2D는 6×6 이미지 위에서 3×3 커널이 가로와 세로로 움직이며 채널 전체를 함께 봐서 (4, 4, filters)를 만든다. 오른쪽 Conv1D는 시간 8칸 × 특성 표에서 연속된 3칸의 특성 전체를 커널로 보고 시간 축으로만 움직여 (6, filters)를 만든다.</desc>
+<line x1="440" y1="24" x2="440" y2="350" class="div"/>
+<text x="40" y="36" class="title">Conv2D</text>
+<text x="40" y="58" class="note">kernel_size=(3, 3) · 가로·세로로 이동</text>
+<rect x="76" y="94" width="144" height="144" class="in"/>
+<rect x="68" y="102" width="144" height="144" class="in"/>
+<rect x="60" y="110" width="144" height="144" class="in"/>
+<line x1="84" y1="110" x2="84" y2="254" class="ln"/>
+<line x1="108" y1="110" x2="108" y2="254" class="ln"/>
+<line x1="132" y1="110" x2="132" y2="254" class="ln"/>
+<line x1="156" y1="110" x2="156" y2="254" class="ln"/>
+<line x1="180" y1="110" x2="180" y2="254" class="ln"/>
+<line x1="60" y1="134" x2="204" y2="134" class="ln"/>
+<line x1="60" y1="158" x2="204" y2="158" class="ln"/>
+<line x1="60" y1="182" x2="204" y2="182" class="ln"/>
+<line x1="60" y1="206" x2="204" y2="206" class="ln"/>
+<line x1="60" y1="230" x2="204" y2="230" class="ln"/>
+<text x="228" y="102" class="lbl">×채널</text>
+<rect x="60" y="110" width="72" height="72" class="ker"/>
+<path d="M60 270 H 204" class="mv" marker-end="url(#g)"/>
+<text x="132" y="288" text-anchor="middle" class="sml">가로</text>
+<path d="M44 110 V 254" class="mv" marker-end="url(#g)"/>
+<text x="34" y="182" text-anchor="middle" class="sml" transform="rotate(-90 34 182)">세로</text>
+<path d="M244 182 H 296" class="arrow" marker-end="url(#g)"/>
+<text x="270" y="172" text-anchor="middle" class="sml">3×3 → 1칸</text>
+<rect x="328" y="118" width="96" height="96" class="out"/>
+<rect x="320" y="126" width="96" height="96" class="out"/>
+<rect x="312" y="134" width="96" height="96" class="out"/>
+<line x1="336" y1="134" x2="336" y2="230" class="lno"/>
+<line x1="360" y1="134" x2="360" y2="230" class="lno"/>
+<line x1="384" y1="134" x2="384" y2="230" class="lno"/>
+<line x1="312" y1="158" x2="408" y2="158" class="lno"/>
+<line x1="312" y1="182" x2="408" y2="182" class="lno"/>
+<line x1="312" y1="206" x2="408" y2="206" class="lno"/>
+<text x="368" y="108" text-anchor="middle" class="lbl">×filters</text>
+<text x="132" y="318" text-anchor="middle" class="shape">(6, 6, 채널)</text>
+<text x="132" y="340" text-anchor="middle" class="note">커널 = 3 × 3 × 채널</text>
+<text x="360" y="318" text-anchor="middle" class="shape">(4, 4, filters)</text>
+<text x="360" y="340" text-anchor="middle" class="note">6 - 3 + 1 = 4</text>
+<text x="470" y="36" class="title">Conv1D</text>
+<text x="470" y="58" class="note">kernel_size=3 · 시간 축으로만 이동</text>
+<rect x="510" y="100" width="120" height="192" class="in"/>
+<line x1="534" y1="100" x2="534" y2="292" class="ln"/>
+<line x1="558" y1="100" x2="558" y2="292" class="ln"/>
+<line x1="582" y1="100" x2="582" y2="292" class="ln"/>
+<line x1="606" y1="100" x2="606" y2="292" class="ln"/>
+<line x1="510" y1="124" x2="630" y2="124" class="ln"/>
+<line x1="510" y1="148" x2="630" y2="148" class="ln"/>
+<line x1="510" y1="172" x2="630" y2="172" class="ln"/>
+<line x1="510" y1="196" x2="630" y2="196" class="ln"/>
+<line x1="510" y1="220" x2="630" y2="220" class="ln"/>
+<line x1="510" y1="244" x2="630" y2="244" class="ln"/>
+<line x1="510" y1="268" x2="630" y2="268" class="ln"/>
+<text x="570.0" y="90" text-anchor="middle" class="lbl">특성 (= 채널)</text>
+<rect x="510" y="100" width="120" height="72" class="ker"/>
+<path d="M494 100 V 292" class="mv" marker-end="url(#g)"/>
+<text x="484" y="196" text-anchor="middle" class="sml" transform="rotate(-90 484 196)">시간 (timesteps)</text>
+<path d="M650 196 H 698" class="arrow" marker-end="url(#g)"/>
+<text x="674" y="186" text-anchor="middle" class="sml">3칸 → 1칸</text>
+<rect x="714" y="124" width="96" height="144" class="out"/>
+<line x1="738" y1="124" x2="738" y2="268" class="lno"/>
+<line x1="762" y1="124" x2="762" y2="268" class="lno"/>
+<line x1="786" y1="124" x2="786" y2="268" class="lno"/>
+<line x1="714" y1="148" x2="810" y2="148" class="lno"/>
+<line x1="714" y1="172" x2="810" y2="172" class="lno"/>
+<line x1="714" y1="196" x2="810" y2="196" class="lno"/>
+<line x1="714" y1="220" x2="810" y2="220" class="lno"/>
+<line x1="714" y1="244" x2="810" y2="244" class="lno"/>
+<text x="762" y="114" text-anchor="middle" class="lbl">filters</text>
+<text x="570.0" y="318" text-anchor="middle" class="shape">(8, 특성)</text>
+<text x="570.0" y="340" text-anchor="middle" class="note">커널 = 3 × 특성</text>
+<text x="762" y="318" text-anchor="middle" class="shape">(6, filters)</text>
+<text x="762" y="340" text-anchor="middle" class="note">8 - 3 + 1 = 6</text>
+</svg>
