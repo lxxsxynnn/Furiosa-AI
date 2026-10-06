@@ -17,7 +17,7 @@ os.environ["TF_GPU_ALLOCATOR"] = "cuda_malloc_async"
 # 12월 31일 00시 10분부터 1월 1일 00시 00분까지의 T(degC) 맞추기
 
 # 1. 데이터
-path = "C:/study/_data/"
+path = "C:/study/_data/kaggle_jena/"
 
 data = pd.read_csv(path + "jena_climate_2009_2016.csv", index_col=0)
 print(data.shape)    # (420551, 14)

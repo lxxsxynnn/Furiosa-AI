@@ -18,6 +18,7 @@ embeddings = OpenAIEmbeddings(
     api_key=api_key,
     base_url=base_url,
     dimensions=5,           # text-embedding-3 계열에서만 사용 가능 / 계산은 줄지만 정보도 줄어듦
+    # OpenAI의 기본 dimension은 1536
 )
 
 # 벡터화

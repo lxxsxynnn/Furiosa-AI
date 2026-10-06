@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import time
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Dropout, BatchNormalization
+from tensorflow.keras.layers import Dense, Conv2D, Reshape, Dropout, BatchNormalization, Flatten
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
@@ -12,20 +12,19 @@ from sklearn.metrics import r2_score, mean_squared_error
 
 os.environ["TF_GPU_ALLOCATOR"] = "cuda_malloc_async"
 
-# 실제 데이터로 RNN 실습해보기
-# 12월 31일 데이터와 wd 컬럼은 학습에서 제거
-# 12월 31일 00시 10분부터 1월 1일 00시 00분까지의 wd 맞추기(total 144개)
+# RNN 모델을 CNN으로 바꿔보기
+# 12월 31일 00시 10분부터 1월 1일 00시 00분까지의 T(degC) 맞추기
 
 # 1. 데이터
 path = "C:/study/_data/kaggle_jena/"
 
 data = pd.read_csv(path + "jena_climate_2009_2016.csv", index_col=0)
 print(data.shape)    # (420551, 14)
-y_answer = data[- 144:][data.columns[-1]]
+y_answer = data[- 144:][data.columns[1]]
 print(y_answer.shape)    # (144,)
 
-x_data = data[:-288].drop(data.columns[-1], axis=1)
-y_data = data[144:-144][data.columns[-1]]
+x_data = data[:-288].drop(data.columns[1], axis=1)
+y_data = data[144:-144][data.columns[1]]
 
 print(x_data.shape)  # (420263, 13)
 print(y_data.shape)  # (420263,)
@@ -59,7 +58,9 @@ print(x_test.shape)     # (84024, 144, 13)
 
 # 2. 모델 구성
 model = Sequential()
-model.add(LSTM(10, input_shape=(144, 13)))
+model.add(Reshape(target_shape=(12, 12, 13), input_shape=(144, 13)))
+model.add(Conv2D(10, (3, 3), activation='relu'))
+model.add(Flatten())
 model.add(Dense(30))
 model.add(BatchNormalization())
 model.add(Dropout(0.2))
@@ -81,43 +82,51 @@ es = EarlyStopping(
     patience=100,
 )
 
+file_path='C:/study/_save/'
+os.makedirs(file_path, exist_ok=True)    # 폴더가 없으면 ModelCheckpoint가 저장할 때 에러
 mcp = ModelCheckpoint(
     monitor='val_loss',
     mode='auto',
     save_best_only=True,
-    patience=50,
-    filepath='C:/study/_save/keras58_jenna.keras',
+    filepath=file_path + 'keras66_jenna.keras',
 )
 
 fit_start = time.time()
-model.fit(x_train, y_train, epochs=1000,
+model.fit(x_train, y_train, epochs=5000,
           callbacks=[es, mcp],
-          batch_size=5000,
+          batch_size=200,
           validation_split=0.2,
           )
 fit_end = time.time()
 
 # 4. 평가, 예측
 results = model.evaluate(x_test, y_test)
-print('loss : ', results)   # loss :  6550.81005859375
+print('loss : ', results)   # loss :  7.214554786682129 > 9.570838928222656
 
-x_predict = data[-431:-144].drop(data.columns[-1], axis=1)      # 287행 -> 창 144개
+x_predict = data[-431:-144].drop(data.columns[1], axis=1)
 x_predict = scaler.transform(x_predict)     # 훈련과 같은 스케일러
 x_predict = split(x_predict, size)
 y_predict = model.predict(x_predict)
 
-print('predict : ', y_predict)
-
 r2 = r2_score(y_answer, y_predict)
-print('r2 : ', r2)      # r2 :  -0.27022373233909236
+print('r2 : ', r2)      # r2 :  0.5035395063265995 > 0.7127751856646907
 
 mse = mean_squared_error(y_answer, y_predict)
-print('mse : ', mse)    # mse :  3684.0644302502496
+print('mse : ', mse)    # mse :  5.408995168950548 > 3.1293479600905565
 
 def RMSE(y_answer, y_predict):
     return np.sqrt(mean_squared_error(y_answer, y_predict))
 
 rmse = RMSE(y_answer, y_predict)
-print("RMSE : ", rmse)  # RMSE :  60.69649438188543
+print("RMSE : ", rmse)  # RMSE :  2.3257246545862964 > 1.7689963143236214
 
-print('훈련 소요 시간 : ', round(fit_end - fit_start, 2), '초')  # 훈련 소요 시간 :  3613.48 초
+print('훈련 소요 시간 : ', round(fit_end - fit_start, 2), '초')  # 훈련 소요 시간 :  3613.48 초 > 2777.44 초
+'''
+2번째 시행
+loss :  9.314935684204102
+5/5 [==============================] - 0s 9ms/step
+r2 :  0.36067032482787276
+mse :  6.965571618368713
+RMSE :  2.6392369386564583
+훈련 소요 시간 :  1791.54 초
+'''
