@@ -26,6 +26,7 @@
 <marker id="mx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 2L8 5L2 8" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 
+<rect x="0" y="0" width="900" height="410" fill="#ffffff"/>
 <text x="200" y="44" text-anchor="middle" class="sec">units 하나가 받는 선</text>
 
 <!-- 입력 -->

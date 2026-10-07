@@ -22,6 +22,7 @@
 </defs>
 
 <!-- 1. 입력 (10, 10, 1) -->
+<rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
 <text x="96" y="40" text-anchor="middle" class="title">입력</text>
 <rect x="36" y="84" width="120" height="120" class="in"/>
 <rect x="36" y="84" width="120" height="120" fill="url(#grid)"/>

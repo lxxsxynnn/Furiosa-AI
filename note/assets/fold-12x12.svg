@@ -29,6 +29,7 @@
 </defs>
 <title>144칸을 12×12로 접으면 커널이 떨어진 시점을 섞는다</title>
 <desc>10분 간격 144개 시점을 12×12 격자로 접은 그림. 가로 한 칸은 10분, 세로 한 칸은 12칸(2시간) 차이다. Conv2D의 3×3 커널은 0~2, 12~14, 24~26번 시점을 한 번에 보고 그 사이 9칸씩을 건너뛴다. Conv1D의 kernel_size=3은 연속된 0~2번 시점만 본다.</desc>
+<rect x="0" y="0" width="860" height="390" fill="#ffffff"/>
 <text x="60" y="36" class="title">144칸을 12×12로 접으면</text>
 <rect x="76" y="64" width="264" height="264" class="in"/>
 <rect x="68" y="72" width="264" height="264" class="in"/>

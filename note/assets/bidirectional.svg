@@ -23,6 +23,7 @@
 </defs>
 
 <!-- 순방향 -->
+<rect x="0" y="70" width="900" height="360" fill="#ffffff"/>
 <text x="40" y="110" class="sec cf">순방향</text>
 <text x="40" y="128" class="note">x₁ → x₃</text>
 <rect x="222" y="90" width="76" height="46" rx="6" class="cell"/><text x="260" y="118" text-anchor="middle" class="w">h₁</text>

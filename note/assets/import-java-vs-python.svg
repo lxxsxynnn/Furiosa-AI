@@ -16,6 +16,7 @@
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
+<rect x="0" y="0" width="680" height="520" fill="#ffffff"/>
 <g class="c1">
 <rect x="40" y="40" width="280" height="440" rx="16" stroke-width="0.5" class="c2"/>
 <text x="180" y="70" text-anchor="middle" class="c3">Java</text>

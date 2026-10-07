@@ -1,0 +1,118 @@
+<svg width="860" viewBox="0 0 860 660" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .sec  { font-size: 13px; font-weight: 600; fill: #52514e; }
+  .ttl  { font-size: 14px; font-weight: 700; }
+  .lbl  { font-size: 12.5px; font-weight: 600; }
+  .note { font-size: 12.5px; fill: #52514e; }
+  .sml  { font-size: 11px; fill: #52514e; }
+  .mono { font-family: Consolas, "JetBrains Mono", monospace; }
+  .code { font-size: 11.5px; fill: #52514e; font-family: Consolas, "JetBrains Mono", monospace; }
+  .val  { font-size: 12px; font-family: Consolas, "JetBrains Mono", monospace; }
+  .step { fill: #F8F9FA; stroke: #DEE2E6; stroke-width: 1.2; }
+  .box  { fill: #FFFFFF; stroke: #ADB5BD; stroke-width: 1.2; }
+  .wrap { fill: none; stroke: #ADB5BD; stroke-width: 1.2; stroke-dasharray: 5 4; }
+  .in   { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.4; }
+  .cx   { fill: #E6FCF5; stroke: #12B886; stroke-width: 1.4; }
+  .an   { fill: #FFF4E6; stroke: #F76707; stroke-width: 1.4; }
+  .ar   { stroke: #898781; stroke-width: 1.6; fill: none; }
+  .link { stroke: #ADB5BD; stroke-width: 1.2; fill: none; stroke-dasharray: 3 4; }
+  .div  { stroke: #CED4DA; stroke-width: 1; stroke-dasharray: 4 4; }
+  .cb { fill: #3B5BDB; } .cg { fill: #087F5B; } .co { fill: #D9480F; }
+</style>
+<defs>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<title>RAG 체인이 질문 하나를 처리하는 순서</title>
+<desc>rag_chain.invoke에 질문을 넣으면 ① retriever가 질문을 임베딩해 Chroma12 청크 52개 중 가까운 2개를 context에 담고, ② docu_chain이 두 청크를 이어 붙여 프롬프트에 채운 뒤 모델과 StrOutputParser를 거쳐 answer를 만든다. dict에는 input, context, answer 순으로 키가 쌓인다</desc>
+
+<rect x="0" y="0" width="860" height="660" fill="#ffffff"/>
+<text x="24" y="28" class="sec">rag_chain.invoke 한 번에 일어나는 일</text>
+<text x="612" y="28" class="sec">dict에 쌓이는 키</text>
+<text x="612" y="45" class="sml">앞 키는 그대로 두고 새 키를 더함</text>
+<line x1="596" y1="14" x2="596" y2="648" class="div"/>
+
+<rect x="24" y="56" width="560" height="48" rx="6" class="in"/>
+<text x="40" y="76" class="lbl mono cb">rag_chain.invoke({"input": query})</text>
+<text x="40" y="95" class="note">query = "삼성전자의 창업자는 누구인가요?"</text>
+
+<path d="M60 104 V 148" class="ar" marker-end="url(#g)"/>
+
+<rect x="24" y="116" width="560" height="424" rx="8" class="wrap"/>
+<text x="76" y="135" class="code">rag_chain = create_retrieval_chain(retriever, docu_chain)</text>
+
+<rect x="40" y="150" width="528" height="124" rx="6" class="step"/>
+<text x="56" y="172" class="ttl">① 검색</text>
+<text x="552" y="172" class="code" text-anchor="end">vector_store.as_retriever(search_kwargs={"k": 2})</text>
+<rect x="56" y="186" width="103" height="38" rx="5" class="box"/>
+<rect x="187" y="186" width="103" height="38" rx="5" class="box"/>
+<rect x="318" y="186" width="103" height="38" rx="5" class="box"/>
+<rect x="449" y="186" width="103" height="38" rx="5" class="box"/>
+<text x="107.5" y="202" class="lbl" text-anchor="middle">질문</text>
+<text x="107.5" y="217" class="sml" text-anchor="middle">문자열</text>
+<text x="238.5" y="202" class="lbl" text-anchor="middle">임베딩</text>
+<text x="238.5" y="217" class="sml" text-anchor="middle">벡터 1536차원</text>
+<text x="369.5" y="202" class="lbl" text-anchor="middle">Chroma12</text>
+<text x="369.5" y="217" class="sml" text-anchor="middle">청크 52개와 비교</text>
+<text x="500.5" y="202" class="lbl" text-anchor="middle">가까운 2개</text>
+<text x="500.5" y="217" class="sml mono" text-anchor="middle">k=2</text>
+<path d="M161 205 H 185" class="ar" marker-end="url(#g)"/>
+<path d="M292 205 H 316" class="ar" marker-end="url(#g)"/>
+<path d="M423 205 H 447" class="ar" marker-end="url(#g)"/>
+<text x="56" y="250" class="lbl"><tspan class="mono cg">context</tspan> = [Document, Document]</text>
+<text x="56" y="266" class="sml">samsung 문서의 '사업 전망'·'중장기 전망' 청크. 둘 다 창업자 내용은 없음</text>
+
+<path d="M60 274 V 300" class="ar" marker-end="url(#g)"/>
+
+<rect x="40" y="302" width="528" height="226" rx="6" class="step"/>
+<text x="56" y="324" class="ttl">② 답변</text>
+<text x="552" y="324" class="code" text-anchor="end">docu_chain = create_stuff_documents_chain(model, prompt)</text>
+<rect x="56" y="338" width="140" height="28" rx="5" class="box"/>
+<rect x="56" y="380" width="140" height="28" rx="5" class="box"/>
+<rect x="56" y="422" width="140" height="28" rx="5" class="box"/>
+<rect x="56" y="464" width="140" height="28" rx="5" class="box"/>
+<text x="126" y="357" class="lbl mono" text-anchor="middle">stuff</text>
+<text x="126" y="399" class="lbl mono" text-anchor="middle">prompt</text>
+<text x="126" y="441" class="lbl mono" text-anchor="middle">model</text>
+<text x="126" y="483" class="lbl mono" text-anchor="middle">StrOutputParser</text>
+<path d="M126 366 V 378" class="ar" marker-end="url(#g)"/>
+<path d="M126 408 V 420" class="ar" marker-end="url(#g)"/>
+<path d="M126 450 V 462" class="ar" marker-end="url(#g)"/>
+<text x="212" y="357" class="note">Document 2개를 <tspan class="mono">\n\n</tspan>으로 이어 붙여 <tspan class="mono cg">{context}</tspan>에</text>
+<text x="212" y="399" class="note">컨텍스트: <tspan class="mono cg">{context}</tspan> · 질문: <tspan class="mono cb">{input}</tspan> 자리에 채움</text>
+<text x="212" y="441" class="note"><tspan class="mono">ChatOpenAI</tspan>(gpt-5.6-luna)가 답을 <tspan class="mono">AIMessage</tspan>로</text>
+<text x="212" y="483" class="note"><tspan class="mono">AIMessage</tspan>에서 텍스트만 꺼내 문자열로</text>
+<text x="56" y="516" class="lbl"><tspan class="mono co">answer</tspan> = '주어진 정보로는 답변할 수 없습니다.'</text>
+
+<path d="M60 528 V 560" class="ar" marker-end="url(#g)"/>
+
+<rect x="24" y="562" width="560" height="86" rx="6" class="step"/>
+<text x="40" y="582" class="lbl mono">response</text>
+<text x="40" y="602" class="val">{<tspan class="cb">'input'</tspan>: '삼성전자의 창업자는 누구인가요?',</text>
+<text x="48" y="620" class="val"><tspan class="cg">'context'</tspan>: [Document(...'사업 전망'...), Document(...'중장기 전망'...)],</text>
+<text x="48" y="638" class="val"><tspan class="co">'answer'</tspan>: '주어진 정보로는 답변할 수 없습니다.'}</text>
+
+<text x="612" y="84" class="sml">처음</text>
+<rect x="650" y="69" width="48" height="22" rx="11" class="in"/>
+<text x="674" y="84" class="lbl mono cb" text-anchor="middle">input</text>
+<path d="M674 93 V 233" class="link" marker-end="url(#g)"/>
+
+<text x="612" y="250" class="sml">① 뒤</text>
+<rect x="650" y="235" width="48" height="22" rx="11" class="in"/>
+<rect x="703" y="235" width="62" height="22" rx="11" class="cx"/>
+<text x="674" y="250" class="lbl mono cb" text-anchor="middle">input</text>
+<text x="734" y="250" class="lbl mono cg" text-anchor="middle">context</text>
+<path d="M674 259 V 499" class="link" marker-end="url(#g)"/>
+
+<text x="612" y="516" class="sml">② 뒤</text>
+<rect x="650" y="501" width="48" height="22" rx="11" class="in"/>
+<rect x="703" y="501" width="62" height="22" rx="11" class="cx"/>
+<rect x="770" y="501" width="56" height="22" rx="11" class="an"/>
+<text x="674" y="516" class="lbl mono cb" text-anchor="middle">input</text>
+<text x="734" y="516" class="lbl mono cg" text-anchor="middle">context</text>
+<text x="798" y="516" class="lbl mono co" text-anchor="middle">answer</text>
+<path d="M674 525 V 588" class="link" marker-end="url(#g)"/>
+<text x="650" y="604" class="lbl mono">response</text>
+<text x="650" y="622" class="sml">그대로 돌려받음</text>
+</svg>

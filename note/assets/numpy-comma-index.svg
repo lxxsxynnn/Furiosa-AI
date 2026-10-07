@@ -23,6 +23,7 @@
 <marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 
+<rect x="0" y="0" width="900" height="644" fill="#ffffff"/>
 <text x="40" y="44" class="sec">축 세 개 : arr.shape = (4, 3, 2)</text>
 <text x="415" y="72" text-anchor="middle" class="lbl c0">0번 축 · 묶음 4개</text>
 <path d="M150 92 V 84 H 680 V 92" class="brk c0s"/>

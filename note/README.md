@@ -30,8 +30,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day22 RAG](day22_1001_rag.ipynb) | 10/01 | 임베딩 모델(`OpenAIEmbeddings`, `embed_query`, 차원), 코사인 유사도 | `RAG/rag10_Embedding01.py` ~ `rag10_Embedding02.py` |
 | [day23](day23_1002_keras.ipynb) | 10/02 | `reuters`·`imdb` 텍스트 데이터셋, 패딩 길이 정하기, 텍스트 분류 모델, 모델별 차원(Embedding 포함), 텐서플로와 넘파이, `sparse_categorical_crossentropy`, DNN·CNN을 RNN으로, `Reshape` 층 | `keras2/keras62_1_reuters.py` ~ `keras65_Reshape2.py` |
 | [day23 RAG](day23_1002_rag.ipynb) | 10/02 | 의미 검색(키워드 검색과 비교), 벡터 저장소 Chroma·FAISS | |
-| [day24](day24_1006_keras.ipynb) | 10/06 | RNN 데이터를 `Reshape`로 접어 `Conv2D`에, `Conv1D`, RNN 모델을 Conv1D로(`GlobalAveragePooling1D`) | `keras2/keras66_jena_CNN.py` ~ `keras67_Conv1D_3_jena.py` |
+| [day24](day24_1006_keras.ipynb) | 10/06 | RNN 데이터를 `Reshape`로 접어 `Conv2D`에, `Conv1D`, RNN 모델을 Conv1D로(`GlobalAveragePooling1D`), 층별 차원(`Conv1D` 추가) | `keras2/keras66_jena_CNN.py` ~ `keras68_Conv1D_15_man_woman.py` |
 | [day24 RAG](day24_1006_rag.ipynb) | 10/06 | 문서 분할(`TextLoader`, `RecursiveCharacterTextSplitter`), 여러 파일 불러오기, 청크 임베딩(`embed_query`·`embed_documents`), Chroma 저장·불러오기·`get`, 유사도 검색, Retriever | `RAG/rag11_Chroma01_save.py` ~ `rag12_Chroma03_save.py` |
+| [day25 RAG](day25_1007_rag.ipynb) | 10/07 | RAG(검색 → 붙이기 → 생성), 문서에 없는 질문, RAG 체인(`create_stuff_documents_chain`·`create_retrieval_chain`), 체인 결과 dict, Gradio 챗봇(`ChatInterface`), FAISS 저장·불러오기·저장 구조 | `RAG/rag12_Chroma04_load.py` ~ `rag18_FAISS_gradio.py` |
 
 ## 주제별 찾아보기
 
@@ -179,6 +180,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `input_shape=(3, 1)`과 `input_length=3, input_dim=1`은 같은 뜻 — [day18 §3-3](day18_0923_keras.ipynb)
 - 모델별 입력·출력 차원 한눈에 — `input_shape`은 데이터 구조보다 하나 적음 — [day20 §1](day20_0929_keras.ipynb)
 - 모델별 차원에 Embedding 추가 — x 2 → output 3, Embedding만 차원이 늘어남 — [day23 §2-1](day23_1002_keras.ipynb)
+- 층별 차원에 `Conv1D` 추가 — `Conv1D` 입력·출력 3차원, `Dense`는 2차원 이상, `Embedding`은 `input_dim`·`output_dim`만 정함 — [day24 §3](day24_1006_keras.ipynb)
 
 #### 모델에 맞게 바꾸기
 - DNN으로 이미지 처리 — `reshape(-1, 28 * 28)`, 컬러는 `32 * 32 * 3` — [day14 §3](day14_0917_keras.ipynb)
@@ -188,6 +190,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - DNN·CNN을 RNN으로 — `(N, 특성)` → `(N, 특성, 1)`, `(N, 세로, 가로, 채널)` → `(N, 세로, 가로 × 채널)` — [day23 §5](day23_1002_keras.ipynb)
 - `Reshape` 층 — 모델 안에서 모양 변경, 파라미터 0, 원소 개수 유지, `LSTM` 앞에서는 timesteps 축을 정함 — [day23 §6](day23_1002_keras.ipynb)
 - RNN 데이터를 `Conv2D`로 — `Reshape((12, 12, 13))`로 144칸을 접음, 세로 이웃이 12칸 떨어진 시점이라 순서가 섞임 — [day24 §1](day24_1006_keras.ipynb)
+- `Flatten`이 필요한 경우 — `Conv2D`·`Conv1D` 출력, 3차원 이상을 받은 `Dense`, RNN 없이 `Dense`로 가는 `Embedding` — [day24 §3](day24_1006_keras.ipynb)
 
 ### 모델 층
 
@@ -418,6 +421,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `PromptTemplate` — `{변수}` 자리를 dict로 채움, 여러 줄로 역할·형식 지정 — [day21 RAG §2](day21_0930_rag.ipynb)
 - LCEL `prompt | model | output_parser` — 단계별 입출력 — [day21 RAG §3](day21_0930_rag.ipynb)
 - `StrOutputParser` — `AIMessage`에서 텍스트만 문자열로 — [day21 RAG §4](day21_0930_rag.ipynb)
+- `ChatPromptTemplate` — 템플릿 전체가 `HumanMessage` 하나로 들어감, `PromptTemplate`은 채우면 문자열 — [day25 RAG §2](day25_1007_rag.ipynb)
 
 #### 문서 분할
 - 문서 분할 — 긴 문서를 검색 단위인 청크로, `TextLoader` → `Document` → `load_and_split` — [day24 RAG §1](day24_1006_rag.ipynb)
@@ -442,6 +446,18 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 저장을 다시 실행하면 같은 청크가 새 id로 쌓임 — 검색 결과에 중복 — [day24 RAG §3 cf)](day24_1006_rag.ipynb)
 - `similarity_search` — 질문과 가까운 청크 `k`개(기본 4)를 `Document` 리스트로 — [day24 RAG §4](day24_1006_rag.ipynb)
 - Retriever — `as_retriever(search_kwargs={"k": 2})`로 만들고 `invoke`로 검색, LCEL 체인에 연결, 답이 없어도 `k`개를 돌려줌 — [day24 RAG §5](day24_1006_rag.ipynb)
+- FAISS 저장·불러오기 — `from_documents` → `save_local`, `load_local`, `.faiss`(벡터)·`.pkl`(문서) 두 파일, 다시 저장하면 덮어씀 — [day25 RAG §4](day25_1007_rag.ipynb)
+- `allow_dangerous_deserialization` — `.pkl`을 pickle로 읽어서 `True`를 줘야 `load_local`이 열림 — [day25 RAG §4](day25_1007_rag.ipynb)
+- FAISS 저장 구조 — `index`(벡터)·`docstore`(원문)·`index_to_docstore_id`(행 번호 → id), `index.d`·`index.ntotal` — [day25 RAG §4-1](day25_1007_rag.ipynb)
+- 인덱스 직접 만들기 — `IndexFlatL2(차원)` + `InMemoryDocstore` + 빈 연결표, 잘 안 씀 — [day25 RAG §4 cf)](day25_1007_rag.ipynb)
+
+#### RAG
+- RAG — 검색한 청크를 질문과 함께 프롬프트에 넣어 답 받기, 검색 → 붙이기 → 생성 — [day25 RAG §1](day25_1007_rag.ipynb)
+- 문서에 없는 질문 — "근거해 답하라"고 해도 학습한 지식으로 답함, 정보가 없으면 답할 수 없다고 지시 — [day25 RAG §1 cf)](day25_1007_rag.ipynb)
+- RAG 체인 — `create_stuff_documents_chain`은 문서를 `{context}`에 채워 `prompt | model | StrOutputParser`, `create_retrieval_chain`은 검색까지 묶음, 변수 이름 `{context}`·`{input}` 고정 — [day25 RAG §2](day25_1007_rag.ipynb)
+- 체인 결과 — `input`·`context`·`answer` dict, 답은 `response['answer']` — [day25 RAG §2-1](day25_1007_rag.ipynb)
+- `langchain_classic` — langchain 1.x에는 `chains`가 없어 체인 함수를 여기서 가져옴 — [day25 RAG §2 cf)](day25_1007_rag.ipynb)
+- Gradio 챗봇 — `ChatInterface(fn, title)` + `launch()`, `fn(message, history)`가 답 문자열을 돌려줌, `history`를 안 넘기면 질문마다 따로 검색 — [day25 RAG §3](day25_1007_rag.ipynb)
 
 ## 작성 규칙
 
@@ -457,4 +473,5 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 주제별 찾아보기는 `- 개념 — 설명 — [dayNN §N](파일)` 한 줄로, 알맞은 분류·키워드 묶음 안에 날짜순으로 넣습니다
 - 실행 결과는 저장하지 않고, 기대값을 코드 주석으로 적습니다
 - 그림은 `assets/`에 두고 이미지로 참조. 직접 그린 다이어그램은 SVG, 캡처·사진은 PNG (노트북에 인라인 HTML/SVG를 넣지 않음)
+  - SVG는 viewBox 크기의 흰 배경 `<rect fill="#ffffff">`를 맨 먼저 그립니다. 배경이 투명하면 어두운 테마에서 박스 밖 글씨가 보이지 않습니다
 - 줄바꿈은 `<br/>` 대신 빈 줄(문단 구분)로

@@ -29,6 +29,7 @@
 </defs>
 <title>Conv2D와 Conv1D의 커널</title>
 <desc>왼쪽 Conv2D는 6×6 이미지 위에서 3×3 커널이 가로와 세로로 움직이며 채널 전체를 함께 봐서 (4, 4, filters)를 만든다. 오른쪽 Conv1D는 시간 8칸 × 특성 표에서 연속된 3칸의 특성 전체를 커널로 보고 시간 축으로만 움직여 (6, filters)를 만든다.</desc>
+<rect x="0" y="0" width="860" height="360" fill="#ffffff"/>
 <line x1="440" y1="24" x2="440" y2="350" class="div"/>
 <text x="40" y="36" class="title">Conv2D</text>
 <text x="40" y="58" class="note">kernel_size=(3, 3) · 가로·세로로 이동</text>

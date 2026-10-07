@@ -11,6 +11,7 @@
 <title>AI, ML, DL, LLM의 포함 관계</title>
 <desc>AI 안에 ML, ML 안에 DL, DL 안에 LLM이 들어가는 4중 포함 관계를 중첩된 사각형으로 나타낸 다이어그램</desc>
 
+<rect x="0" y="0" width="440" height="248" fill="#ffffff"/>
 <rect class="ai"  x="20" y="16"  width="400" height="216" rx="14"/>
 <text x="40" y="40">AI (인공지능)</text>
 

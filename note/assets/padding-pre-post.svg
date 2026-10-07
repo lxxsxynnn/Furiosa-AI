@@ -22,6 +22,7 @@
 </defs>
 <title>패딩을 앞에 채우면 RNN이 실제 단어를 마지막에 읽는다</title>
 <desc>너무 재미있다를 길이 5로 맞춘다. pre는 [0, 0, 0, 2, 3]이라 실제 단어를 마지막에 읽고 바로 출력하고, post는 [2, 3, 0, 0, 0]이라 실제 단어를 읽은 뒤 0을 세 칸 더 읽고 출력한다.</desc>
+<rect x="0" y="70" width="900" height="300" fill="#ffffff"/>
 <text x="40" y="106" class="sec">padding='pre'</text>
 <text x="40" y="124" class="note">기본값. 앞을 0으로 채움</text>
 <rect x="220" y="90" width="64" height="40" rx="6" class="pad"/><text x="252" y="116" text-anchor="middle" class="w mono">0</text>

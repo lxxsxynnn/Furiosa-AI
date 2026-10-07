@@ -22,6 +22,7 @@
 </defs>
 <title>Embedding 층은 단어 번호로 표의 줄을 꺼내 벡터로 바꾼다</title>
 <desc>패딩한 문장 [0, 0, 0, 2, 3]의 번호마다 30줄 10칸짜리 Embedding 표에서 같은 번호의 줄을 꺼낸다. 0 세 칸은 모두 0번 줄, 2는 2번 줄, 3은 3번 줄이 된다. 꺼낸 줄을 쌓으면 (5, 10)이 되고, 파라미터는 표의 칸 수 300개다.</desc>
+<rect x="0" y="50" width="900" height="304" fill="#ffffff"/>
 <text x="40" y="76" class="sec">입력 문장 1개 (5칸)</text>
 <text x="40" y="94" class="note">"너무 재미있다"를 패딩한 것</text>
 <rect x="70" y="108" width="44" height="24" rx="4" class="pad"/><text x="92" y="125" text-anchor="middle" class="io mono">0</text>

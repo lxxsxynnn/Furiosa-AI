@@ -32,6 +32,7 @@
 </defs>
 
 <!-- ① 커널 한 장 -->
+<rect x="0" y="0" width="800" height="262" fill="#ffffff"/>
 <text x="110" y="36" text-anchor="middle" class="title">① 커널 한 장</text>
 <rect x="68" y="80" width="84" height="84" class="kernel"/>
 <line x1="96" y1="80" x2="96" y2="164" class="kline"/>

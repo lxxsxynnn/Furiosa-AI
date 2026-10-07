@@ -32,6 +32,7 @@
 </defs>
 
 <!-- ── A. 체인 ── -->
+<rect x="0" y="0" width="900" height="876" fill="#ffffff"/>
 <text x="40" y="44" class="sec">칸마다 같은 가중치 두 벌을 다시 씀</text>
 
 <text x="450" y="76" text-anchor="middle" class="io cy2">출력</text>

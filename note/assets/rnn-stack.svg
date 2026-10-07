@@ -24,6 +24,7 @@
 <marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 
+<rect x="0" y="0" width="900" height="692" fill="#ffffff"/>
 <text x="40" y="44" class="sec">return_sequences 없음 (기본) — 마지막 칸만 내보냄</text>
 <rect x="260" y="76" width="76" height="46" rx="6" class="cell"/><text x="298" y="104" text-anchor="middle" class="w">h₁</text>
 <rect x="430" y="76" width="76" height="46" rx="6" class="cell"/><text x="468" y="104" text-anchor="middle" class="w">h₂</text>

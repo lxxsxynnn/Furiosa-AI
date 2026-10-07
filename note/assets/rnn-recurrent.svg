@@ -34,6 +34,7 @@
 </defs>
 
 <!-- ══════ 1. 순환 ══════ -->
+<rect x="0" y="0" width="900" height="1000" fill="#ffffff"/>
 <text x="152" y="46" text-anchor="middle" class="sec">접힌 모습</text>
 <rect x="110" y="100" width="84" height="52" rx="6" class="cell"/>
 <text x="152" y="132" text-anchor="middle" class="w">W</text>

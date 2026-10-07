@@ -16,6 +16,7 @@
 <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 
+<rect x="0" y="0" width="840" height="420" fill="#ffffff"/>
 <text x="20" y="40" class="desc">원본 사진첩</text>
 <text x="20" y="75" class="step">사진 10장</text>
 
