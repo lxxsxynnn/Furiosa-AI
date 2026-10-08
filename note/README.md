@@ -33,6 +33,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day24](day24_1006_keras.ipynb) | 10/06 | RNN 데이터를 `Reshape`로 접어 `Conv2D`에, `Conv1D`, RNN 모델을 Conv1D로(`GlobalAveragePooling1D`), 층별 차원(`Conv1D` 추가) | `keras2/keras66_jena_CNN.py` ~ `keras68_Conv1D_15_man_woman.py` |
 | [day24 RAG](day24_1006_rag.ipynb) | 10/06 | 문서 분할(`TextLoader`, `RecursiveCharacterTextSplitter`), 여러 파일 불러오기, 청크 임베딩(`embed_query`·`embed_documents`), Chroma 저장·불러오기·`get`, 유사도 검색, Retriever | `RAG/rag11_Chroma01_save.py` ~ `rag12_Chroma03_save.py` |
 | [day25 RAG](day25_1007_rag.ipynb) | 10/07 | RAG(검색 → 붙이기 → 생성), 문서에 없는 질문, RAG 체인(`create_stuff_documents_chain`·`create_retrieval_chain`), 체인 결과 dict, Gradio 챗봇(`ChatInterface`), FAISS 저장·불러오기·저장 구조 | `RAG/rag12_Chroma04_load.py` ~ `rag18_FAISS_gradio.py` |
+| [day26](day26_1008_keras.ipynb) | 10/08 | 다중 입력 모델(`Concatenate`), 여러 배열 `train_test_split`, 앙상블과의 차이, 다중 출력 모델, 출력별 loss, 출력에 이어지지 않은 층 | `keras2/keras69_ensemble1.py` ~ `keras69_ensemble3.py` |
+| [day26 RAG](day26_1008_rag.ipynb) | 10/08 | PDF 불러오기(`PyPDFLoader`), 쪽별 `metadata`, PDF 분할(`split_documents`), 허깅페이스 임베딩(`HuggingFaceEmbeddings`), 질문 지시문, 임베딩 모델 교체, 요약·결론 질문 | `RAG/rag19_PyPDF_1.py` ~ `rag20_embedding5_chatbot.py` |
 
 ## 주제별 찾아보기
 
@@ -79,6 +81,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `validation_split` vs `validation_data` — [day06 §3](day06_0907_keras.ipynb)
 - `stratify=y`로 라벨 비율 유지하며 분할 — [day07 §3](day07_0908_keras.ipynb)
 - `stratify`에 원핫(2차원)을 넘겨도 되는가 — [day08 §6 cf)](day08_0909_keras.ipynb)
+- 여러 배열을 한 번에 나누기 — `train_test_split(x1, x2, y)`, 모두 같은 행 번호로 나눠 넣은 순서대로 `(train, test)` 쌍 — [day26 §1](day26_1008_keras.ipynb)
 
 #### 스케일링
 - 특성 스케일이 제각각이면 생기는 문제 — [day03 §5](day03_0902_keras.ipynb)
@@ -201,6 +204,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 파라미터(w·b) 개수 세는 공식 — [day09 §2](day09_0910_keras.ipynb)
 - `model.summary()` 읽는 법, `Output Shape`의 `None` — [day09 §2, §3](day09_0910_keras.ipynb)
 - 함수형 모델 `Input` / `Model` — `Sequential`과 연결 방식 비교 — [day11 §4](day11_0914_keras.ipynb)
+- 다중 입력 모델 — `Input` 여러 개, 입력마다 쌓은 층을 `Concatenate`로 합침, x는 `inputs` 순서대로 리스트로 (수업에서는 앙상블) — [day26 §1](day26_1008_keras.ipynb)
+- 앙상블 — 여러 모델의 예측값을 평균·투표로 합침, 모델마다 예측이 달라야 오차 일부가 상쇄됨 — [day26 §1 cf)](day26_1008_keras.ipynb)
+- 다중 출력 모델 — `outputs`·y를 리스트로, loss는 출력마다 계산해 합을 줄임 — [day26 §2](day26_1008_keras.ipynb)
+- 출력에 이어지지 않은 층 — 에러 없이 모델에서 빠짐, `summary()`로 확인 — [day26 §2 cf)](day26_1008_keras.ipynb)
 
 #### 활성화 함수
 - 활성화 함수란, 기본값이 `linear`라는 것 — [day05 §3](day05_0904_keras.ipynb)
@@ -298,6 +305,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - MSE를 구하는 두 경로 (케라스 / sklearn) — [day04 §4](day04_0903_keras.ipynb)
 - `metrics`를 주면 `evaluate`가 리스트를 반환 — [day07 §5](day07_0908_keras.ipynb)
 - `evaluate`에 y를 안 주면 나는 에러 — [day08 §5 cf)](day08_0909_keras.ipynb)
+- 출력이 여러 개일 때 `evaluate` — `[loss 합, 출력별 loss]`, `return_dict=True`면 이름 붙은 dict — [day26 §2](day26_1008_keras.ipynb)
 
 #### 회귀 지표
 - MSE가 "제곱"인 이유, 경사 하강법 갱신식 — [day03 cf)](day03_0902_keras.ipynb)
@@ -317,6 +325,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 이미지 한 장으로 예측 — `load_img` → `img_to_array` → 차원 증가 — [day16 §3](day16_0921_keras.ipynb)
 - 예측할 이미지도 학습 때와 같은 전처리 — 스케일이 다르면 에러 없이 예측값만 달라짐 — [day16 §3 cf)](day16_0921_keras.ipynb)
 - 예측할 입력도 훈련 x와 같은 3차원으로 — [day18 §4-3](day18_0923_keras.ipynb)
+- 입력·출력이 여러 개일 때 `predict` — x는 리스트로 넣고(묶지 않으면 두 번째 배열이 `batch_size` 자리로), 출력별 배열을 리스트로 돌려줌 — [day26 §1, §2](day26_1008_keras.ipynb)
 
 #### 대회 제출
 - `x_test`(내 채점용)와 `test_csv`(제출용)의 차이 — [day04 §7](day04_0903_keras.ipynb)
@@ -429,6 +438,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `chunk_overlap` — 앞 청크 끝부분을 다음 청크 앞에 겹침, 끝의 100자 이하 조각만 넘어감 — [day24 RAG §1-1](day24_1006_rag.ipynb)
 - 여러 파일 불러오기 — `glob` → `data += loader.load()` → `split_documents`, `append`면 리스트가 겹침 — [day24 RAG §1-2](day24_1006_rag.ipynb)
 - 합치기와 겹침 — 합치기는 짧은 조각을 청크 하나로 묶음(중복 없음), 겹침은 앞 청크 끝을 다음 청크에 한 번 더 넣음 — [day24 RAG §1 cf)](day24_1006_rag.ipynb)
+- `PyPDFLoader` — PDF를 쪽마다 `Document` 하나로, `TextLoader`로는 못 읽음, 쪽 번호·머리말도 `page_content`에 들어감 — [day26 RAG §1](day26_1008_rag.ipynb)
+- PDF `metadata` — `source`·`total_pages`·`page`(0부터)·`page_label`(문자열)과 PDF 파일 정보, 쪽마다 `page`·`page_label`만 다름 — [day26 RAG §1-1](day26_1008_rag.ipynb)
+- PDF 분할 — `split_documents(pdf_docs)`, 청크마다 쪽 `metadata`가 붙고 두 쪽에 걸치지 않음, `load_and_split`은 PDF를 한 번 더 읽음 — [day26 RAG §1-2](day26_1008_rag.ipynb)
 
 #### 임베딩
 - 임베딩 모델 `OpenAIEmbeddings` — 문장 하나를 벡터 하나로, small 1536·large 3072, `dimensions`로 줄이기 — [day22 RAG §1](day22_1001_rag.ipynb)
@@ -436,6 +448,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 코사인 유사도 — `(A · B) / (|A| × |B|)`, 방향이 같으면 1·수직 0·정반대 -1, 길이는 보지 않음 — [day22 RAG §1-2](day22_1001_rag.ipynb)
 - 청크 임베딩 — 청크 하나가 벡터 하나, 청크 N개 → `(N, dimensions)` — [day24 RAG §2](day24_1006_rag.ipynb)
 - `embed_query`와 `embed_documents` — 문자열 하나 → 벡터 하나 / 문자열 리스트 → 벡터 리스트 — [day24 RAG §2](day24_1006_rag.ipynb)
+- `HuggingFaceEmbeddings` — Hub 임베딩 모델을 내 컴퓨터에서, 키·크레딧 없음, 처음 실행할 때 모델 파일을 `~/.cache/huggingface/hub`에 받음, bge-m3·Qwen3-Embedding-0.6B 1024차원 — [day26 RAG §2](day26_1008_rag.ipynb)
+- 질문 지시문 — 지시문을 붙여 학습된 모델(Qwen3-Embedding)은 `query_encode_kwargs={"prompt_name": "query"}`로 질문에만 붙임, `encode_kwargs`면 청크에도 붙음 — [day26 RAG §2 cf)](day26_1008_rag.ipynb)
 
 #### 벡터 DB·검색
 - 의미 검색 — 단어가 달라도 뜻이 비슷한 문서를 찾음, 키워드 검색과 비교 — [day23 RAG §1](day23_1002_rag.ipynb)
@@ -450,6 +464,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `allow_dangerous_deserialization` — `.pkl`을 pickle로 읽어서 `True`를 줘야 `load_local`이 열림 — [day25 RAG §4](day25_1007_rag.ipynb)
 - FAISS 저장 구조 — `index`(벡터)·`docstore`(원문)·`index_to_docstore_id`(행 번호 → id), `index.d`·`index.ntotal` — [day25 RAG §4-1](day25_1007_rag.ipynb)
 - 인덱스 직접 만들기 — `IndexFlatL2(차원)` + `InMemoryDocstore` + 빈 연결표, 잘 안 씀 — [day25 RAG §4 cf)](day25_1007_rag.ipynb)
+- 임베딩 모델 교체 — 저장·질문 모델이 같아야 함, 차원이 다르면 검색할 때 `AssertionError`, 같으면 에러 없이 질문과 상관없는 청크 — [day26 RAG §3](day26_1008_rag.ipynb)
+- 요약·결론 질문 — 비교할 내용이 없어 초록·결론 청크가 위로 오기 어려움, 내용을 넣어 묻기, 본문이 아닌 쪽 빼기, `k`를 늘려도 한참 밀린 청크는 안 잡힘 — [day26 RAG §4](day26_1008_rag.ipynb)
 
 #### RAG
 - RAG — 검색한 청크를 질문과 함께 프롬프트에 넣어 답 받기, 검색 → 붙이기 → 생성 — [day25 RAG §1](day25_1007_rag.ipynb)
@@ -458,6 +474,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 체인 결과 — `input`·`context`·`answer` dict, 답은 `response['answer']` — [day25 RAG §2-1](day25_1007_rag.ipynb)
 - `langchain_classic` — langchain 1.x에는 `chains`가 없어 체인 함수를 여기서 가져옴 — [day25 RAG §2 cf)](day25_1007_rag.ipynb)
 - Gradio 챗봇 — `ChatInterface(fn, title)` + `launch()`, `fn(message, history)`가 답 문자열을 돌려줌, `history`를 안 넘기면 질문마다 따로 검색 — [day25 RAG §3](day25_1007_rag.ipynb)
+- 답이 나와도 검색이 틀렸을 수 있음 — 제목·저자만 든 청크가 넘어가도 유명한 문서는 요약이 나올 수 있음, `response['context']`로 확인 — [day26 RAG §4 cf)](day26_1008_rag.ipynb)
 
 ## 작성 규칙
 
