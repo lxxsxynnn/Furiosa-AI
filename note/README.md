@@ -35,6 +35,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day25 RAG](day25_1007_rag.ipynb) | 10/07 | RAG(검색 → 붙이기 → 생성), 문서에 없는 질문, RAG 체인(`create_stuff_documents_chain`·`create_retrieval_chain`), 체인 결과 dict, Gradio 챗봇(`ChatInterface`), FAISS 저장·불러오기·저장 구조 | `RAG/rag12_Chroma04_load.py` ~ `rag18_FAISS_gradio.py` |
 | [day26](day26_1008_keras.ipynb) | 10/08 | 다중 입력 모델(`Concatenate`), 여러 배열 `train_test_split`, 앙상블과의 차이, 다중 출력 모델, 출력별 loss, 출력에 이어지지 않은 층 | `keras2/keras69_ensemble1.py` ~ `keras69_ensemble3.py` |
 | [day26 RAG](day26_1008_rag.ipynb) | 10/08 | PDF 불러오기(`PyPDFLoader`), 쪽별 `metadata`, PDF 분할(`split_documents`), 허깅페이스 임베딩(`HuggingFaceEmbeddings`), 질문 지시문, 임베딩 모델 교체, 요약·결론 질문 | `RAG/rag19_PyPDF_1.py` ~ `rag20_embedding5_chatbot.py` |
+| [day27 RAG](day27_1012_rag.ipynb) | 10/12 | 대화 기록(`MessagesPlaceholder`·`HumanMessage`·`AIMessage`), Gradio `history` 형식, 검색은 이번 질문만 | `RAG/rag21_Gradio_history.py` |
 
 ## 주제별 찾아보기
 
@@ -475,6 +476,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `langchain_classic` — langchain 1.x에는 `chains`가 없어 체인 함수를 여기서 가져옴 — [day25 RAG §2 cf)](day25_1007_rag.ipynb)
 - Gradio 챗봇 — `ChatInterface(fn, title)` + `launch()`, `fn(message, history)`가 답 문자열을 돌려줌, `history`를 안 넘기면 질문마다 따로 검색 — [day25 RAG §3](day25_1007_rag.ipynb)
 - 답이 나와도 검색이 틀렸을 수 있음 — 제목·저자만 든 청크가 넘어가도 유명한 문서는 요약이 나올 수 있음, `response['context']`로 확인 — [day26 RAG §4 cf)](day26_1008_rag.ipynb)
+- 대화 기록 — `MessagesPlaceholder('chat_history')`, `history`를 `HumanMessage`·`AIMessage`로 바꿔 `invoke`에 넘김 — [day27 RAG §1](day27_1012_rag.ipynb)
+- 검색은 이번 질문만 — 검색기는 `input`만 받음 — [day27 RAG §1 cf)](day27_1012_rag.ipynb)
 
 ## 작성 규칙
 
