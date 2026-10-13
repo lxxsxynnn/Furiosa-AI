@@ -138,13 +138,14 @@ print('time : ', round(end_time - start_time, 2), 'sec')
 # time : 309.94 sec
 
 # 2. 가중치를 동결하고 훈련시켰을 때와 비교(trainable=False)
-# loss :  2.3026034832000732
-# acc :  0.10000000149011612
-# accuracy_score :  0.1
-# time :  1133.16 sec
-
-# 3. 가중치를 동결하지 않고 훈련시켰을 때와 비교(trainable=True)
 # loss :  2.6445188522338867
 # acc :  0.3434000015258789
 # accuracy_score :  0.3434
 # time :  179.75 sec
+
+# 3. 가중치를 동결하지 않고 훈련시켰을 때와 비교(trainable=True)
+# loss :  2.3026034832000732
+# acc :  0.10000000149011612
+# accuracy_score :  0.1
+# time :  1133.16 sec
+# 동결하면 VGG16 가중치를 안 바꿔서 epoch당 시간이 약 10분의 1. 시간으로 보면 2·3번 결과가 바뀌어 적혀 있어서 바로잡음
