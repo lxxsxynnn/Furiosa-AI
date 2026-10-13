@@ -38,8 +38,6 @@ embeddings = HuggingFaceEmbeddings(
     },
 )
 
-
-
 DB_PATH = 'C:/study/_db/Faiss20/'
 os.makedirs(DB_PATH, exist_ok=True)
 

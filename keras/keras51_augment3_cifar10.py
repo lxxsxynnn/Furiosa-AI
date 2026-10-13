@@ -65,6 +65,7 @@ y_test = ohe.transform(y_test)
 
 print(y_train.shape, y_val.shape, y_test.shape)     # (65000, 10) (10000, 10) (10000, 10)
 
+# 2. 모델 구성
 model = Sequential()
 model.add(Conv2D(64, (3, 3), activation='relu', input_shape=(32, 32, 3)))
 model.add(BatchNormalization())
