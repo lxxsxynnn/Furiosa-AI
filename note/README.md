@@ -36,6 +36,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day26](day26_1008_keras.ipynb) | 10/08 | 다중 입력 모델(`Concatenate`), 여러 배열 `train_test_split`, 앙상블과의 차이, 다중 출력 모델, 출력별 loss, 출력에 이어지지 않은 층 | `keras2/keras69_ensemble1.py` ~ `keras69_ensemble3.py` |
 | [day26 RAG](day26_1008_rag.ipynb) | 10/08 | PDF 불러오기(`PyPDFLoader`), 쪽별 `metadata`, PDF 분할(`split_documents`), 허깅페이스 임베딩(`HuggingFaceEmbeddings`), 질문 지시문, 임베딩 모델 교체, 요약·결론 질문 | `RAG/rag19_PyPDF_1.py` ~ `rag20_embedding5_chatbot.py` |
 | [day27 RAG](day27_1012_rag.ipynb) | 10/12 | 대화 기록(`MessagesPlaceholder`·`HumanMessage`·`AIMessage`), Gradio `history` 형식, 검색은 이번 질문만 | `RAG/rag21_Gradio_history.py` |
+| [day28](day28_1013_keras.ipynb) | 10/13 | 가중치 확인(`weights`·`trainable_weights`), 직접 계산, 랜덤 고정(seed), 동결(`trainable = False`), VGG16, `include_top` | `keras2/keras71_trainable_weights1.py` ~ `keras72_1_vgg16_include_top.py` |
+| [day28 RAG](day28_1013_rag.ipynb) | 10/13 | 검색 문서 확인(`response['context']`), 유사도 기준값(`similarity_score_threshold`), 프롬프트 규칙 | `RAG/rag22_Gradio_1_doc.py` ~ `rag22_Gradio_3_prompt.py` |
 
 ## 주제별 찾아보기
 
@@ -209,6 +211,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 앙상블 — 여러 모델의 예측값을 평균·투표로 합침, 모델마다 예측이 달라야 오차 일부가 상쇄됨 — [day26 §1 cf)](day26_1008_keras.ipynb)
 - 다중 출력 모델 — `outputs`·y를 리스트로, loss는 출력마다 계산해 합을 줄임 — [day26 §2](day26_1008_keras.ipynb)
 - 출력에 이어지지 않은 층 — 에러 없이 모델에서 빠짐, `summary()`로 확인 — [day26 §2 cf)](day26_1008_keras.ipynb)
+- 가중치 확인 — `model.weights`·`trainable_weights`, `Dense`마다 `kernel`·`bias`, `kernel`은 `(입력 노드 수, 출력 노드 수)`, `bias`는 0으로 시작 — [day28 §1](day28_1013_keras.ipynb)
+- 가중치로 직접 계산 — 입력마다 `kernel` 열 값을 곱해 더하고 `bias`를 더함, `predict`와 비교 — [day28 §1-1](day28_1013_keras.ipynb)
+- 랜덤 고정 — `random.seed`·`np.random.seed`·`tf.random.set_seed`, 같은 층 구성이면 처음 가중치가 같음 — [day28 §1 cf)](day28_1013_keras.ipynb)
 
 #### 활성화 함수
 - 활성화 함수란, 기본값이 `linear`라는 것 — [day05 §3](day05_0904_keras.ipynb)
@@ -254,6 +259,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 #### Embedding
 - `Embedding` 층 — `(N, 문장 길이)` > `(N, 문장 길이, output_dim)`, 파라미터 `input_dim × output_dim` — [day22 §1-2](day22_1001_keras.ipynb)
 - 텍스트 분류 모델 — `Embedding` 뒤에 LSTM·GRU·Bidirectional·Flatten으로 2차원 — [day23 §2](day23_1002_keras.ipynb)
+
+#### 전이학습
+- 동결 — `model.trainable = False`, `trainable_weights`만 0개, `fit`해도 가중치가 안 바뀜, `compile` 전에 설정 — [day28 §2](day28_1013_keras.ipynb)
+- VGG16 — ImageNet으로 학습된 CNN, `weights='imagenet'`, 3×3 `Conv2D` 블록 5개 + `Dense` 3개, 출력 1000개 클래스 — [day28 §3](day28_1013_keras.ipynb)
+- `include_top` — 분류 부분(`Flatten`~출력 `Dense`)까지 가져올지, 클래스 수가 다르면 `False`로 빼고 `Dense`를 붙임 — [day28 §3-1](day28_1013_keras.ipynb)
+- top을 두고 `input_shape` 바꾸기 — `include_top=True`·`weights='imagenet'`이면 `(224, 224, 3)`만 됨 — [day28 §3-1 cf)](day28_1013_keras.ipynb)
 
 ### 컴파일·훈련
 
@@ -467,6 +478,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 인덱스 직접 만들기 — `IndexFlatL2(차원)` + `InMemoryDocstore` + 빈 연결표, 잘 안 씀 — [day25 RAG §4 cf)](day25_1007_rag.ipynb)
 - 임베딩 모델 교체 — 저장·질문 모델이 같아야 함, 차원이 다르면 검색할 때 `AssertionError`, 같으면 에러 없이 질문과 상관없는 청크 — [day26 RAG §3](day26_1008_rag.ipynb)
 - 요약·결론 질문 — 비교할 내용이 없어 초록·결론 청크가 위로 오기 어려움, 내용을 넣어 묻기, 본문이 아닌 쪽 빼기, `k`를 늘려도 한참 밀린 청크는 안 잡힘 — [day26 RAG §4](day26_1008_rag.ipynb)
+- 유사도 기준값 — `search_type="similarity_score_threshold"`, `score_threshold` 이상만 최대 `k`개, 없으면 경고와 빈 `context` — [day28 RAG §2](day28_1013_rag.ipynb)
 
 #### RAG
 - RAG — 검색한 청크를 질문과 함께 프롬프트에 넣어 답 받기, 검색 → 붙이기 → 생성 — [day25 RAG §1](day25_1007_rag.ipynb)
@@ -478,6 +490,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 답이 나와도 검색이 틀렸을 수 있음 — 제목·저자만 든 청크가 넘어가도 유명한 문서는 요약이 나올 수 있음, `response['context']`로 확인 — [day26 RAG §4 cf)](day26_1008_rag.ipynb)
 - 대화 기록 — `MessagesPlaceholder('chat_history')`, `history`를 `HumanMessage`·`AIMessage`로 바꿔 `invoke`에 넘김 — [day27 RAG §1](day27_1012_rag.ipynb)
 - 검색은 이번 질문만 — 검색기는 `input`만 받음 — [day27 RAG §1 cf)](day27_1012_rag.ipynb)
+- 검색 문서 확인 — `response['context']`의 `Document`마다 `metadata.get("source")`·`page_content` 출력 — [day28 RAG §1](day28_1013_rag.ipynb)
+- 프롬프트 규칙 — system에 이전 대화·일상 대화·문서 질문·정보 없음일 때 답하는 법을 번호로, 검색 방식은 그대로 — [day28 RAG §3](day28_1013_rag.ipynb)
 
 ## 작성 규칙
 
