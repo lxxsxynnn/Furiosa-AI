@@ -38,6 +38,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day27 RAG](day27_1012_rag.ipynb) | 10/12 | 대화 기록(`MessagesPlaceholder`·`HumanMessage`·`AIMessage`), Gradio `history` 형식, 검색은 이번 질문만 | `RAG/rag21_Gradio_history.py` |
 | [day28](day28_1013_keras.ipynb) | 10/13 | 가중치 확인(`weights`·`trainable_weights`), 직접 계산, 랜덤 고정(seed), 동결(`trainable = False`), VGG16, `include_top` | `keras2/keras71_trainable_weights1.py` ~ `keras72_1_vgg16_include_top.py` |
 | [day28 RAG](day28_1013_rag.ipynb) | 10/13 | 검색 문서 확인(`response['context']`), 유사도 기준값(`similarity_score_threshold`), 프롬프트 규칙 | `RAG/rag22_Gradio_1_doc.py` ~ `rag22_Gradio_3_prompt.py` |
+| [day29](day29_1014_keras.ipynb) | 10/14 | 전이학습, 사전 학습 모델, Feature Extraction(동결), Fine Tuning(작은 `learning_rate`), 층별 동결(`layers[i].trainable`), `keras.applications` 모델들 | `keras2/keras73_vgg16_13_cifar10.py` ~ `keras76_all_T_01_cifar10.py` |
 
 ## 주제별 찾아보기
 
@@ -265,6 +266,13 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - VGG16 — ImageNet으로 학습된 CNN, `weights='imagenet'`, 3×3 `Conv2D` 블록 5개 + `Dense` 3개, 출력 1000개 클래스 — [day28 §3](day28_1013_keras.ipynb)
 - `include_top` — 분류 부분(`Flatten`~출력 `Dense`)까지 가져올지, 클래스 수가 다르면 `False`로 빼고 `Dense`를 붙임 — [day28 §3-1](day28_1013_keras.ipynb)
 - top을 두고 `input_shape` 바꾸기 — `include_top=True`·`weights='imagenet'`이면 `(224, 224, 3)`만 됨 — [day28 §3-1 cf)](day28_1013_keras.ipynb)
+- 전이학습 — 사전 학습 모델(Pre-Trained Model)을 가져와 내 데이터로 학습, `include_top=False` + 클래스 수에 맞는 `Dense` — [day29 §1](day29_1014_keras.ipynb)
+- Feature Extraction — 사전 학습 모델을 동결(`trainable = False`)해 특징 추출기로, 붙인 `Dense`만 학습 — [day29 §1-1](day29_1014_keras.ipynb)
+- Fine Tuning — 사전 학습 모델까지 `trainable = True`로 학습, `learning_rate`를 작게 — [day29 §1-2](day29_1014_keras.ipynb)
+- Fine Tuning에서 `learning_rate`가 크면 — loss ln(클래스 수)·acc 1 / 클래스 수에서 멈춤 — [day29 §1 cf)](day29_1014_keras.ipynb)
+- 층별 동결 — `model.layers[i].trainable = False`로 층 하나만, `Sequential`에 넣은 사전 학습 모델은 `Functional` 층 하나로 보임, 안쪽 층은 그 모델의 `layers`로 — [day29 §2](day29_1014_keras.ipynb)
+- `keras.applications` — VGG·ResNet·DenseNet·Inception·MobileNet·NASNet·EfficientNet, 기본 입력 크기가 모델마다 다름, 리스트를 `for`로 돌며 비교 — [day29 §3](day29_1014_keras.ipynb)
+- `weights` > `trainable_weights` — `BatchNormalization`의 `moving_mean`·`moving_variance`는 역전파로 안 바뀜, VGG는 둘이 같음 — [day29 §3 cf)](day29_1014_keras.ipynb)
 
 ### 컴파일·훈련
 
