@@ -7,20 +7,21 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.preprocessing import OneHotEncoder
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
-from tensorflow.keras.datasets import cifar100
+from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import accuracy_score
 import os
 import time
 
 # 1. 데이터
-(x_train, y_train), (x_test, y_test) = cifar100.load_data()
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 data_gen = ImageDataGenerator(
     rescale=1./255,
     horizontal_flip=True,
-    shear_range=20,
+    # vertical_flip=True,   # 실사진이라 뒤집힌 자동차·개는 없음. 없는 상황을 학습시키게 됨
+    zoom_range=0.2,
     fill_mode='nearest',
 )
 
@@ -32,14 +33,14 @@ print(x_test.shape, y_test.shape)   # (10000, 32, 32, 3) (10000, 1)
 # 테스트가 원본이므로 검증도 원본이어야 하고, 증폭은 훈련셋에만 적용한다
 x_train, x_val, y_train, y_val = train_test_split(
     x_train, y_train,
-    test_size=0.2,
+    test_size=0.1,
     random_state=42,
     stratify=y_train,
 )
-print(x_train.shape, x_val.shape)   # (40000, 32, 32, 3) (10000, 32, 32, 3)
+print(x_train.shape, x_val.shape)   # (45000, 32, 32, 3) (5000, 32, 32, 3)
 
 augment_size = 25000
-randidx = np.random.randint(x_train.shape[0], size=augment_size)   # 40000개 중에 25000개 랜덤뽑기
+randidx = np.random.randint(x_train.shape[0], size=augment_size)   # 45000개 중에 25000개 랜덤뽑기
 
 x_augmented = x_train[randidx].copy()    # (25000, 32, 32, 3)
 y_augmented = y_train[randidx].copy()    # (25000, 1)
@@ -81,7 +82,9 @@ model.add(vgg16)
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
 model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='softmax'))
+model.add(Dense(10, activation='softmax'))
+
+model.summary()
 
 # 3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy',
@@ -102,21 +105,13 @@ mcp = ModelCheckpoint(
     monitor='val_loss',
     mode='min',
     save_best_only=True,
-    filepath=path + 'keras73_cifar100.keras'
-)
-
-rlr = ReduceLROnPlateau(
-    monitor='val_loss',
-    mode='min',
-    patience=10,
-    verbose=1,
-    factor=0.5,
+    filepath=path + 'keras73_cifar10.keras'
 )
 
 start_time = time.time()
 model.fit(x_train, y_train, epochs=150, batch_size=128,
           verbose=1,
-          callbacks=[es, mcp, rlr],
+          callbacks=[es, mcp],
           validation_data=(x_val, y_val),
           )
 end_time = time.time()
@@ -137,19 +132,32 @@ print('time : ', round(end_time - start_time, 2), 'sec')
 
 
 # 1. 이전에 만들었던 최상의 결과와 비교
-# loss : 2.002082109451294
-# acc : 0.4668999910354614
-# accuracy_score : 0.4669
-# time : 2205.06 sec
+# loss : 0.6933213472366333
+# acc : 0.8224999904632568
+# accuracy_score : 0.8225
+# time : 309.94 sec
 
 # 2. 가중치를 동결하고 훈련시켰을 때와 비교(trainable=False)
-# loss :  2.65674090385437
-# acc :  0.33719998598098755
-# accuracy_score :  0.3372
-# time :  170.45 sec
+# loss :  2.6445188522338867
+# acc :  0.3434000015258789
+# accuracy_score :  0.3434
+# time :  179.75 sec
+
+'''
+loss :  1.176862359046936
+acc :  0.5891000032424927
+accuracy_score :  0.5891
+time :  991.89 sec
+'''
 
 # 3. 가중치를 동결하지 않고 훈련시켰을 때와 비교(trainable=True)
-# loss :  4.605435371398926
-# acc :  0.009999999776482582
-# accuracy_score :  0.01
-# time :  364.77 sec
+# loss :  0.5202186703681946
+# acc :  0.8266000151634216
+# accuracy_score :  0.8266
+# time :  502.52 sec
+'''
+loss :  0.542540431022644
+acc :  0.8216999769210815
+accuracy_score :  0.8217
+time :  766.67 sec
+'''
