@@ -39,6 +39,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day28](day28_1013_keras.ipynb) | 10/13 | 가중치 확인(`weights`·`trainable_weights`), 직접 계산, 랜덤 고정(seed), 동결(`trainable = False`), VGG16, `include_top` | `keras2/keras71_trainable_weights1.py` ~ `keras72_1_vgg16_include_top.py` |
 | [day28 RAG](day28_1013_rag.ipynb) | 10/13 | 검색 문서 확인(`response['context']`), 유사도 기준값(`similarity_score_threshold`), 프롬프트 규칙 | `RAG/rag22_Gradio_1_doc.py` ~ `rag22_Gradio_3_prompt.py` |
 | [day29](day29_1014_keras.ipynb) | 10/14 | 전이학습, 사전 학습 모델, Feature Extraction(동결), Fine Tuning(작은 `learning_rate`), 층별 동결(`layers[i].trainable`), `keras.applications` 모델들 | `keras2/keras73_vgg16_13_cifar10.py` ~ `keras76_all_T_01_cifar10.py` |
+| [day30 RAG](day30_1015_rag.ipynb) | 10/15 | 키워드 검색(BM25), 벡터 검색과 비교, 하이브리드 검색(`EnsembleRetriever`·`weights`) | `RAG/rag23_01_bm25.py` ~ `rag23_03_hybrid.py` |
 
 ## 주제별 찾아보기
 
@@ -487,6 +488,11 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 임베딩 모델 교체 — 저장·질문 모델이 같아야 함, 차원이 다르면 검색할 때 `AssertionError`, 같으면 에러 없이 질문과 상관없는 청크 — [day26 RAG §3](day26_1008_rag.ipynb)
 - 요약·결론 질문 — 비교할 내용이 없어 초록·결론 청크가 위로 오기 어려움, 내용을 넣어 묻기, 본문이 아닌 쪽 빼기, `k`를 늘려도 한참 밀린 청크는 안 잡힘 — [day26 RAG §4](day26_1008_rag.ipynb)
 - 유사도 기준값 — `search_type="similarity_score_threshold"`, `score_threshold` 이상만 최대 `k`개, 없으면 경고와 빈 `context` — [day28 RAG §2](day28_1013_rag.ipynb)
+- BM25 — 질문 단어가 든 문서에 점수, `BM25Retriever.from_documents`·`k` 속성, 임베딩 없이 동작 — [day30 RAG §1](day30_1015_rag.ipynb)
+- BM25 띄어쓰기 토큰화 — `text.split()`이라 조사가 붙으면 다른 단어, 일치 단어가 없으면 0점 — [day30 RAG §1 cf)](day30_1015_rag.ipynb)
+- 벡터 검색 — 임베딩 유사도로 찾음, 단어가 달라도 뜻이 가까우면 찾음, `from_documents` 인자는 `embedding` — [day30 RAG §2](day30_1015_rag.ipynb)
+- 하이브리드 검색 — `EnsembleRetriever(retrievers, weights)`, 검색기마다 `weight / (순위 + 60)`을 더해 다시 정렬, 같은 문서는 하나로 — [day30 RAG §3](day30_1015_rag.ipynb)
+- 하이브리드 결과 개수 — 검색기별 `k`의 합에서 겹친 문서를 뺀 수 — [day30 RAG §3 cf)](day30_1015_rag.ipynb)
 
 #### RAG
 - RAG — 검색한 청크를 질문과 함께 프롬프트에 넣어 답 받기, 검색 → 붙이기 → 생성 — [day25 RAG §1](day25_1007_rag.ipynb)
