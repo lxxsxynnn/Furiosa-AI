@@ -1,3 +1,4 @@
+# BM25 키워드 검색 : 질문과 같은 단어가 든 문서 찾기
 # pip install rank_bm25
 from langchain_core.documents import Document
 

@@ -1,3 +1,4 @@
+# 하이브리드 검색 : BM25와 벡터 검색 결과를 EnsembleRetriever로 합치기
 # pip install rank_bm25
 from langchain_core.documents import Document
 
@@ -41,7 +42,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_classic.chains import create_retrieval_chain
 
-# 같은 질문을 BM25·벡터·하이브리드 검색으로 비교
 load_dotenv()
 api_key = os.environ['MONOROUTER_API_KEY'].strip()
 base_url = 'https://monogpt.kr/api/monorouter/v1'
