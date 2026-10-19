@@ -40,6 +40,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day28 RAG](day28_1013_rag.ipynb) | 10/13 | 검색 문서 확인(`response['context']`), 유사도 기준값(`similarity_score_threshold`), 프롬프트 규칙 | `RAG/rag22_Gradio_1_doc.py` ~ `rag22_Gradio_3_prompt.py` |
 | [day29](day29_1014_keras.ipynb) | 10/14 | 전이학습, 사전 학습 모델, Feature Extraction(동결), Fine Tuning(작은 `learning_rate`), 층별 동결(`layers[i].trainable`), `keras.applications` 모델들 | `keras2/keras73_vgg16_13_cifar10.py` ~ `keras76_all_T_01_cifar10.py` |
 | [day30 RAG](day30_1015_rag.ipynb) | 10/15 | 키워드 검색(BM25), 벡터 검색과 비교, 하이브리드 검색(`EnsembleRetriever`·`weights`) | `RAG/rag23_01_bm25.py` ~ `rag23_03_hybrid.py` |
+| [day32 LangGraph](day32_1019_langgraph.ipynb) | 10/19 | LangGraph(State·Node·Edge), `TypedDict`, 리듀서 `add_messages`, 그래프 만들기(`StateGraph`·`add_node`·`add_edge`·`compile`·`invoke`), 노드 여러 개 연결 | `LG/lg01_TypedDict.py` ~ `lg04_add_node_edge.py` |
 
 ## 주제별 찾아보기
 
@@ -506,6 +507,15 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 검색은 이번 질문만 — 검색기는 `input`만 받음 — [day27 RAG §1 cf)](day27_1012_rag.ipynb)
 - 검색 문서 확인 — `response['context']`의 `Document`마다 `metadata.get("source")`·`page_content` 출력 — [day28 RAG §1](day28_1013_rag.ipynb)
 - 프롬프트 규칙 — system에 이전 대화·일상 대화·문서 질문·정보 없음일 때 답하는 법을 번호로, 검색 방식은 그대로 — [day28 RAG §3](day28_1013_rag.ipynb)
+
+### LangGraph
+
+- LangGraph — 체인 단계를 노드로, 연결을 직접 정함, LCEL 체인은 Sequential처럼 한 방향이라 분기를 넣으려고 씀, State·Node·Edge — [day32 LangGraph §1](day32_1019_langgraph.ipynb)
+- `TypedDict` — dict의 키마다 값 타입, `class 이름(TypedDict)`, 결과는 일반 dict — [day32 LangGraph §2](day32_1019_langgraph.ipynb)
+- `TypedDict` 타입 강제 없음 — 다른 타입을 넣어도 실행 에러 없음, 편집기 검사에서만 표시 — [day32 LangGraph §2 cf)](day32_1019_langgraph.ipynb)
+- `add_messages` — `Annotated[list, add_messages]`, 리듀서는 (기존 값, 새 값)을 합침, 뒤에 붙이고 id가 같으면 바꿈, 리듀서 없는 키는 덮어씀 — [day32 LangGraph §3](day32_1019_langgraph.ipynb)
+- 그래프 만들기 — `StateGraph(State)` → `add_node` → `add_edge(START, …)`·`add_edge(…, END)` → `compile()` → `invoke`, 결과는 State dict — [day32 LangGraph §4](day32_1019_langgraph.ipynb)
+- 노드 연결 — `add_edge`로 `START → 노드1 → 노드2 → END`, 메시지가 실행 순서대로 쌓이고 다음 노드는 앞 노드까지 쌓인 State를 받음 — [day32 LangGraph §5](day32_1019_langgraph.ipynb)
 
 ## 작성 규칙
 
