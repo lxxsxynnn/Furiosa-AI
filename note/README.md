@@ -41,6 +41,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day29](day29_1014_keras.ipynb) | 10/14 | 전이학습, 사전 학습 모델, Feature Extraction(동결), Fine Tuning(작은 `learning_rate`), 층별 동결(`layers[i].trainable`), `keras.applications` 모델들 | `keras2/keras73_vgg16_13_cifar10.py` ~ `keras76_all_T_01_cifar10.py` |
 | [day30 RAG](day30_1015_rag.ipynb) | 10/15 | 키워드 검색(BM25), 벡터 검색과 비교, 하이브리드 검색(`EnsembleRetriever`·`weights`) | `RAG/rag23_01_bm25.py` ~ `rag23_03_hybrid.py` |
 | [day32 LangGraph](day32_1019_langgraph.ipynb) | 10/19 | LangGraph(State·Node·Edge), `TypedDict`, 리듀서 `add_messages`, 그래프 만들기(`StateGraph`·`add_node`·`add_edge`·`compile`·`invoke`), 노드 여러 개 연결 | `LG/lg01_TypedDict.py` ~ `lg04_add_node_edge.py` |
+| [day33 LangGraph](day33_1020_langgraph.ipynb) | 10/20 | Tool Calling(`bind_tools`·`tool_calls`), 검색 도구(`TavilySearch`·`DuckDuckGoSearchRun`), `ToolNode`·조건부 엣지(`tools_condition`), 그래프 그림(`draw_mermaid_png`) | `LG/lg05_ToolNode.py` ~ `lg07_ToolNode_graph.py` |
 
 ## 주제별 찾아보기
 
@@ -516,6 +517,11 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `add_messages` — `Annotated[list, add_messages]`, 리듀서는 (기존 값, 새 값)을 합침, 뒤에 붙이고 id가 같으면 바꿈, 리듀서 없는 키는 덮어씀 — [day32 LangGraph §3](day32_1019_langgraph.ipynb)
 - 그래프 만들기 — `StateGraph(State)` → `add_node` → `add_edge(START, …)`·`add_edge(…, END)` → `compile()` → `invoke`, 결과는 State dict — [day32 LangGraph §4](day32_1019_langgraph.ipynb)
 - 노드 연결 — `add_edge`로 `START → 노드1 → 노드2 → END`, 메시지가 실행 순서대로 쌓이고 다음 노드는 앞 노드까지 쌓인 State를 받음 — [day32 LangGraph §5](day32_1019_langgraph.ipynb)
+- Tool Calling — `bind_tools`로 모델에 도구 이름·설명·인자를 알려줌, 모델은 `tool_calls`만 만들고 실행은 안 함, 도구가 여럿이면 이름·설명으로 고름 — [day33 LangGraph §1](day33_1020_langgraph.ipynb)
+- 검색 도구 — `TavilySearch`(API 키, 본문까지 dict), `DuckDuckGoSearchRun`(키 없음, 요약문 문자열) — [day33 LangGraph §2](day33_1020_langgraph.ipynb)
+- DuckDuckGo `max_results` — `DuckDuckGoSearchRun`에 넣으면 무시됨, `api_wrapper=DuckDuckGoSearchAPIWrapper(max_results=…)`로 — [day33 LangGraph §2 cf)](day33_1020_langgraph.ipynb)
+- `ToolNode` — `tool_calls`대로 도구를 실행해 `ToolMessage`로 붙임, `add_conditional_edges("chatbot", tools_condition)` + `add_edge("tools", "chatbot")`로 반복, 노드 이름은 `tools` — [day33 LangGraph §3](day33_1020_langgraph.ipynb)
+- 그래프 그림 — `get_graph().draw_mermaid_png()`(웹 API, 인터넷 필요)·`draw_mermaid()`(텍스트), 실선은 `add_edge`·점선은 조건부 — [day33 LangGraph §4](day33_1020_langgraph.ipynb)
 
 ## 작성 규칙
 
