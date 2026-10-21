@@ -41,7 +41,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day29](day29_1014_keras.ipynb) | 10/14 | 전이학습, 사전 학습 모델, Feature Extraction(동결), Fine Tuning(작은 `learning_rate`), 층별 동결(`layers[i].trainable`), `keras.applications` 모델들 | `keras2/keras73_vgg16_13_cifar10.py` ~ `keras76_all_T_01_cifar10.py` |
 | [day30 RAG](day30_1015_rag.ipynb) | 10/15 | 키워드 검색(BM25), 벡터 검색과 비교, 하이브리드 검색(`EnsembleRetriever`·`weights`) | `RAG/rag23_01_bm25.py` ~ `rag23_03_hybrid.py` |
 | [day32 LangGraph](day32_1019_langgraph.ipynb) | 10/19 | LangGraph(State·Node·Edge), `TypedDict`, 리듀서 `add_messages`, 그래프 만들기(`StateGraph`·`add_node`·`add_edge`·`compile`·`invoke`), 노드 여러 개 연결 | `LG/lg01_TypedDict.py` ~ `lg04_add_node_edge.py` |
-| [day33 LangGraph](day33_1020_langgraph.ipynb) | 10/20 | Tool Calling(`bind_tools`·`tool_calls`), 검색 도구(`TavilySearch`·`DuckDuckGoSearchRun`), `ToolNode`·조건부 엣지(`tools_condition`), 그래프 그림(`draw_mermaid_png`) | `LG/lg05_ToolNode.py` ~ `lg07_ToolNode_graph.py` |
+| [day33 LangGraph](day33_1020_langgraph.ipynb) | 10/20 | Tool Calling(`bind_tools`·`tool_calls`), 검색 도구(`TavilySearch`·`DuckDuckGoSearchRun`), `ToolNode`·조건부 엣지(`tools_condition`), 그래프 그림(`draw_mermaid_png`) | `LG/lg05_ToolNode.py` ~ `lg07_ToolNode_graph01.py` |
+| [day34 LangGraph](day34_1021_langgraph.ipynb) | 10/21 | 그래프 그림 출력(`BytesIO`·`plt.imshow`), 메모리(`InMemorySaver`·`thread_id`), fan-out / fan-in | `LG/lg07_ToolNode_graph02.py` ~ `lg09_fanout_fanin2_concat.py` |
 
 ## 주제별 찾아보기
 
@@ -522,6 +523,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - DuckDuckGo `max_results` — `DuckDuckGoSearchRun`에 넣으면 무시됨, `api_wrapper=DuckDuckGoSearchAPIWrapper(max_results=…)`로 — [day33 LangGraph §2 cf)](day33_1020_langgraph.ipynb)
 - `ToolNode` — `tool_calls`대로 도구를 실행해 `ToolMessage`로 붙임, `add_conditional_edges("chatbot", tools_condition)` + `add_edge("tools", "chatbot")`로 반복, 노드 이름은 `tools` — [day33 LangGraph §3](day33_1020_langgraph.ipynb)
 - 그래프 그림 — `get_graph().draw_mermaid_png()`(웹 API, 인터넷 필요)·`draw_mermaid()`(텍스트), 실선은 `add_edge`·점선은 조건부 — [day33 LangGraph §4](day33_1020_langgraph.ipynb)
+- 그래프 그림 출력 — `Image.open(BytesIO(png_data))` → `plt.imshow` → `plt.show()`, 파일 저장 없이 띄움 — [day34 LangGraph §1](day34_1021_langgraph.ipynb)
+- 메모리 — `compile(checkpointer=InMemorySaver())`, `config`의 `thread_id`가 같으면 저장된 State에 이어서 실행, checkpointer가 없으면 `invoke`마다 새 State — [day34 LangGraph §2](day34_1021_langgraph.ipynb)
+- fan-out / fan-in — 한 노드에서 엣지 여러 개로 같은 단계에 같이 실행, 여러 엣지를 한 노드로 모아 다음 단계에서 합침 — [day34 LangGraph §3](day34_1021_langgraph.ipynb)
+- 노드가 돌려주는 키 — 같은 단계에서 리듀서 없는 같은 키를 바꾸면 `InvalidUpdateError`, State에 없는 키는 에러 없이 무시 — [day34 LangGraph §3 cf)](day34_1021_langgraph.ipynb)
 
 ## 작성 규칙
 
