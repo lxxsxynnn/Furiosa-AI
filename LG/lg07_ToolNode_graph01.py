@@ -76,13 +76,13 @@ graph_builder.add_edge("tools", "chatbot")  # 검색 결과를 들고 다시 모
 graph = graph_builder.compile()
 
 ###################### 6. 그래프 실행 ######################
-query = "삼성전자의 오늘 주가를 알려줘"
+# query = "삼성전자의 오늘 주가를 알려줘"
 
-response = graph.invoke({
-    "messages" : [("user", query)]
-})
+# response = graph.invoke({
+#     "messages" : [("user", query)]
+# })
 
-print("AI : ", response["messages"][-1].content)  # .content만 출력해서 메타데이터 없이 답 문자열만 나옴
+# print("AI : ", response["messages"][-1].content)  # .content만 출력해서 메타데이터 없이 답 문자열만 나옴
 
 ############################################################
 # 그래프 이미지 저장
