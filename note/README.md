@@ -43,6 +43,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day32 LangGraph](day32_1019_langgraph.ipynb) | 10/19 | LangGraph(State·Node·Edge), `TypedDict`, 리듀서 `add_messages`, 그래프 만들기(`StateGraph`·`add_node`·`add_edge`·`compile`·`invoke`), 노드 여러 개 연결 | `LG/lg01_TypedDict.py` ~ `lg04_add_node_edge.py` |
 | [day33 LangGraph](day33_1020_langgraph.ipynb) | 10/20 | Tool Calling(`bind_tools`·`tool_calls`), 검색 도구(`TavilySearch`·`DuckDuckGoSearchRun`), `ToolNode`·조건부 엣지(`tools_condition`), 그래프 그림(`draw_mermaid_png`) | `LG/lg05_ToolNode.py` ~ `lg07_ToolNode_graph01.py` |
 | [day34 LangGraph](day34_1021_langgraph.ipynb) | 10/21 | 그래프 그림 출력(`BytesIO`·`plt.imshow`), 메모리(`InMemorySaver`·`thread_id`), fan-out / fan-in | `LG/lg07_ToolNode_graph02.py` ~ `lg09_fanout_fanin2_concat.py` |
+| [day35 LangGraph·ML](day35_1022_langgraph_ml.ipynb) | 10/22 | 결과 통합 노드(LLM으로 fan-in 결과 정리), 트리 계열 모델(`DecisionTree`·`RandomForest`·`GradientBoosting`·`XGBoost`), `feature_importances_`, XGBoost 중요도 기준(weight·gain·`plot_importance`) | `LG/lg09_fanout_fanin3.py`, `ml/m01_feature_importances01.py` ~ `m01_feature_importances04_graph.py` |
 
 ## 주제별 찾아보기
 
@@ -527,6 +528,16 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 메모리 — `compile(checkpointer=InMemorySaver())`, `config`의 `thread_id`가 같으면 저장된 State에 이어서 실행, checkpointer가 없으면 `invoke`마다 새 State — [day34 LangGraph §2](day34_1021_langgraph.ipynb)
 - fan-out / fan-in — 한 노드에서 엣지 여러 개로 같은 단계에 같이 실행, 여러 엣지를 한 노드로 모아 다음 단계에서 합침 — [day34 LangGraph §3](day34_1021_langgraph.ipynb)
 - 노드가 돌려주는 키 — 같은 단계에서 리듀서 없는 같은 키를 바꾸면 `InvalidUpdateError`, State에 없는 키는 에러 없이 무시 — [day34 LangGraph §3 cf)](day34_1021_langgraph.ipynb)
+- 결과 통합 노드 — 이어 붙이기 대신 앞 결과를 프롬프트에 넣어 LLM이 최종 답을 씀, 결과마다 이름을 붙이고 우선순위를 지시 — [day35 LangGraph·ML §1](day35_1022_langgraph_ml.ipynb)
+
+### 머신러닝
+
+- 트리 계열 모델 — 컬럼 값으로 데이터를 나눠(분기) 예측, `DecisionTree`(트리 하나)·`RandomForest`(배깅)·`GradientBoosting`(부스팅)·`XGBoost`, 분기는 손실이 가장 많이 줄어드는 기준, 스케일링 영향 없음, sklearn은 `compile` 없이 `fit` — [day35 LangGraph·ML §2](day35_1022_langgraph_ml.ipynb)
+- `feature_importances_` — 트리 계열 모델이 `fit` 후 컬럼마다 매긴 중요도, 합은 1, 파라미터가 아니라 속성, feature engineering에 씀 — [day35 LangGraph·ML §3](day35_1022_langgraph_ml.ipynb)
+- sklearn `score` — 분류 모델은 acc, 회귀 모델은 r2 — [day35 LangGraph·ML §3](day35_1022_langgraph_ml.ipynb)
+- r2 음수 — 평균값 하나로 예측한 것보다 못함, 트리 하나는 과적합되기 쉬움 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
+- 회귀의 `stratify` — 클래스 비율을 맞추는 옵션이라 연속값 y에는 안 씀 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
+- XGBoost 중요도 기준 — weight(분기 횟수, F score)·gain(손실 감소 평균), `get_booster().get_score(importance_type=…)`, `plot_importance`, XGB `feature_importances_`는 gain 비율 — [day35 LangGraph·ML §4](day35_1022_langgraph_ml.ipynb)
 
 ## 작성 규칙
 
