@@ -44,6 +44,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day33 LangGraph](day33_1020_langgraph.ipynb) | 10/20 | Tool Calling(`bind_tools`·`tool_calls`), 검색 도구(`TavilySearch`·`DuckDuckGoSearchRun`), `ToolNode`·조건부 엣지(`tools_condition`), 그래프 그림(`draw_mermaid_png`) | `LG/lg05_ToolNode.py` ~ `lg07_ToolNode_graph01.py` |
 | [day34 LangGraph](day34_1021_langgraph.ipynb) | 10/21 | 그래프 그림 출력(`BytesIO`·`plt.imshow`), 메모리(`InMemorySaver`·`thread_id`), fan-out / fan-in | `LG/lg07_ToolNode_graph02.py` ~ `lg09_fanout_fanin2_concat.py` |
 | [day35 LangGraph·ML](day35_1022_langgraph_ml.ipynb) | 10/22 | 결과 통합 노드(LLM으로 fan-in 결과 정리), 트리 계열 모델(`DecisionTree`·`RandomForest`·`GradientBoosting`·`XGBoost`), `feature_importances_`, XGBoost 중요도 기준(weight·gain·`plot_importance`) | `LG/lg09_fanout_fanin3.py`, `ml/m01_feature_importances01.py` ~ `m01_feature_importances04_graph.py` |
+| [day41 NPU](day41_1030_npu.ipynb) | 10/30 | WSL 배포판(`wsl --install --name`·`wsl -l -v`), 윈도우 파일 접근(`/mnt/c`·`explorer.exe`), SSH 키 접속(`ssh -i -p`·`chmod 600`), NPU 상태 확인(`furiosa-smi`), `watch`, 서버 사양 확인(`lscpu`·`free -h`), Miniconda 설치(`curl -O`·`conda init`·`conda create`), 윈도우에서 바로 접속(`.ssh/config`·`icacls`) | — |
 
 ## 주제별 찾아보기
 
@@ -538,6 +539,23 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - r2 음수 — 평균값 하나로 예측한 것보다 못함, 트리 하나는 과적합되기 쉬움 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
 - 회귀의 `stratify` — 클래스 비율을 맞추는 옵션이라 연속값 y에는 안 씀 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
 - XGBoost 중요도 기준 — weight(분기 횟수, F score)·gain(손실 감소 평균), `get_booster().get_score(importance_type=…)`, `plot_importance`, XGB `feature_importances_`는 gain 비율 — [day35 LangGraph·ML §4](day35_1022_langgraph_ml.ipynb)
+
+### WSL·원격 접속
+
+- WSL 배포판 — `wsl --install -d <배포판> --name <이름>`, `wsl -l -v`로 목록·`*`가 기본, `wsl -d <이름>`으로 접속, 긴 옵션은 `-` 두 개 — [day41 NPU §1](day41_1030_npu.ipynb)
+- 윈도우 파일 접근 — `/mnt/c`가 C 드라이브, `explorer.exe .`로 탐색기 열기, 윈도우 프로그램은 `.exe`까지 — [day41 NPU §2](day41_1030_npu.ipynb)
+- Zone.Identifier — 인터넷에서 받은 파일을 윈도우에서 복사하면 따라오는 메타데이터, 지워도 됨 — [day41 NPU §2 cf)](day41_1030_npu.ipynb)
+- SSH 키 접속 — `ssh -i <키> -p <포트> <사용자>@<주소>`, 키는 `chmod 600`, 권한이 느슨하면 거부, 첫 접속은 호스트 지문 수락 후 `known_hosts`에 저장 — [day41 NPU §3](day41_1030_npu.ipynb)
+- 포트 매핑 — 접속할 때 치는 포트가 서버 안의 포트와 다를 수 있음, 바깥 포트를 안의 ssh 포트(22)로 연결해 둔 것 — [day41 NPU §3 cf)](day41_1030_npu.ipynb)
+- `furiosa-smi` — NPU 상태 확인, `info`·`status`·`ps`·`topo`·`version`, GPU의 `nvidia-smi`와 같은 자리 — [day41 NPU §4](day41_1030_npu.ipynb)
+- `watch` — 명령을 일정 간격으로 다시 실행해 화면 갱신, `-n <초>`로 간격 지정, `Ctrl + C`로 종료 — [day41 NPU §5](day41_1030_npu.ipynb)
+- 서버 사양 확인 — `lscpu`(논리 코어 = 소켓 × 코어 × 스레드, 캐시, NUMA)·`free -h`(메모리) — [day41 NPU §6](day41_1030_npu.ipynb)
+- `free`의 available — `buff/cache`는 필요하면 회수되므로 `free`가 작아도 부족한 것이 아님, 실제 여유는 `available` — [day41 NPU §6 cf)](day41_1030_npu.ipynb)
+- Miniconda 설치 — `curl -O`로 스크립트 받아 `bash`로 실행, 라이선스·설치 위치·`conda init`을 물어봄, `source ~/.bashrc` 후 `(base)` 표시 — [day41 NPU §7](day41_1030_npu.ipynb)
+- conda 환경 — `conda create -n <이름> python=<버전>`, `conda env list`로 목록·경로, `conda activate`/`deactivate`, 환경은 설치 경로 아래 `envs/<이름>`에 생김 — [day41 NPU §8](day41_1030_npu.ipynb)
+- 윈도우에서 바로 접속 — `.ssh/config`에 `Host`·`HostName`·`User`·`Port`·`IdentityFile`·`IdentitiesOnly`, 키 권한은 `icacls`로 좁힘, `known_hosts`는 WSL과 따로 — [day41 NPU §9](day41_1030_npu.ipynb)
+- VS Code 원격 폴더 — `Remote - SSH` 확장 + `Ctrl + Shift + P` → `Connect to Host` → `Open Folder`, 적는 경로는 서버 쪽 — [day41 NPU §9 cf)](day41_1030_npu.ipynb)
+- 미니콘다와 아나콘다 — 기능 차이는 작고 아나콘다는 패키지가 미리 깔려 있음, 큰 조직은 아나콘다에 유료 라이선스가 필요해 미니콘다를 씀 — [day41 NPU §7 cf)](day41_1030_npu.ipynb)
 
 ## 작성 규칙
 
