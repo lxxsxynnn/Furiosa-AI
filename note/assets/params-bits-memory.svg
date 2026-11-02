@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" width="720" height="280" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <rect x="0" y="0" width="720" height="280" fill="#ffffff"/>
+
+  <text x="24" y="34" font-size="15" font-weight="600" fill="#1a1a1a">가중치 메모리 = 가중치 개수 × 자료형 크기</text>
+
+  <!-- FP16 row -->
+  <text x="24" y="78" font-size="13" fill="#555555">FP16</text>
+  <rect x="80" y="62" width="132" height="34" rx="5" fill="#eef2f7" stroke="#8fa3bd" stroke-width="1.2"/>
+  <text x="146" y="84" font-size="13" text-anchor="middle" fill="#1a1a1a">8B = 80억 개</text>
+  <text x="226" y="84" font-size="14" fill="#555555">×</text>
+  <rect x="246" y="62" width="104" height="34" rx="5" fill="#eef2f7" stroke="#8fa3bd" stroke-width="1.2"/>
+  <text x="298" y="84" font-size="13" text-anchor="middle" fill="#1a1a1a">2바이트</text>
+  <text x="364" y="84" font-size="14" fill="#555555">=</text>
+  <rect x="384" y="62" width="256" height="34" rx="5" fill="#dde6f1" stroke="#5b7ea6" stroke-width="1.4"/>
+  <text x="512" y="84" font-size="13" font-weight="600" text-anchor="middle" fill="#1a1a1a">약 16 GB</text>
+
+  <!-- FP8 row -->
+  <text x="24" y="146" font-size="13" fill="#555555">FP8</text>
+  <rect x="80" y="130" width="132" height="34" rx="5" fill="#eef2f7" stroke="#8fa3bd" stroke-width="1.2"/>
+  <text x="146" y="152" font-size="13" text-anchor="middle" fill="#1a1a1a">8B = 80억 개</text>
+  <text x="226" y="152" font-size="14" fill="#555555">×</text>
+  <rect x="246" y="130" width="104" height="34" rx="5" fill="#eef2f7" stroke="#8fa3bd" stroke-width="1.2"/>
+  <text x="298" y="152" font-size="13" text-anchor="middle" fill="#1a1a1a">1바이트</text>
+  <text x="364" y="152" font-size="14" fill="#555555">=</text>
+  <rect x="384" y="130" width="128" height="34" rx="5" fill="#cfe0d2" stroke="#4e7a58" stroke-width="1.4"/>
+  <text x="448" y="152" font-size="13" font-weight="600" text-anchor="middle" fill="#1a1a1a">약 8 GB</text>
+
+  <!-- saved -->
+  <rect x="512" y="130" width="128" height="34" rx="5" fill="#ffffff" stroke="#b0b0b0" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="576" y="152" font-size="12" text-anchor="middle" fill="#777777">절약한 8 GB</text>
+
+  <!-- divider -->
+  <line x1="24" y1="192" x2="696" y2="192" stroke="#e2e2e2" stroke-width="1"/>
+
+  <text x="24" y="220" font-size="12.5" fill="#444444">개수(B)는 그대로고 그릇의 크기만 절반이 되므로 메모리도 절반이 됨</text>
+  <text x="24" y="244" font-size="12.5" fill="#444444">가중치를 퍼 올리는 대역폭 병목이 줄어서 토큰 생성 속도도 함께 올라감</text>
+  <text x="24" y="268" font-size="12.5" fill="#777777">B = Billion(10억), FP16 = 16비트 실수, FP8 = 8비트 실수</text>
+</svg>

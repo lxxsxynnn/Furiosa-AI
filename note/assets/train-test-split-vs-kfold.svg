@@ -1,0 +1,144 @@
+<svg width="860" viewBox="0 0 860 460" role="img" xmlns="http://www.w3.org/2000/svg">
+<style>
+  svg { font-family: "Segoe UI", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif; }
+  text { fill: #1a1a1a; }
+  .title { font-size: 16px; font-weight: 700; }
+  .sub   { font-size: 12px; fill: #666460; }
+  .sec   { font-size: 13px; font-weight: 700; }
+  .lbl   { font-size: 12px; font-weight: 600; text-anchor: middle; }
+  .desc  { font-size: 12px; fill: #495057; }
+  .score { font-size: 11.5px; font-weight: 600; fill: #D9480F; }
+  .tr    { fill: #EEF2FF; stroke: #4C6EF5; stroke-width: 1.4; }
+  .te    { fill: #FFF4E6; stroke: #F76707; stroke-width: 1.4; }
+  .box-tr { fill: #364FC7; }
+  .box-te { fill: #D9480F; }
+  .div   { stroke: #CED4DA; stroke-width: 1; stroke-dasharray: 4 4; }
+  .arrow { stroke: #868E96; stroke-width: 1.5; fill: none; }
+  .warn-bg { fill: #FFF5F5; stroke: #FFA8A8; stroke-width: 1.2; rx: 6px; }
+  .warn-title { font-size: 13.5px; font-weight: 700; fill: #C92A2A; }
+  .good-bg { fill: #E6FCF5; stroke: #63E6BE; stroke-width: 1.2; rx: 6px; }
+  .good-title { font-size: 13.5px; font-weight: 700; fill: #087F5B; }
+  .res-bg  { fill: #EBFBEE; stroke: #51CF66; stroke-width: 1.4; rx: 4px; }
+  .res-txt { font-size: 12.5px; font-weight: 700; fill: #2B8A3E; text-anchor: middle; }
+</style>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#868E96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="arr-te" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#F76707" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- 배경 (다크모드 지원 흰색) -->
+<rect x="0" y="0" width="860" height="460" fill="#ffffff"/>
+
+<!-- 중앙 구분선 -->
+<line x1="420" y1="20" x2="420" y2="440" class="div"/>
+
+<!-- ======================= LEFT: train_test_split (Hold-out) ======================= -->
+<text x="35" y="38" class="title">train_test_split (Hold-out 분할)</text>
+<text x="35" y="58" class="sub">고정된 1회 분할 · 테스트 데이터는 학습에서 영구 제외</text>
+
+<!-- 범례 -->
+<rect x="35" y="80" width="14" height="14" class="tr" rx="2"/>
+<text x="55" y="92" class="desc">Train (학습용)</text>
+<rect x="150" y="80" width="14" height="14" class="te" rx="2"/>
+<text x="170" y="92" class="desc">Test (평가용)</text>
+
+<!-- 1회 분할 바 -->
+<rect x="35" y="112" width="270" height="38" class="tr" rx="4"/>
+<text x="170" y="136" class="lbl box-tr">Train (80%)</text>
+
+<rect x="313" y="112" width="67" height="38" class="te" rx="4"/>
+<text x="346" y="136" class="lbl box-te">Test (20%)</text>
+
+<!-- 흐름 화살표 -->
+<path d="M170 152 V182" class="arrow" marker-end="url(#arr)"/>
+<path d="M346 152 V182" class="arrow" marker-end="url(#arr-te)"/>
+
+<!-- 평가 결과 -->
+<rect x="110" y="184" width="120" height="32" fill="#F8F9FA" stroke="#CED4DA" rx="4"/>
+<text x="170" y="204" class="lbl" style="fill: #495057;">모델 1회 훈련</text>
+
+<rect x="286" y="184" width="100" height="32" fill="#FFF4E6" stroke="#F76707" rx="4"/>
+<text x="336" y="204" class="lbl box-te">단일 평가 (1회)</text>
+
+<!-- 한계점 카드 -->
+<rect x="35" y="240" width="355" height="185" class="warn-bg"/>
+<text x="52" y="268" class="warn-title">단일 분할의 한계점</text>
+<text x="52" y="298" class="desc">• 테스트(20%) 데이터는 학습에 쓰이지 못하고 버려짐</text>
+<text x="52" y="326" class="desc">• 데이터가 적을 때 훈련 데이터 부족으로 모델 성능 저하</text>
+<text x="52" y="354" class="desc">• 우연히 테스트셋에 쉬운/어려운 샘플이 몰릴 경우</text>
+<text x="62" y="374" class="desc" style="fill: #C92A2A; font-weight: 600;">평가 점수가 왜곡되어 실제 일반화 능력을 신뢰하기 어려움</text>
+<text x="52" y="404" class="desc">• 분할 상태(random_state)에 따라 점수 편차가 큼</text>
+
+
+<!-- ======================= RIGHT: K-Fold Cross Validation ======================= -->
+<text x="445" y="38" class="title">K-Fold 교차 검증 (k=5)</text>
+<text x="445" y="58" class="sub">5등분 분할 · 매 회차 테스트셋을 바꿔가며 5회 반복 검증</text>
+
+<!-- Fold 1~5 시각화 -->
+<!-- Fold 1 -->
+<text x="445" y="98" class="desc" style="font-weight: 600;">Fold 1</text>
+<rect x="495" y="84" width="54" height="22" class="tr" rx="2"/>
+<rect x="553" y="84" width="54" height="22" class="tr" rx="2"/>
+<rect x="611" y="84" width="54" height="22" class="tr" rx="2"/>
+<rect x="669" y="84" width="54" height="22" class="tr" rx="2"/>
+<rect x="727" y="84" width="54" height="22" class="te" rx="2"/>
+<path d="M785 95 H802" class="arrow" marker-end="url(#arr-te)"/>
+<text x="812" y="99" class="score">점수 1</text>
+
+<!-- Fold 2 -->
+<text x="445" y="126" class="desc" style="font-weight: 600;">Fold 2</text>
+<rect x="495" y="112" width="54" height="22" class="tr" rx="2"/>
+<rect x="553" y="112" width="54" height="22" class="tr" rx="2"/>
+<rect x="611" y="112" width="54" height="22" class="tr" rx="2"/>
+<rect x="669" y="112" width="54" height="22" class="te" rx="2"/>
+<rect x="727" y="112" width="54" height="22" class="tr" rx="2"/>
+<path d="M785 123 H802" class="arrow" marker-end="url(#arr-te)"/>
+<text x="812" y="127" class="score">점수 2</text>
+
+<!-- Fold 3 -->
+<text x="445" y="154" class="desc" style="font-weight: 600;">Fold 3</text>
+<rect x="495" y="140" width="54" height="22" class="tr" rx="2"/>
+<rect x="553" y="140" width="54" height="22" class="tr" rx="2"/>
+<rect x="611" y="140" width="54" height="22" class="te" rx="2"/>
+<rect x="669" y="140" width="54" height="22" class="tr" rx="2"/>
+<rect x="727" y="140" width="54" height="22" class="tr" rx="2"/>
+<path d="M785 151 H802" class="arrow" marker-end="url(#arr-te)"/>
+<text x="812" y="155" class="score">점수 3</text>
+
+<!-- Fold 4 -->
+<text x="445" y="182" class="desc" style="font-weight: 600;">Fold 4</text>
+<rect x="495" y="168" width="54" height="22" class="tr" rx="2"/>
+<rect x="553" y="168" width="54" height="22" class="te" rx="2"/>
+<rect x="611" y="168" width="54" height="22" class="tr" rx="2"/>
+<rect x="669" y="168" width="54" height="22" class="tr" rx="2"/>
+<rect x="727" y="168" width="54" height="22" class="tr" rx="2"/>
+<path d="M785 179 H802" class="arrow" marker-end="url(#arr-te)"/>
+<text x="812" y="183" class="score">점수 4</text>
+
+<!-- Fold 5 -->
+<text x="445" y="210" class="desc" style="font-weight: 600;">Fold 5</text>
+<rect x="495" y="196" width="54" height="22" class="te" rx="2"/>
+<rect x="553" y="196" width="54" height="22" class="tr" rx="2"/>
+<rect x="611" y="196" width="54" height="22" class="tr" rx="2"/>
+<rect x="669" y="196" width="54" height="22" class="tr" rx="2"/>
+<rect x="727" y="196" width="54" height="22" class="tr" rx="2"/>
+<path d="M785 207 H802" class="arrow" marker-end="url(#arr-te)"/>
+<text x="812" y="211" class="score">점수 5</text>
+
+<!-- 최종 평균 점수 박스 -->
+<path d="M830 220 V236 H650 V244" class="arrow" marker-end="url(#arr)"/>
+<rect x="445" y="246" width="385" height="36" class="res-bg"/>
+<text x="637" y="269" class="res-txt">최종 성능 = 5개 회차 점수의 평균 (Mean)</text>
+
+<!-- K-Fold 장점 카드 -->
+<rect x="445" y="300" width="385" height="125" class="good-bg"/>
+<text x="462" y="326" class="good-title">K-Fold의 핵심 이점</text>
+<text x="462" y="354" class="desc">• 모든 데이터(100%)가 적어도 한 번씩 테스트셋으로 쓰임</text>
+<text x="462" y="380" class="desc">• 평가 후 버려지는 데이터가 없어 데이터 손실을 원천 차단</text>
+<text x="462" y="406" class="desc">• 5회 점수 평균으로 특정 분할 편향 없는 객관적 일반화 검증</text>
+
+</svg>

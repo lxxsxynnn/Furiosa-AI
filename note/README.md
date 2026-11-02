@@ -45,6 +45,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day34 LangGraph](day34_1021_langgraph.ipynb) | 10/21 | 그래프 그림 출력(`BytesIO`·`plt.imshow`), 메모리(`InMemorySaver`·`thread_id`), fan-out / fan-in | `LG/lg07_ToolNode_graph02.py` ~ `lg09_fanout_fanin2_concat.py` |
 | [day35 LangGraph·ML](day35_1022_langgraph_ml.ipynb) | 10/22 | 결과 통합 노드(LLM으로 fan-in 결과 정리), 트리 계열 모델(`DecisionTree`·`RandomForest`·`GradientBoosting`·`XGBoost`), `feature_importances_`, XGBoost 중요도 기준(weight·gain·`plot_importance`) | `LG/lg09_fanout_fanin3.py`, `ml/m01_feature_importances01.py` ~ `m01_feature_importances04_graph.py` |
 | [day41 NPU](day41_1030_npu.ipynb) | 10/30 | WSL 배포판(`wsl --install --name`·`wsl -l -v`), 윈도우 파일 접근(`/mnt/c`·`explorer.exe`), SSH 키 접속(`ssh -i -p`·`chmod 600`), NPU 상태 확인(`furiosa-smi`), `watch`, 서버 사양 확인(`lscpu`·`free -h`), Miniconda 설치(`curl -O`·`conda init`·`conda create`), 윈도우에서 바로 접속(`.ssh/config`·`icacls`) | — |
+| [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | — |
+| [day42 ML](day42_1102_ml.ipynb) | 11/02 | Hold-out 분할의 한계, K-Fold 교차 검증(5-Fold 분할·데이터 손실 방지·일반화 성능), random_state 착시, K-Fold 검증 데이터(`validation_split`), Stratified K-Fold, 최종 가중치 결정(전체 재학습·앙상블) | `ml/m02_kfold_00_iris.py` ~ `m02_kfold_01_california.py` |
 
 ## 주제별 찾아보기
 
@@ -92,6 +94,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `stratify=y`로 라벨 비율 유지하며 분할 — [day07 §3](day07_0908_keras.ipynb)
 - `stratify`에 원핫(2차원)을 넘겨도 되는가 — [day08 §6 cf)](day08_0909_keras.ipynb)
 - 여러 배열을 한 번에 나누기 — `train_test_split(x1, x2, y)`, 모두 같은 행 번호로 나눠 넣은 순서대로 `(train, test)` 쌍 — [day26 §1](day26_1008_keras.ipynb)
+- Hold-out 분할의 한계 — 테스트 데이터 손실과 평가 편향 — [day42 ML §1](day42_1102_ml.ipynb)
+- K-Fold 교차 검증 — k개 묶음으로 나눠 테스트셋을 바꿔가며 k번 학습·평가, 모든 데이터 활용 — [day42 ML §2](day42_1102_ml.ipynb)
+- K-Fold 검증 데이터 — fold 내부 학습셋에서 `validation_split`으로 조기종료 모니터링 — [day42 ML §3](day42_1102_ml.ipynb)
+- Stratified K-Fold — 분류 라벨 비율을 fold마다 동일하게 유지 — [day42 ML §3 cf)](day42_1102_ml.ipynb)
+- random_state의 착시 — 우연히 쉬운 테스트셋이 걸려 점수가 과대평가되는 현상 — [day42 ML §2 cf)](day42_1102_ml.ipynb)
+- 최종 가중치 결정 — K-Fold 검증 후 전체 데이터(100%) 재학습 또는 k개 모델 앙상블 — [day42 ML §4](day42_1102_ml.ipynb)
 
 #### 스케일링
 - 특성 스케일이 제각각이면 생기는 문제 — [day03 §5](day03_0902_keras.ipynb)
@@ -539,6 +547,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - r2 음수 — 평균값 하나로 예측한 것보다 못함, 트리 하나는 과적합되기 쉬움 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
 - 회귀의 `stratify` — 클래스 비율을 맞추는 옵션이라 연속값 y에는 안 씀 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
 - XGBoost 중요도 기준 — weight(분기 횟수, F score)·gain(손실 감소 평균), `get_booster().get_score(importance_type=…)`, `plot_importance`, XGB `feature_importances_`는 gain 비율 — [day35 LangGraph·ML §4](day35_1022_langgraph_ml.ipynb)
+- K-Fold 교차 검증 — k개 묶음으로 나눠 테스트셋을 번갈아 검증, 모델 일반화 성능 평가 — [day42 ML §2](day42_1102_ml.ipynb)
 
 ### WSL·원격 접속
 
