@@ -47,6 +47,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day41 NPU](day41_1030_npu.ipynb) | 10/30 | WSL 배포판(`wsl --install --name`·`wsl -l -v`), 윈도우 파일 접근(`/mnt/c`·`explorer.exe`), SSH 키 접속(`ssh -i -p`·`chmod 600`), NPU 상태 확인(`furiosa-smi`), `watch`, 서버 사양 확인(`lscpu`·`free -h`), Miniconda 설치(`curl -O`·`conda init`·`conda create`), 윈도우에서 바로 접속(`.ssh/config`·`icacls`) | — |
 | [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | — |
 | [day42 ML](day42_1102_ml.ipynb) | 11/02 | Hold-out 분할의 한계, K-Fold 교차 검증(5-Fold 분할·데이터 손실 방지·일반화 성능), random_state 착시, K-Fold 검증 데이터(`validation_split`), Stratified K-Fold, 최종 가중치 결정(전체 재학습·앙상블) | `ml/m02_kfold_00_iris.py` ~ `m02_kfold_01_california.py` |
+| [day43 ML](day43_1103_ml.ipynb) | 11/03 | `train_test_split`과 K-Fold 함께 쓰기(스케일링 위치), `cross_val_predict`, `all_estimators`로 모델 전체 비교 | `ml/m02_kfold_05_kaggle_bike.py` ~ `m05_all_estimators2_kfold.py` |
 
 ## 주제별 찾아보기
 
@@ -100,6 +101,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - Stratified K-Fold — 분류 라벨 비율을 fold마다 동일하게 유지 — [day42 ML §3 cf)](day42_1102_ml.ipynb)
 - random_state의 착시 — 우연히 쉬운 테스트셋이 걸려 점수가 과대평가되는 현상 — [day42 ML §2 cf)](day42_1102_ml.ipynb)
 - 최종 가중치 결정 — K-Fold 검증 후 전체 데이터(100%) 재학습 또는 k개 모델 앙상블 — [day42 ML §4](day42_1102_ml.ipynb)
+- `train_test_split` + K-Fold — test를 먼저 떼고 train 안에서만 교차 검증, 스케일러는 train에만 `fit` — [day43 ML §1](day43_1103_ml.ipynb)
+- `cross_val_predict` — 점수 대신 fold별 예측값을 모아 돌려줌, `accuracy_score`·`r2_score`로 따로 계산 — [day43 ML §2](day43_1103_ml.ipynb)
+- `cross_val_predict` 점수가 더 낮은 이유 — 넘긴 데이터를 다시 k등분해 학습하므로 학습량이 줄어서 — [day43 ML §2 cf)](day43_1103_ml.ipynb)
+- `all_estimators` — sklearn 모델을 `(이름, 클래스)`로 전부 받아 비교, `type_filter`, `try`/`except`로 에러 넘김 — [day43 ML §3](day43_1103_ml.ipynb)
 
 #### 스케일링
 - 특성 스케일이 제각각이면 생기는 문제 — [day03 §5](day03_0902_keras.ipynb)
