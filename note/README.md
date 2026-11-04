@@ -48,6 +48,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | — |
 | [day42 ML](day42_1102_ml.ipynb) | 11/02 | Hold-out 분할의 한계, K-Fold 교차 검증(5-Fold 분할·데이터 손실 방지·일반화 성능), random_state 착시, K-Fold 검증 데이터(`validation_split`), Stratified K-Fold, 최종 가중치 결정(전체 재학습·앙상블) | `ml/m02_kfold_00_iris.py` ~ `m02_kfold_01_california.py` |
 | [day43 ML](day43_1103_ml.ipynb) | 11/03 | `train_test_split`과 K-Fold 함께 쓰기(스케일링 위치), `cross_val_predict`, `all_estimators`로 모델 전체 비교 | `ml/m02_kfold_05_kaggle_bike.py` ~ `m05_all_estimators2_kfold.py` |
+| [day44 양자화](day44_1104_quantization.ipynb) | 11/04 | 양자화 파이프라인(BF16 → GGUF → Q4_K_M), Ollama(`ollama run`·`ollama list`), llama.cpp 빌드(`cmake -B`·`-j`), 파이썬 가상환경(`venv`·`source`), GGUF 변환(`convert_hf_to_gguf.py`), 양자화 실행(`llama-quantize`) | — |
 
 ## 주제별 찾아보기
 
@@ -570,6 +571,24 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 윈도우에서 바로 접속 — `.ssh/config`에 `Host`·`HostName`·`User`·`Port`·`IdentityFile`·`IdentitiesOnly`, 키 권한은 `icacls`로 좁힘, `known_hosts`는 WSL과 따로 — [day41 NPU §9](day41_1030_npu.ipynb)
 - VS Code 원격 폴더 — `Remote - SSH` 확장 + `Ctrl + Shift + P` → `Connect to Host` → `Open Folder`, 적는 경로는 서버 쪽 — [day41 NPU §9 cf)](day41_1030_npu.ipynb)
 - 미니콘다와 아나콘다 — 기능 차이는 작고 아나콘다는 패키지가 미리 깔려 있음, 큰 조직은 아나콘다에 유료 라이선스가 필요해 미니콘다를 씀 — [day41 NPU §7 cf)](day41_1030_npu.ipynb)
+
+### 양자화·로컬 LLM
+
+- 양자화 파이프라인 — 원본 BF16 → GGUF 변환(형식만 바꿈) → 양자화(비트 줄임), 중간 BF16 GGUF를 두고 타입만 바꿔 다시 양자화 — [day44 양자화 §1](day44_1104_quantization.ipynb)
+- GGUF — llama.cpp가 쓰는 모델 파일 형식, 가중치와 토크나이저·메타데이터를 한 파일에 담음 — [day44 양자화 §1](day44_1104_quantization.ipynb)
+- BPW — 가중치 하나당 평균 비트 수, 양자화 전후를 비교하는 기준 — [day44 양자화 §1](day44_1104_quantization.ipynb)
+- Ollama — `curl -fsSL … | sh`로 설치하면 systemd 서비스로 등록, `ollama run <모델>:<태그>`는 없으면 받고 실행, `ollama list`로 목록, 양자화는 못 함 — [day44 양자화 §2](day44_1104_quantization.ipynb)
+- llama.cpp 빌드 — `cmake -B build -DCMAKE_BUILD_TYPE=Release`로 설정 후 `cmake --build build -j <개수>`, 실행 파일은 `build/bin` 아래 — [day44 양자화 §3](day44_1104_quantization.ipynb)
+- 파이썬 가상환경 — `python3 -m venv <경로>` + `source <경로>/bin/activate`, 셸 세션마다 다시 활성화해야 함, `which python3`으로 확인 — [day44 양자화 §4](day44_1104_quantization.ipynb)
+- requirements.txt가 목록만 있을 때 — llama.cpp는 `-r`로 다른 파일을 불러오는 줄만 있고 실제 패키지는 `requirements/` 아래 스크립트별로 나뉨, `pip check`로 의존성 확인 — [day44 양자화 §4 cf)](day44_1104_quantization.ipynb)
+- requirements의 버전 핀 — 불러오는 파일에 `==`로 박혀 있으면 수동 업그레이드가 재설치 때 되돌아가므로, 올린 뒤에는 다시 설치하지 않음 — [day44 양자화 §4 cf)](day44_1104_quantization.ipynb)
+- GGUF 변환 — `convert_hf_to_gguf.py`의 `--outfile`·`--outtype`·`--remote <계정>/<모델>`, `-it`는 instruction tuned — [day44 양자화 §5](day44_1104_quantization.ipynb)
+- 변환 결과 검증 — 에러 없이 끝나도 내용이 깨질 수 있어 양자화 전에 `llama-completion`으로 한 번 돌려 확인 — [day44 양자화 §5](day44_1104_quantization.ipynb)
+- 변환이 막힐 때 — `ModuleNotFoundError`는 가상환경 미활성, `AttributeError: 'list' object has no attribute 'keys'`는 트랜스포머가 그 모델을 모를 때 — [day44 양자화 §5 cf)](day44_1104_quantization.ipynb)
+- 디스크가 꽉 찰 때 — WSL `ext4.vhdx`가 더 못 늘어나 `Input/output error`, 가상 디스크는 자동으로 줄지 않아 `wsl --manage <배포판> --set-sparse true`로 회수 — [day44 양자화 §5 cf)](day44_1104_quantization.ipynb)
+- 양자화 실행 — `llama-quantize <입력> <출력> <타입>` 인자 순서, `Q4_K_M`은 4비트 K-quant의 중간 크기, 결과 BPW는 4비트보다 큼 — [day44 양자화 §6](day44_1104_quantization.ipynb)
+- 어느 단계가 깨졌는지 가리기 — `llama-completion`으로 대화 템플릿을 빼고 돌려보고, BF16과 양자화 결과를 각각 확인, `gguf_dump.py --no-tensors`로 메타데이터 확인 — [day44 양자화 §6 cf)](day44_1104_quantization.ipynb)
+- GGUF의 `chat_template` — 지시 학습 모델을 제대로 변환하면 들어가는 키, 있으면 llama.cpp가 대화 모드로 바뀌고 Jinja 형식은 `--jinja` 필요 — [day44 양자화 §6 cf)](day44_1104_quantization.ipynb)
 
 ## 작성 규칙
 
