@@ -47,8 +47,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day41 NPU](day41_1030_npu.ipynb) | 10/30 | WSL 배포판(`wsl --install --name`·`wsl -l -v`), 윈도우 파일 접근(`/mnt/c`·`explorer.exe`), SSH 키 접속(`ssh -i -p`·`chmod 600`), NPU 상태 확인(`furiosa-smi`), `watch`, 서버 사양 확인(`lscpu`·`free -h`), Miniconda 설치(`curl -O`·`conda init`·`conda create`), 윈도우에서 바로 접속(`.ssh/config`·`icacls`) | — |
 | [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | — |
 | [day42 ML](day42_1102_ml.ipynb) | 11/02 | Hold-out 분할의 한계, K-Fold 교차 검증(5-Fold 분할·데이터 손실 방지·일반화 성능), random_state 착시, K-Fold 검증 데이터(`validation_split`), Stratified K-Fold, 최종 가중치 결정(전체 재학습·앙상블) | `ml/m02_kfold_00_iris.py` ~ `m02_kfold_01_california.py` |
+| [day43 NPU](day43_1103_npu.ipynb) | 11/03 | 파이썬에서 모델 올리기(`LLM`·`SamplingParams`·`apply_chat_template`·`generate`), Tool Calling(`tools` 스키마·`tool_choice`·`tool_calls`), `fxb`로 사전 컴파일(`fxb build`·`fxb cache ls`·`fxb add`·`--fxb`) | — |
 | [day43 ML](day43_1103_ml.ipynb) | 11/03 | `train_test_split`과 K-Fold 함께 쓰기(스케일링 위치), `cross_val_predict`, `all_estimators`로 모델 전체 비교 | `ml/m02_kfold_05_kaggle_bike.py` ~ `m05_all_estimators2_kfold.py` |
 | [day44 양자화](day44_1104_quantization.ipynb) | 11/04 | 양자화 파이프라인(BF16 → GGUF → Q4_K_M), Ollama(`ollama run`·`ollama list`), llama.cpp 빌드(`cmake -B`·`-j`), 파이썬 가상환경(`venv`·`source`), GGUF 변환(`convert_hf_to_gguf.py`), 양자화 실행(`llama-quantize`) | — |
+| [day45 NPU](day45_1105_npu.ipynb) | 11/05 | OpenAI 호환 API로 NPU 서버 추론(`OpenAI`·`models.list()`), LangChain 연결(`ChatOpenAI`·`invoke`), 처리량 측정(`time.perf_counter`·tokens/s), 스트리밍(`stream=True`·`delta.content`·`llm.stream`), 공통 설정 모듈(`get_llm`·`import`) | — |
+| [day45 파이썬](day45_1105_python.ipynb) | 11/05 | 모듈(`import`·`from … import`), `__name__`과 `__main__`, `if __name__=='__main__':`, 모듈별 이름공간(전역 변수가 모듈마다 따로), 패키지(`machine.car`·`from machine import car, tv`) | `python/p01_car.py` ~ `p51_from_module.py` |
+| [day45 ML](day45_1105_ml.ipynb) | 11/05 | 데이터셋 리스트로 묶어 돌리기(`enumerate`·`np.argmax`), for문 파라미터 튜닝(조합마다 `best_score` 갱신), `GridSearchCV`(`parameters` 딕셔너리 목록·`best_params_`·`best_estimator_`·`best_score_`) | `ml/m06_all_estimators1_datasets.py` ~ `m08_GridSearchCV_02_diabetes.py` |
 
 ## 주제별 찾아보기
 
@@ -419,6 +423,15 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 메서드 체이닝 — `.flow(...).next()`는 두 줄을 한 줄로 붙인 것 — [day17 §2-2](day17_0922_keras.ipynb)
 - 제너레이터 — `( ... for ...)`는 print하면 `<generator object>`, `list()`로 꺼내야 값이 보임 — [day24 RAG §1-2](day24_1006_rag.ipynb)
 
+#### 모듈·패키지
+- 모듈 — 함수·변수를 모아 둔 `.py` 파일, `import <모듈>`은 이름을 붙여 쓰고 `from <모듈> import <이름>`은 바로 씀, 같은 폴더면 경로를 안 적음 — [day45 파이썬 §1](day45_1105_python.ipynb)
+- `__pycache__` — 처음 불러올 때 생기는 `.pyc`, 다음부터 파일을 다시 해석하지 않고 그것을 씀 — [day45 파이썬 §1](day45_1105_python.ipynb)
+- `__name__` — 직접 실행하면 `__main__`, `import`되면 모듈 이름. `import`가 그 파일을 한 번 실행하기 때문에 구분이 필요함 — [day45 파이썬 §2](day45_1105_python.ipynb)
+- `if __name__=='__main__':` — 직접 실행할 때만 돌리는 블록, 다른 파일에서 쓸 `def`는 바깥에 둠 — [day45 파이썬 §3](day45_1105_python.ipynb)
+- 모듈별 이름공간 — 전역 변수는 적어 둔 모듈 안에서만 전역, 함수가 보는 변수는 어디서 불렀는지가 아니라 어디에 정의됐는지로 정해짐 — [day45 파이썬 §4](day45_1105_python.ipynb)
+- 패키지 — 모듈을 폴더로 묶어 `machine.car`처럼 점으로 내려감, `import machine.car as car`·`from machine import car, tv`, 폴더 안의 폴더도 점으로 이어짐 — [day45 파이썬 §5](day45_1105_python.ipynb)
+- `__init__.py` — 없어도 폴더가 패키지로 인식됨(3.3부터) — [day45 파이썬 §5](day45_1105_python.ipynb)
+
 #### 문자열·경로
 - 윈도우 경로에서 `\\`와 `/` — [day04 §5](day04_0903_keras.ipynb)
 - 문자열 연결로 경로 만들기, 이스케이프 `\\` — [day05 §0](day05_0904_keras.ipynb)
@@ -554,6 +567,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 회귀의 `stratify` — 클래스 비율을 맞추는 옵션이라 연속값 y에는 안 씀 — [day35 LangGraph·ML §3 cf)](day35_1022_langgraph_ml.ipynb)
 - XGBoost 중요도 기준 — weight(분기 횟수, F score)·gain(손실 감소 평균), `get_booster().get_score(importance_type=…)`, `plot_importance`, XGB `feature_importances_`는 gain 비율 — [day35 LangGraph·ML §4](day35_1022_langgraph_ml.ipynb)
 - K-Fold 교차 검증 — k개 묶음으로 나눠 테스트셋을 번갈아 검증, 모델 일반화 성능 평가 — [day42 ML §2](day42_1102_ml.ipynb)
+- 데이터셋 리스트 — 데이터셋을 리스트로 묶고 `enumerate`로 차례로 돌림, 이름 리스트를 같은 순서로 두고 `np.argmax`로 최고 모델만 뽑음 — [day45 ML §1](day45_1105_ml.ipynb)
+- for문 파라미터 튜닝 — 후보 값을 리스트로 두고 이중 for문으로 모든 조합, `if score > best_score`로 갱신, test로 조합을 고르면 그 점수를 성능으로 쓸 수 없음 — [day45 ML §2](day45_1105_ml.ipynb)
+- `GridSearchCV` — 모델을 감싸 조합 × fold를 전부 돌리고 최적 조합으로 다시 훈련, `parameters`는 딕셔너리 목록, `best_params_`·`best_estimator_`·`best_score_`, `verbose`·`n_jobs` — [day45 ML §3](day45_1105_ml.ipynb)
+- `best_score_`와 `model.score` — 앞은 train을 나눠 만든 검증 점수, 뒤는 test 점수, 차이가 벌어지면 그 조합이 train에만 맞춰진 것 — [day45 ML §3 cf)](day45_1105_ml.ipynb)
 
 ### WSL·원격 접속
 
@@ -589,6 +606,23 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 양자화 실행 — `llama-quantize <입력> <출력> <타입>` 인자 순서, `Q4_K_M`은 4비트 K-quant의 중간 크기, 결과 BPW는 4비트보다 큼 — [day44 양자화 §6](day44_1104_quantization.ipynb)
 - 어느 단계가 깨졌는지 가리기 — `llama-completion`으로 대화 템플릿을 빼고 돌려보고, BF16과 양자화 결과를 각각 확인, `gguf_dump.py --no-tensors`로 메타데이터 확인 — [day44 양자화 §6 cf)](day44_1104_quantization.ipynb)
 - GGUF의 `chat_template` — 지시 학습 모델을 제대로 변환하면 들어가는 키, 있으면 llama.cpp가 대화 모드로 바뀌고 Jinja 형식은 `--jinja` 필요 — [day44 양자화 §6 cf)](day44_1104_quantization.ipynb)
+
+### NPU 서빙
+
+- `furiosa_llm`의 `LLM` — 서버를 띄우지 않고 파이썬에서 모델을 NPU에 올림, `SamplingParams`로 생성 옵션, `apply_chat_template`으로 대화 형식 문자열, `generate`는 목록을 받고 목록을 돌려줌 — [day43 NPU §1](day43_1103_npu.ipynb)
+- `top_p`·`top_k` — 다음 토큰 후보를 누적 확률로 자르는 값과 개수로 자르는 값, `temperature`는 분포 자체를 바꿈 — [day43 NPU §1 cf)](day43_1103_npu.ipynb)
+- Tool Calling — `tools`에 함수 이름·설명·JSON 스키마를 적어 넘기면 모델이 함수와 인자를 골라 `tool_calls`로 돌려줌, 실행은 코드가 함 — [day43 NPU §2](day43_1103_npu.ipynb)
+- `tool_choice` — 모델이 고르는 단계를 건너뛰고 쓸 함수를 지정, 생략하면 모델이 직접 고르거나 함수를 안 씀 — [day43 NPU §2](day43_1103_npu.ipynb)
+- `fxb` — 모델을 NPU 전용 실행 파일로 미리 컴파일, `fxb build <모델> <이름>`·`fxb cache ls`·`fxb add`, `LLM(fxb=…)`이나 `serve --fxb`로 씀 — [day43 NPU §3](day43_1103_npu.ipynb)
+- 교차 컴파일 도구 — `fxb build`에 arm64용 `gcc-aarch64-linux-gnu`·`libc6-dev-arm64-cross`가 필요, `--no-install-recommends`로 적어 둔 것만 설치 — [day43 NPU §3](day43_1103_npu.ipynb)
+- OpenAI 호환 API — `furiosa-llm serve`로 띄운 서버에 `OpenAI(base_url=…/v1, api_key=…)`로 붙음, `client.models.list().data[0].id`로 올라간 모델 이름을 받음 — [day45 NPU §1](day45_1105_npu.ipynb)
+- `serve` 옵션 — `--devices npu:<번호>`로 장치 지정, `--host 0.0.0.0`은 어느 쪽에서 온 요청도 받음, `--port`로 받을 포트 — [day45 NPU §1](day45_1105_npu.ipynb)
+- `ChatOpenAI` — LangChain에서 OpenAI 호환 서버에 붙는 객체, 문자열 하나를 `invoke`로 넘기고 답변은 `content`로 꺼냄 — [day45 NPU §2](day45_1105_npu.ipynb)
+- 처리량 측정 — `max_tokens`를 고정하고 `time.perf_counter()` 차이로 나눠 tokens/s, 조건을 고정해야 비교됨 — [day45 NPU §3](day45_1105_npu.ipynb)
+- `temperature`·`top_p` — 다음 토큰을 고를 때 주는 무작위성과, 누적 확률로 자르는 후보 범위 — [day45 NPU §3](day45_1105_npu.ipynb)
+- 스트리밍 — `stream=True`로 조각을 받아 `chunk.choices[0].delta.content`를 `print(…, end="", flush=True)`로 이어 붙임, 첫 글자가 나오는 시점만 빨라짐 — [day45 NPU §4](day45_1105_npu.ipynb)
+- LangChain 스트리밍 — `llm.stream("…")`으로 조각을 받고 `chunk.content`로 꺼냄, 빈 조각을 거르는 `if`가 필요 없음 — [day45 NPU §4 cf)](day45_1105_npu.ipynb)
+- 공통 설정 모듈 — 객체를 만드는 코드를 `get_llm` 함수로 빼 `common.py`에 두고 `from common import get_llm`으로 불러 씀, 주소가 바뀌면 한 군데만 고침 — [day45 NPU §5](day45_1105_npu.ipynb)
 
 ## 작성 규칙
 
