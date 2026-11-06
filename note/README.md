@@ -53,6 +53,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day45 NPU](day45_1105_npu.ipynb) | 11/05 | OpenAI 호환 API로 NPU 서버 추론(`OpenAI`·`models.list()`), LangChain 연결(`ChatOpenAI`·`invoke`), 처리량 측정(`time.perf_counter`·tokens/s), 스트리밍(`stream=True`·`delta.content`·`llm.stream`), 공통 설정 모듈(`get_llm`·`import`) | — |
 | [day45 파이썬](day45_1105_python.ipynb) | 11/05 | 모듈(`import`·`from … import`), `__name__`과 `__main__`, `if __name__=='__main__':`, 모듈별 이름공간(전역 변수가 모듈마다 따로), 패키지(`machine.car`·`from machine import car, tv`) | `python/p01_car.py` ~ `p51_from_module.py` |
 | [day45 ML](day45_1105_ml.ipynb) | 11/05 | 데이터셋 리스트로 묶어 돌리기(`enumerate`·`np.argmax`), for문 파라미터 튜닝(조합마다 `best_score` 갱신), `GridSearchCV`(`parameters` 딕셔너리 목록·`best_params_`·`best_estimator_`·`best_score_`) | `ml/m06_all_estimators1_datasets.py` ~ `m08_GridSearchCV_02_diabetes.py` |
+| [day46 ML](day46_1106_ml.ipynb) | 11/06 | `RandomizedSearchCV`(`n_iter`로 조합 일부만 뽑기·`random_state`), `refit`(최종 재학습과 `best_estimator_`) | `ml/m09_RandomSearchCV_00.py` ~ `m09_RandomSearchCV_02_diabetes.py` |
+| [day46](day46_1106_keras.ipynb) | 11/06 | 케라스 모델 하이퍼파라미터 튜닝(모델을 함수로·하이퍼파라미터 딕셔너리·`KerasRegressor` 래핑·`RandomizedSearchCV`) | `keras2/keras77_hyperParameter02_diabetes.py` |
 
 ## 주제별 찾아보기
 
@@ -338,6 +340,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 하이퍼파라미터란 — [day01 §8, §9](day01_0831_keras.ipynb)
 - 층·epoch만 키운다고 좋아지지 않는다 (튜닝 기록) — [day05 §4](day05_0904_keras.ipynb)
 - 튜닝 우선순위 — 데이터 > 짝 > 구조 > 규제 > 학습 설정 — [day17 §4-7](day17_0922_keras.ipynb)
+- 케라스 모델 래핑 — 모델을 함수로 만들고 `KerasRegressor`로 감싸 sklearn 탐색기에 넣음 — [day46 §1](day46_1106_keras.ipynb)
+- 하이퍼파라미터 딕셔너리 — 키는 모델 함수의 매개변수 이름과 같아야 하고, `batch_size`는 래퍼가 받음 — [day46 §1](day46_1106_keras.ipynb)
 
 ### 평가·예측
 
@@ -571,6 +575,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - for문 파라미터 튜닝 — 후보 값을 리스트로 두고 이중 for문으로 모든 조합, `if score > best_score`로 갱신, test로 조합을 고르면 그 점수를 성능으로 쓸 수 없음 — [day45 ML §2](day45_1105_ml.ipynb)
 - `GridSearchCV` — 모델을 감싸 조합 × fold를 전부 돌리고 최적 조합으로 다시 훈련, `parameters`는 딕셔너리 목록, `best_params_`·`best_estimator_`·`best_score_`, `verbose`·`n_jobs` — [day45 ML §3](day45_1105_ml.ipynb)
 - `best_score_`와 `model.score` — 앞은 train을 나눠 만든 검증 점수, 뒤는 test 점수, 차이가 벌어지면 그 조합이 train에만 맞춰진 것 — [day45 ML §3 cf)](day45_1105_ml.ipynb)
+- `RandomizedSearchCV` — 조합 전체가 아니라 `n_iter`개만 무작위로 뽑아 교차 검증, `random_state`로 뽑히는 조합 고정, 전체 최적이라는 보장은 없음 — [day46 ML §1](day46_1106_ml.ipynb)
+- `refit` — 기본값은 최적 조합으로 train 전체를 다시 학습해 `best_estimator_`를 만듦, `refit=False`면 `model.score`·`model.predict`를 쓸 수 없고 `best_params_`·`best_score_`만 남음 — [day46 ML §1 cf)](day46_1106_ml.ipynb)
 
 ### WSL·원격 접속
 
