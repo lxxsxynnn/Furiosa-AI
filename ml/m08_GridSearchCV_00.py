@@ -32,7 +32,9 @@ parameters = [
 xgb = XGBClassifier()
 model = GridSearchCV(xgb, parameters, cv=kfold,     # 모델을 Wrapping한 알고리즘
                      verbose=1,
-                    n_jobs=1,
+                     n_jobs=1,
+                     refit=True,
+                    #  random_state=333,    전부 다 돌리기 때문에 random_state(어떤 파라미터를 선택할 것인가에 대한 난수)가 필요없음
                     )
 
 # 3. 훈련
