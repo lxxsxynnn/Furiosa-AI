@@ -55,6 +55,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day45 ML](day45_1105_ml.ipynb) | 11/05 | 데이터셋 리스트로 묶어 돌리기(`enumerate`·`np.argmax`), for문 파라미터 튜닝(조합마다 `best_score` 갱신), `GridSearchCV`(`parameters` 딕셔너리 목록·`best_params_`·`best_estimator_`·`best_score_`) | `ml/m06_all_estimators1_datasets.py` ~ `m08_GridSearchCV_02_diabetes.py` |
 | [day46 ML](day46_1106_ml.ipynb) | 11/06 | `RandomizedSearchCV`(`n_iter`로 조합 일부만 뽑기·`random_state`), `refit`(최종 재학습과 `best_estimator_`) | `ml/m09_RandomSearchCV_00.py` ~ `m09_RandomSearchCV_02_diabetes.py` |
 | [day46](day46_1106_keras.ipynb) | 11/06 | 케라스 모델 하이퍼파라미터 튜닝(모델을 함수로·하이퍼파라미터 딕셔너리·`KerasRegressor` 래핑·`RandomizedSearchCV`) | `keras2/keras77_hyperParameter02_diabetes.py` |
+| [day47 NPU](day47_1109_npu.ipynb) | 11/09 | 지연 시간 반복 측정(평균·prefill과 decode), 첫 응답 시간(`first_time`·`break`·`next(iter(...))`), `usage_metadata`(`output_tokens`·`cache_read`·TPS) | — |
+| [day47 ML](day47_1109_ml.ipynb) | 11/09 | `HalvingGridSearchCV`(적은 샘플로 조합 걸러내기·`factor`·`min_resources`·`max_resources`·iter 수) | `ml/m10_HalvingGridSearchCV_00.py` |
 
 ## 주제별 찾아보기
 
@@ -577,6 +579,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `best_score_`와 `model.score` — 앞은 train을 나눠 만든 검증 점수, 뒤는 test 점수, 차이가 벌어지면 그 조합이 train에만 맞춰진 것 — [day45 ML §3 cf)](day45_1105_ml.ipynb)
 - `RandomizedSearchCV` — 조합 전체가 아니라 `n_iter`개만 무작위로 뽑아 교차 검증, `random_state`로 뽑히는 조합 고정, 전체 최적이라는 보장은 없음 — [day46 ML §1](day46_1106_ml.ipynb)
 - `refit` — 기본값은 최적 조합으로 train 전체를 다시 학습해 `best_estimator_`를 만듦, `refit=False`면 `model.score`·`model.predict`를 쓸 수 없고 `best_params_`·`best_score_`만 남음 — [day46 ML §1 cf)](day46_1106_ml.ipynb)
+- `HalvingGridSearchCV` — 첫 iter에 샘플을 적게 주고 점수 낮은 조합을 버리면서 남은 조합에 샘플을 늘림, `factor`로 줄이는 비율과 늘리는 배수를 함께 정함 — [day47 ML §1](day47_1109_ml.ipynb)
+- `min_resources` — 첫 iter의 샘플 수, 기본값 `'exhaust'`의 하한은 `n_splits * 2 * 클래스 수`, iter 수는 `n_required_iterations`와 `n_possible_iterations` 중 작은 쪽 — [day47 ML §1](day47_1109_ml.ipynb)
+- Halving의 한계 — 초반 iter는 샘플이 적어 조합 점수가 흔들리고, 데이터가 적으면 iter를 늘릴 여유도 없어 전체를 쓰는 탐색을 씀 — [day47 ML §1 cf)](day47_1109_ml.ipynb)
 
 ### WSL·원격 접속
 
@@ -629,6 +634,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 스트리밍 — `stream=True`로 조각을 받아 `chunk.choices[0].delta.content`를 `print(…, end="", flush=True)`로 이어 붙임, 첫 글자가 나오는 시점만 빨라짐 — [day45 NPU §4](day45_1105_npu.ipynb)
 - LangChain 스트리밍 — `llm.stream("…")`으로 조각을 받고 `chunk.content`로 꺼냄, 빈 조각을 거르는 `if`가 필요 없음 — [day45 NPU §4 cf)](day45_1105_npu.ipynb)
 - 공통 설정 모듈 — 객체를 만드는 코드를 `get_llm` 함수로 빼 `common.py`에 두고 `from common import get_llm`으로 불러 씀, 주소가 바뀌면 한 군데만 고침 — [day45 NPU §5](day45_1105_npu.ipynb)
+- 지연 시간 측정 — 같은 호출을 반복해 평균을 냄, 입력 길이를 늘려도 전체 시간은 출력 토큰 수가 정함(prefill은 한 번, decode는 토큰마다) — [day47 NPU §1](day47_1109_npu.ipynb)
+- 첫 응답 시간 — 스트리밍 첫 조각까지의 시간, `first_time is None`으로 한 번만 기록하거나 `break`·`next(iter(...))`로 끊음 — [day47 NPU §2](day47_1109_npu.ipynb)
+- `usage_metadata` — 응답에 오는 `input_tokens`·`output_tokens`·`total_tokens`와 `cache_read`, TPS는 `output_tokens`로 나눔 — [day47 NPU §3](day47_1109_npu.ipynb)
+- 폴더로 나눈 뒤 import — `from furiosa1.common import get_llm`처럼 폴더 이름을 점으로 이어 적고, `__init__.py`는 없어도 됨 — [day47 NPU §3 cf)](day47_1109_npu.ipynb)
 
 ## 작성 규칙
 
