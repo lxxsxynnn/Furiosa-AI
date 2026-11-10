@@ -51,12 +51,14 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day43 ML](day43_1103_ml.ipynb) | 11/03 | `train_test_split`과 K-Fold 함께 쓰기(스케일링 위치), `cross_val_predict`, `all_estimators`로 모델 전체 비교 | `ml/m02_kfold_05_kaggle_bike.py` ~ `m05_all_estimators2_kfold.py` |
 | [day44 양자화](day44_1104_quantization.ipynb) | 11/04 | 양자화 파이프라인(BF16 → GGUF → Q4_K_M), Ollama(`ollama run`·`ollama list`), llama.cpp 빌드(`cmake -B`·`-j`), 파이썬 가상환경(`venv`·`source`), GGUF 변환(`convert_hf_to_gguf.py`), 양자화 실행(`llama-quantize`) | — |
 | [day45 NPU](day45_1105_npu.ipynb) | 11/05 | OpenAI 호환 API로 NPU 서버 추론(`OpenAI`·`models.list()`), LangChain 연결(`ChatOpenAI`·`invoke`), 처리량 측정(`time.perf_counter`·tokens/s), 스트리밍(`stream=True`·`delta.content`·`llm.stream`), 공통 설정 모듈(`get_llm`·`import`) | — |
-| [day45 파이썬](day45_1105_python.ipynb) | 11/05 | 모듈(`import`·`from … import`), `__name__`과 `__main__`, `if __name__=='__main__':`, 모듈별 이름공간(전역 변수가 모듈마다 따로), 패키지(`machine.car`·`from machine import car, tv`) | `python/p01_car.py` ~ `p51_from_module.py` |
+| [day45 파이썬](day45_1105_python.ipynb) | 11/05 | 모듈(`import`·`from … import`), `__name__`과 `__main__`, `if __name__=='__main__':`, 모듈별 이름공간(전역 변수가 모듈마다 따로), 패키지(`machine.car`·`from machine import car, tv`) | `python_pkg/p01_car.py` ~ `p51_from_module.py` |
 | [day45 ML](day45_1105_ml.ipynb) | 11/05 | 데이터셋 리스트로 묶어 돌리기(`enumerate`·`np.argmax`), for문 파라미터 튜닝(조합마다 `best_score` 갱신), `GridSearchCV`(`parameters` 딕셔너리 목록·`best_params_`·`best_estimator_`·`best_score_`) | `ml/m06_all_estimators1_datasets.py` ~ `m08_GridSearchCV_02_diabetes.py` |
 | [day46 ML](day46_1106_ml.ipynb) | 11/06 | `RandomizedSearchCV`(`n_iter`로 조합 일부만 뽑기·`random_state`), `refit`(최종 재학습과 `best_estimator_`) | `ml/m09_RandomSearchCV_00.py` ~ `m09_RandomSearchCV_02_diabetes.py` |
 | [day46](day46_1106_keras.ipynb) | 11/06 | 케라스 모델 하이퍼파라미터 튜닝(모델을 함수로·하이퍼파라미터 딕셔너리·`KerasRegressor` 래핑·`RandomizedSearchCV`) | `keras2/keras77_hyperParameter02_diabetes.py` |
 | [day47 NPU](day47_1109_npu.ipynb) | 11/09 | 지연 시간 반복 측정(평균·prefill과 decode), 첫 응답 시간(`first_time`·`break`·`next(iter(...))`), `usage_metadata`(`output_tokens`·`cache_read`·TPS) | — |
 | [day47 ML](day47_1109_ml.ipynb) | 11/09 | `HalvingGridSearchCV`(적은 샘플로 조합 걸러내기·`factor`·`min_resources`·`max_resources`·iter 수) | `ml/m10_HalvingGridSearchCV_00.py` |
+| [day48 NPU](day48_1110_npu.ipynb) | 11/10 | 동시 요청과 continuous batching(`ThreadPoolExecutor`·`pool.map`·동시 요청 수별 TPS와 지연), 측정 함수로 묶기(`run_once`·`usage_metadata` 없을 때 `.get`), KV Cache와 `/metrics`(prefix cache 적중률·사용률) | — |
+| [day48 파이썬](day48_1110_python.ipynb) | 11/10 | `map`(함수 이름만 넘기기·`list()`로 꺼내기), `lambda`(한 줄 함수·조건식·`map`과 함께) | `python/p01_map.py` ~ `p02_lambda3.py` |
 
 ## 주제별 찾아보기
 
@@ -428,6 +430,9 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 튜플 언패킹 — 묶여 나온 값을 변수에 나눠 담기 — [day16 §1-2](day16_0921_keras.ipynb)
 - 메서드 체이닝 — `.flow(...).next()`는 두 줄을 한 줄로 붙인 것 — [day17 §2-2](day17_0922_keras.ipynb)
 - 제너레이터 — `( ... for ...)`는 print하면 `<generator object>`, `list()`로 꺼내야 값이 보임 — [day24 RAG §1-2](day24_1006_rag.ipynb)
+- `map` — 함수를 값마다 한 번씩 적용, 함수는 이름만 넘기고 `list()`로 꺼냄, 한 번 꺼내면 비워짐 — [day48 파이썬 §1](day48_1110_python.ipynb)
+- `lambda` — 콜론 왼쪽이 매개변수, 오른쪽 식이 반환값, `return`을 적지 않고 식 하나만 들어감 — [day48 파이썬 §2](day48_1110_python.ipynb)
+- 조건식 — `값 if 조건 else 값` 순서, `lambda`나 `map` 안에 한 줄로 넣음 — [day48 파이썬 §2](day48_1110_python.ipynb)
 
 #### 모듈·패키지
 - 모듈 — 함수·변수를 모아 둔 `.py` 파일, `import <모듈>`은 이름을 붙여 쓰고 `from <모듈> import <이름>`은 바로 씀, 같은 폴더면 경로를 안 적음 — [day45 파이썬 §1](day45_1105_python.ipynb)
@@ -638,6 +643,11 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 첫 응답 시간 — 스트리밍 첫 조각까지의 시간, `first_time is None`으로 한 번만 기록하거나 `break`·`next(iter(...))`로 끊음 — [day47 NPU §2](day47_1109_npu.ipynb)
 - `usage_metadata` — 응답에 오는 `input_tokens`·`output_tokens`·`total_tokens`와 `cache_read`, TPS는 `output_tokens`로 나눔 — [day47 NPU §3](day47_1109_npu.ipynb)
 - 폴더로 나눈 뒤 import — `from furiosa1.common import get_llm`처럼 폴더 이름을 점으로 이어 적고, `__init__.py`는 없어도 됨 — [day47 NPU §3 cf)](day47_1109_npu.ipynb)
+- continuous batching — 서버가 들어온 요청을 묶어 함께 처리, 동시 요청 수를 늘리면 전체 시간과 TPS는 좋아지고 요청별 지연은 늘어남 — [day48 NPU §1](day48_1110_npu.ipynb)
+- `ThreadPoolExecutor` — `max_workers`로 동시 요청 수를 정하고 `pool.map`으로 질문마다 호출, `with`를 벗어날 때 모두 기다림 — [day48 NPU §1](day48_1110_npu.ipynb)
+- `run_once` — 시간·토큰·본문을 딕셔너리로 돌려주는 측정 함수, `usage_metadata`가 없을 때는 `or {}`와 `.get(키, 0)`으로 받음 — [day48 NPU §2](day48_1110_npu.ipynb)
+- KV Cache·prefix cache — 입력 앞부분 계산 결과를 들고 있다가 겹치는 입력에서 건너뜀, 겹치는 입력이 많을수록 적중률이 올라감 — [day48 NPU §3](day48_1110_npu.ipynb)
+- `/metrics` — 서버 상태 수치를 내주는 주소, `urllib.request.urlopen`으로 읽어 줄마다 마지막 칸을 꺼냄, 쌓이는 값이라 전후 차이로 봄 — [day48 NPU §3](day48_1110_npu.ipynb)
 
 ## 작성 규칙
 
