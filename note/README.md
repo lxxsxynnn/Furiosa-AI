@@ -60,7 +60,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day48 NPU](day48_1110_npu.ipynb) | 11/10 | 동시 요청과 continuous batching(`ThreadPoolExecutor`·`pool.map`·동시 요청 수별 TPS와 지연), 측정 함수로 묶기(`run_once`·`usage_metadata` 없을 때 `.get`), KV Cache와 `/metrics`(prefix cache 적중률·사용률) | — |
 | [day48 파이썬](day48_1110_python.ipynb) | 11/10 | `map`(함수 이름만 넘기기·`list()`로 꺼내기), `lambda`(한 줄 함수·조건식·`map`과 함께) | `python/p01_map.py` ~ `p02_lambda3.py` |
 | [day49 NPU](day49_1111_npu.ipynb) | 11/11 | 요청 처리량(RPS와 TPS·순차와 동시·동시 요청 수별 비교), 요청 대기(`submit`·`futures`·`max_workers`), 적중률 전후 차이 계산, 서버 상태 확인(`/metrics` 거르기·`num_requests_running`) | — |
-| [day50](day50_1112_keras.ipynb) | 11/12 | 활성화 함수 그래프(sigmoid·tanh·relu·silu·mish·elu·selu·leaky_relu 식 직접 구현·`np.arange`·`plt.plot`) | `keras2/keras78_01_simoid.py` ~ `keras78_08_leaky_lelu.py` |
+| [day50](day50_1112_keras.ipynb) | 11/12 | 활성화 함수 그래프(sigmoid·tanh·relu·silu·mish·elu·selu·leaky_relu 식 직접 구현·`np.arange`·`plt.plot`) | `keras2/keras78_01_simoid.py` ~ `keras78_08_leaky_relu.py` |
 
 ## 주제별 찾아보기
 
