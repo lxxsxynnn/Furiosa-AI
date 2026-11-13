@@ -45,22 +45,24 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day34 LangGraph](day34_1021_langgraph.ipynb) | 10/21 | 그래프 그림 출력(`BytesIO`·`plt.imshow`), 메모리(`InMemorySaver`·`thread_id`), fan-out / fan-in | `LG/lg07_ToolNode_graph02.py` ~ `lg09_fanout_fanin2_concat.py` |
 | [day35 LangGraph·ML](day35_1022_langgraph_ml.ipynb) | 10/22 | 결과 통합 노드(LLM으로 fan-in 결과 정리), 트리 계열 모델(`DecisionTree`·`RandomForest`·`GradientBoosting`·`XGBoost`), `feature_importances_`, XGBoost 중요도 기준(weight·gain·`plot_importance`) | `LG/lg09_fanout_fanin3.py`, `ml/m01_feature_importances01.py` ~ `m01_feature_importances04_graph.py` |
 | [day41 NPU](day41_1030_npu.ipynb) | 10/30 | WSL 배포판(`wsl --install --name`·`wsl -l -v`), 윈도우 파일 접근(`/mnt/c`·`explorer.exe`), SSH 키 접속(`ssh -i -p`·`chmod 600`), NPU 상태 확인(`furiosa-smi`), `watch`, 서버 사양 확인(`lscpu`·`free -h`), Miniconda 설치(`curl -O`·`conda init`·`conda create`), 윈도우에서 바로 접속(`.ssh/config`·`icacls`) | — |
-| [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | — |
+| [day42 NPU·LLM](day42_1102_npu.ipynb) | 11/02 | WSL 배포판 삭제·전환(`wsl --unregister`·`wsl -d`), 파일/권한 트러블슈팅(`wslpath`·`chown`·`chmod`), SSH 키 복사 및 원격 접속(`StrictHostKeyChecking=accept-new`), Hugging Face 캐시 관리(`hf cache ls`·`hf cache rm`), Furiosa-LLM NPU 모델 서빙(`Qwen3-8B`·`EXAONE-32B`·`Llama-3.1-8B`), 모델 파라미터(B)와 양자화(FP8·메모리 계산), `fxb build` 사전 컴파일, WSL vs SSH 환경 가이드 | `furiosa/furiosa1/test0001.py` |
 | [day42 ML](day42_1102_ml.ipynb) | 11/02 | Hold-out 분할의 한계, K-Fold 교차 검증(5-Fold 분할·데이터 손실 방지·일반화 성능), random_state 착시, K-Fold 검증 데이터(`validation_split`), Stratified K-Fold, 최종 가중치 결정(전체 재학습·앙상블) | `ml/m02_kfold_00_iris.py` ~ `m02_kfold_01_california.py` |
-| [day43 NPU](day43_1103_npu.ipynb) | 11/03 | 파이썬에서 모델 올리기(`LLM`·`SamplingParams`·`apply_chat_template`·`generate`), Tool Calling(`tools` 스키마·`tool_choice`·`tool_calls`), `fxb`로 사전 컴파일(`fxb build`·`fxb cache ls`·`fxb add`·`--fxb`) | — |
+| [day43 NPU](day43_1103_npu.ipynb) | 11/03 | 파이썬에서 모델 올리기(`LLM`·`SamplingParams`·`apply_chat_template`·`generate`), Tool Calling(`tools` 스키마·`tool_choice`·`tool_calls`), `fxb`로 사전 컴파일(`fxb build`·`fxb cache ls`·`fxb add`·`--fxb`) | `furiosa/furiosa1/f02_tutorial.py` ~ `f04_fxb_custom.py` |
 | [day43 ML](day43_1103_ml.ipynb) | 11/03 | `train_test_split`과 K-Fold 함께 쓰기(스케일링 위치), `cross_val_predict`, `all_estimators`로 모델 전체 비교 | `ml/m02_kfold_05_kaggle_bike.py` ~ `m05_all_estimators2_kfold.py` |
 | [day44 양자화](day44_1104_quantization.ipynb) | 11/04 | 양자화 파이프라인(BF16 → GGUF → Q4_K_M), Ollama(`ollama run`·`ollama list`), llama.cpp 빌드(`cmake -B`·`-j`), 파이썬 가상환경(`venv`·`source`), GGUF 변환(`convert_hf_to_gguf.py`), 양자화 실행(`llama-quantize`) | — |
-| [day45 NPU](day45_1105_npu.ipynb) | 11/05 | OpenAI 호환 API로 NPU 서버 추론(`OpenAI`·`models.list()`), LangChain 연결(`ChatOpenAI`·`invoke`), 처리량 측정(`time.perf_counter`·tokens/s), 스트리밍(`stream=True`·`delta.content`·`llm.stream`), 공통 설정 모듈(`get_llm`·`import`) | — |
+| [day45 NPU](day45_1105_npu.ipynb) | 11/05 | OpenAI 호환 API로 NPU 서버 추론(`OpenAI`·`models.list()`), LangChain 연결(`ChatOpenAI`·`invoke`), 처리량 측정(`time.perf_counter`·tokens/s), 스트리밍(`stream=True`·`delta.content`·`llm.stream`), 공통 설정 모듈(`get_llm`·`import`) | `furiosa/furiosa1/common.py`, `f01_furiosa_test.py`, `f05_langchain.py` ~ `f07_stream02_lc.py` |
 | [day45 파이썬](day45_1105_python.ipynb) | 11/05 | 모듈(`import`·`from … import`), `__name__`과 `__main__`, `if __name__=='__main__':`, 모듈별 이름공간(전역 변수가 모듈마다 따로), 패키지(`machine.car`·`from machine import car, tv`) | `python_pkg/p01_car.py` ~ `p51_from_module.py` |
 | [day45 ML](day45_1105_ml.ipynb) | 11/05 | 데이터셋 리스트로 묶어 돌리기(`enumerate`·`np.argmax`), for문 파라미터 튜닝(조합마다 `best_score` 갱신), `GridSearchCV`(`parameters` 딕셔너리 목록·`best_params_`·`best_estimator_`·`best_score_`) | `ml/m06_all_estimators1_datasets.py` ~ `m08_GridSearchCV_02_diabetes.py` |
 | [day46 ML](day46_1106_ml.ipynb) | 11/06 | `RandomizedSearchCV`(`n_iter`로 조합 일부만 뽑기·`random_state`), `refit`(최종 재학습과 `best_estimator_`) | `ml/m09_RandomSearchCV_00.py` ~ `m09_RandomSearchCV_02_diabetes.py` |
 | [day46](day46_1106_keras.ipynb) | 11/06 | 케라스 모델 하이퍼파라미터 튜닝(모델을 함수로·하이퍼파라미터 딕셔너리·`KerasRegressor` 래핑·`RandomizedSearchCV`) | `keras2/keras77_hyperParameter02_diabetes.py` |
-| [day47 NPU](day47_1109_npu.ipynb) | 11/09 | 지연 시간 반복 측정(평균·prefill과 decode), 첫 응답 시간(`first_time`·`break`·`next(iter(...))`), `usage_metadata`(`output_tokens`·`cache_read`·TPS) | — |
+| [day47 NPU](day47_1109_npu.ipynb) | 11/09 | 지연 시간 반복 측정(평균·prefill과 decode), 첫 응답 시간(`first_time`·`break`·`next(iter(...))`), `usage_metadata`(`output_tokens`·`cache_read`·TPS) | `furiosa/furiosa1/f08_pkg01_invoke.py`, `furiosa2/f11_basic.py` ~ `f18_compare.py` |
 | [day47 ML](day47_1109_ml.ipynb) | 11/09 | `HalvingGridSearchCV`(적은 샘플로 조합 걸러내기·`factor`·`min_resources`·`max_resources`·iter 수) | `ml/m10_HalvingGridSearchCV_00.py` |
-| [day48 NPU](day48_1110_npu.ipynb) | 11/10 | 동시 요청과 continuous batching(`ThreadPoolExecutor`·`pool.map`·동시 요청 수별 TPS와 지연), 측정 함수로 묶기(`run_once`·`usage_metadata` 없을 때 `.get`), KV Cache와 `/metrics`(prefix cache 적중률·사용률) | — |
+| [day48 NPU](day48_1110_npu.ipynb) | 11/10 | 동시 요청과 continuous batching(`ThreadPoolExecutor`·`pool.map`·동시 요청 수별 TPS와 지연), 측정 함수로 묶기(`run_once`·`usage_metadata` 없을 때 `.get`), KV Cache와 `/metrics`(prefix cache 적중률·사용률) | `furiosa/furiosa2/f21_continuous_batching1.py` ~ `f22_kv_cache2.py` |
 | [day48 파이썬](day48_1110_python.ipynb) | 11/10 | `map`(함수 이름만 넘기기·`list()`로 꺼내기), `lambda`(한 줄 함수·조건식·`map`과 함께) | `python/p01_map.py` ~ `p02_lambda3.py` |
-| [day49 NPU](day49_1111_npu.ipynb) | 11/11 | 요청 처리량(RPS와 TPS·순차와 동시·동시 요청 수별 비교), 요청 대기(`submit`·`futures`·`max_workers`), 적중률 전후 차이 계산, 서버 상태 확인(`/metrics` 거르기·`num_requests_running`) | — |
+| [day49 NPU](day49_1111_npu.ipynb) | 11/11 | 요청 처리량(RPS와 TPS·순차와 동시·동시 요청 수별 비교), 요청 대기(`submit`·`futures`·`max_workers`), 적중률 전후 차이 계산, 서버 상태 확인(`/metrics` 거르기·`num_requests_running`) | `furiosa/furiosa2/f21_continuous_batching3.py`, `f23_prefix_cache1.py` ~ `f29_check_server_metric.py` |
 | [day50](day50_1112_keras.ipynb) | 11/12 | 활성화 함수 그래프(sigmoid·tanh·relu·silu·mish·elu·selu·leaky_relu 식 직접 구현·`np.arange`·`plt.plot`) | `keras2/keras78_01_simoid.py` ~ `keras78_08_leaky_relu.py` |
+| [day51 NPU](day51_1113_npu.ipynb) | 11/13 | 스케줄링 모드(eager와 overlap·`--enable-overlap-scheduling`·서버 재시작과 `EBUSY`) | `furiosa/furiosa2/f30_overlap_eager1.py` ~ `f30_overlap_eager2.py` |
+| [day51](day51_1113_keras.ipynb) | 11/13 | softmax(합이 1인 비율·파이 차트), 경사하강법(기울기 반대 방향으로 이동·`lr * 기울기`), `learning_rate`(고정 폭으로 옮겨 보기·진동), TensorBoard(`log_dir`·`tensorboard --logdir`) | `keras2/keras78_09_softmax.py` ~ `keras80_Tensorboard.py` |
 
 ## 주제별 찾아보기
 
@@ -254,6 +256,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `activation='relu'` 넣는 위치 — [day05 §3](day05_0904_keras.ipynb)
 - 식을 그려서 모양 보기 — `np.arange`로 x 구간, sigmoid는 0~1, tanh는 -1~1, relu는 음수 구간 0 — [day50 §1](day50_1112_keras.ipynb)
 - SiLU(swish) — `x * sigmoid(x)`, 음수 쪽이 작은 음수로 남아 0에서 각지게 꺾이지 않음 — [day50 §1](day50_1112_keras.ipynb)
+- softmax — `np.exp(x) / np.sum(np.exp(x))`, 묶음 전체를 합이 1인 비율로 바꿔 확률로 읽음 — [day51 §1](day51_1113_keras.ipynb)
 - Mish — `x * tanh(log(1 + exp(x)))`, silu와 모양은 비슷하고 연산량은 더 많음 — [day50 §1](day50_1112_keras.ipynb)
 - ELU·SELU — 음수 구간을 지수 함수로, `-alpha`에 수렴, selu는 `lmbda`를 곱한 고정 상수 버전 — [day50 §1](day50_1112_keras.ipynb)
 - leaky_relu — 음수 구간에 `alpha`(0.01)를 곱해 기울기를 남김 — [day50 §1](day50_1112_keras.ipynb)
@@ -335,6 +338,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `learning_rate` — 보폭. 작으면 느리고 크면 바닥에서 진동 — [day17 §4-3](day17_0922_keras.ipynb)
 - `learning_rate` 직접 지정 — 문자열은 기본값, 객체는 값을 정할 수 있음 — [day18 §1-1](day18_0923_keras.ipynb)
 - `lr`이 너무 크면 찍기 수준 — 다중분류 loss가 `ln(클래스 수)` 근처면 학습 안 된 것 — [day18 §1 cf)](day18_0923_keras.ipynb)
+- 고정 폭으로 옮겨 보기 — `w ± lr`의 loss를 견줘 방향만 정하면 최솟값에서 `lr` 간격으로 진동 — [day51 §3](day51_1113_keras.ipynb)
 
 #### 콜백
 - 콜백(callback)과 `EarlyStopping` — [day06 §7](day06_0907_keras.ipynb)
@@ -342,6 +346,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `restore_best_weights`가 필요한 이유 — [day06 §7](day06_0907_keras.ipynb)
 - `patience`는 epochs의 10~20% 선 — [day06 §7](day06_0907_keras.ipynb)
 - Early Stopping이 최고 모델을 보장하지 않는 이유 — [day07 §1](day07_0908_keras.ipynb)
+- `TensorBoard` 콜백 — `log_dir`에 로그를 남기고 `tensorboard --logdir=<경로>`로 띄워 `localhost:6006`에서 봄 — [day51 §4](day51_1113_keras.ipynb)
 - 체크포인트 파일명에 `{epoch}`·`{val_loss}` 넣기 — [day11 §0](day11_0914_keras.ipynb)
 - `ModelCheckpoint` — 훈련 중 최고 지점을 파일로 저장 — [day11 §2](day11_0914_keras.ipynb)
 - `restore_best_weights`(메모리) vs 체크포인트(파일) — [day11 §2](day11_0914_keras.ipynb)
@@ -411,6 +416,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 갱신식 — 미분은 방향만 알려주고 거리는 알려주지 않음 — [day17 §4-2](day17_0922_keras.ipynb)
 - 지역 최저점 — 출발 위치에 따라 다른 곳에 도착. 튜닝이 필요한 이유 — [day17 §4-4](day17_0922_keras.ipynb)
 - 자동 미분 — 역전파를 손으로 쓰지 않는 이유, BPTT — [day17 §4-5](day17_0922_keras.ipynb)
+- 경사하강법 직접 구현 — `x = x - lr * gradient(x)`, 기울기가 작아지면 이동 폭도 줄어 최솟값에서 멈춤 — [day51 §2](day51_1113_keras.ipynb)
 
 #### 회귀와 분류
 - 회귀와 분류의 차이 — [day04 §1](day04_0903_keras.ipynb)
@@ -660,6 +666,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `submit`과 `futures` — 요청을 하나씩 맡기고 `f.result()`로 꺼냄, 인자가 여러 개여도 되고 `max_workers`를 넘는 요청은 기다림 — [day49 NPU §2](day49_1111_npu.ipynb)
 - 적중률 전후 차이 — 쌓이는 메트릭은 요청 전후를 읽어 뺀 값으로 계산, 적중해도 입력 토큰 수는 그대로 — [day49 NPU §3](day49_1111_npu.ipynb)
 - 메트릭 거르기 — `requests.get`·`raise_for_status`로 받아 키워드로 줄을 남김, `num_requests_running`·`num_requests_waiting`으로 처리·대기 요청 수를 봄 — [day49 NPU §4](day49_1111_npu.ipynb)
+- 스케줄링 모드 — eager는 배치를 끝낸 뒤 다음 배치를 준비, `--enable-overlap-scheduling`은 NPU가 돌아가는 동안 CPU가 준비 — [day51 NPU §1](day51_1113_npu.ipynb)
+- 모드 바꿔 띄우기 — 서버를 내리지 않고 같은 장치로 다시 띄우면 `EBUSY`, 프로세스를 `kill`하고 `furiosa-smi status`로 확인 — [day51 NPU §1 cf)](day51_1113_npu.ipynb)
 
 ## 작성 규칙
 
