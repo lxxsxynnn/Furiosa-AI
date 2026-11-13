@@ -59,6 +59,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day47 ML](day47_1109_ml.ipynb) | 11/09 | `HalvingGridSearchCV`(적은 샘플로 조합 걸러내기·`factor`·`min_resources`·`max_resources`·iter 수) | `ml/m10_HalvingGridSearchCV_00.py` |
 | [day48 NPU](day48_1110_npu.ipynb) | 11/10 | 동시 요청과 continuous batching(`ThreadPoolExecutor`·`pool.map`·동시 요청 수별 TPS와 지연), 측정 함수로 묶기(`run_once`·`usage_metadata` 없을 때 `.get`), KV Cache와 `/metrics`(prefix cache 적중률·사용률) | — |
 | [day48 파이썬](day48_1110_python.ipynb) | 11/10 | `map`(함수 이름만 넘기기·`list()`로 꺼내기), `lambda`(한 줄 함수·조건식·`map`과 함께) | `python/p01_map.py` ~ `p02_lambda3.py` |
+| [day49 NPU](day49_1111_npu.ipynb) | 11/11 | 요청 처리량(RPS와 TPS·순차와 동시·동시 요청 수별 비교), 요청 대기(`submit`·`futures`·`max_workers`), 적중률 전후 차이 계산, 서버 상태 확인(`/metrics` 거르기·`num_requests_running`) | — |
+| [day50](day50_1112_keras.ipynb) | 11/12 | 활성화 함수 그래프(sigmoid·tanh·relu·silu·mish·elu·selu·leaky_relu 식 직접 구현·`np.arange`·`plt.plot`) | `keras2/keras78_01_simoid.py` ~ `keras78_08_leaky_lelu.py` |
 
 ## 주제별 찾아보기
 
@@ -250,6 +252,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 활성화 함수란, 기본값이 `linear`라는 것 — [day05 §3](day05_0904_keras.ipynb)
 - ReLU가 비선형성을 주는 이유, 기울기 소실 방지 — [day05 §3](day05_0904_keras.ipynb)
 - `activation='relu'` 넣는 위치 — [day05 §3](day05_0904_keras.ipynb)
+- 식을 그려서 모양 보기 — `np.arange`로 x 구간, sigmoid는 0~1, tanh는 -1~1, relu는 음수 구간 0 — [day50 §1](day50_1112_keras.ipynb)
+- SiLU(swish) — `x * sigmoid(x)`, 음수 쪽이 작은 음수로 남아 0에서 각지게 꺾이지 않음 — [day50 §1](day50_1112_keras.ipynb)
+- Mish — `x * tanh(log(1 + exp(x)))`, silu와 모양은 비슷하고 연산량은 더 많음 — [day50 §1](day50_1112_keras.ipynb)
+- ELU·SELU — 음수 구간을 지수 함수로, `-alpha`에 수렴, selu는 `lmbda`를 곱한 고정 상수 버전 — [day50 §1](day50_1112_keras.ipynb)
+- leaky_relu — 음수 구간에 `alpha`(0.01)를 곱해 기울기를 남김 — [day50 §1](day50_1112_keras.ipynb)
+- 넘파이로 식 적기 — `np.maximum`, `np.where`, `(x > 0) * x`로 구간 나누기, `lambda`가 예약어라 `lmbda` — [day50 §1 cf)](day50_1112_keras.ipynb)
 
 #### Dropout·BatchNormalization
 - `Dropout` — 배치마다 랜덤하게 노드를 꺼서 과적합 줄이기 — [day11 §3](day11_0914_keras.ipynb)
@@ -648,6 +656,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `run_once` — 시간·토큰·본문을 딕셔너리로 돌려주는 측정 함수, `usage_metadata`가 없을 때는 `or {}`와 `.get(키, 0)`으로 받음 — [day48 NPU §2](day48_1110_npu.ipynb)
 - KV Cache·prefix cache — 입력 앞부분 계산 결과를 들고 있다가 겹치는 입력에서 건너뜀, 겹치는 입력이 많을수록 적중률이 올라감 — [day48 NPU §3](day48_1110_npu.ipynb)
 - `/metrics` — 서버 상태 수치를 내주는 주소, `urllib.request.urlopen`으로 읽어 줄마다 마지막 칸을 꺼냄, 쌓이는 값이라 전후 차이로 봄 — [day48 NPU §3](day48_1110_npu.ipynb)
+- RPS와 TPS — 앞은 초당 요청 수, 뒤는 초당 출력 토큰 수, 순차 요청은 요청 하나의 지연에 묶이고 동시 요청은 둘이 같이 올라감 — [day49 NPU §1](day49_1111_npu.ipynb)
+- `submit`과 `futures` — 요청을 하나씩 맡기고 `f.result()`로 꺼냄, 인자가 여러 개여도 되고 `max_workers`를 넘는 요청은 기다림 — [day49 NPU §2](day49_1111_npu.ipynb)
+- 적중률 전후 차이 — 쌓이는 메트릭은 요청 전후를 읽어 뺀 값으로 계산, 적중해도 입력 토큰 수는 그대로 — [day49 NPU §3](day49_1111_npu.ipynb)
+- 메트릭 거르기 — `requests.get`·`raise_for_status`로 받아 키워드로 줄을 남김, `num_requests_running`·`num_requests_waiting`으로 처리·대기 요청 수를 봄 — [day49 NPU §4](day49_1111_npu.ipynb)
 
 ## 작성 규칙
 
