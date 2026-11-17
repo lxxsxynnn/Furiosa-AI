@@ -63,6 +63,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day50](day50_1112_keras.ipynb) | 11/12 | 활성화 함수 그래프(sigmoid·tanh·relu·silu·mish·elu·selu·leaky_relu 식 직접 구현·`np.arange`·`plt.plot`) | `keras2/keras78_01_simoid.py` ~ `keras78_08_leaky_relu.py` |
 | [day51 NPU](day51_1113_npu.ipynb) | 11/13 | 스케줄링 모드(eager와 overlap·`--enable-overlap-scheduling`·서버 재시작과 `EBUSY`) | `furiosa/furiosa2/f30_overlap_eager1.py` ~ `f30_overlap_eager2.py` |
 | [day51](day51_1113_keras.ipynb) | 11/13 | softmax(합이 1인 비율·파이 차트), 경사하강법(기울기 반대 방향으로 이동·`lr * 기울기`), `learning_rate`(고정 폭으로 옮겨 보기·진동), TensorBoard(`log_dir`·`tensorboard --logdir`) | `keras2/keras78_09_softmax.py` ~ `keras80_Tensorboard.py` |
+| [day52 판다스](day52_1116_pandas.ipynb) | 11/16 | 결측치 처리 방법(`dropna`·`fillna`·`ffill`/`bfill`·보간·모델), `interpolate`(앞뒤 값을 직선으로 이음·양 끝 처리), Imputer(`SimpleImputer`·`strategy`·`KNNImputer`·`IterativeImputer`), `loc`와 `iloc`(행 이름과 행 번호·콤마 인덱싱) | `pandas/pd01_imputation1_interpolate.py` ~ `pd06_loc_iloc2_range.py` |
 
 ## 주제별 찾아보기
 
@@ -91,6 +92,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - train은 `dropna()`, test는 `fillna()`인 이유 — [day04 §6](day04_0903_keras.ipynb)
 - `df.isna()` / `df.isnull()`은 같은 함수 — [day04 §6](day04_0903_keras.ipynb)
 - `dropna()`가 행 단위로 지운다는 것 — [day04 §6 cf)](day04_0903_keras.ipynb)
+- 결측치 처리 방법 — 삭제·임의의 값 채우기·앞뒤 값 채우기·보간·모델 예측, 트리 계열은 결측치 영향을 덜 받음 — [day52 판다스 §1](day52_1116_pandas.ipynb)
+- `fillna`에 Series — `data.mean()`을 넘기면 열마다 그 열의 값으로 채움, 열을 따로 지정하면 방법을 달리할 수 있음 — [day52 판다스 §1](day52_1116_pandas.ipynb)
+- `interpolate` — 앞뒤 값을 직선으로 이어 중간을 채움, 마지막이 비면 앞의 값이 들어가고 첫 번째가 비면 NaN으로 남음 — [day52 판다스 §2](day52_1116_pandas.ipynb)
+- `SimpleImputer` — 열마다 통계값 하나로 채움, `strategy`에 `'median'`·`'most_frequent'`·`'constant'`나 함수를 줌 — [day52 판다스 §3](day52_1116_pandas.ipynb)
+- `KNNImputer`·`IterativeImputer` — 다른 열의 값까지 보고 채움, 뒤는 `estimator`로 예측을 반복하고 `tol`에서 멈춤 — [day52 판다스 §3](day52_1116_pandas.ipynb)
+- `enable_iterative_imputer` — 실험 단계라 먼저 import해야 `IterativeImputer`를 불러올 수 있음 — [day52 판다스 §3 cf)](day52_1116_pandas.ipynb)
 
 #### x·y 나누기
 - x / y 분리 (`drop(axis=1)`, `df['count']`) — [day04 §7](day04_0903_keras.ipynb)
@@ -486,6 +493,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `drop`은 라벨만 받음 — 위치로 자르려면 `iloc` — [day20 §3-1](day20_0929_keras.ipynb)
 - `index`는 행 이름, `columns`는 열 이름 — 지우려는 축에서 뽑음 — [day20 §3-2](day20_0929_keras.ipynb)
 - `drop`은 원본을 바꾸지 않음 — `inplace`와 재대입의 차이 — [day20 §3 cf)](day20_0929_keras.ipynb)
+- `loc`와 `iloc` — 앞은 행 이름, 뒤는 행 번호로 행을 고름, `df[...]` 하나는 열 이름만 받음 — [day52 판다스 §4](day52_1116_pandas.ipynb)
+- 콤마 인덱싱 — `df.loc[행, 열]`은 이름끼리, `df.iloc[행, 열]`은 번호끼리만 쓰고 섞을 수 없음 — [day52 판다스 §4](day52_1116_pandas.ipynb)
+- `loc` 슬라이싱 — 끝 이름을 포함하고 `iloc`은 끝 번호를 포함하지 않음 — [day52 판다스 §4](day52_1116_pandas.ipynb)
+- 대괄호 나눠 쓰기 — 행을 먼저 꺼내면 Series라 이름·번호 둘 다 되고, `df.iloc[3][2]`는 pandas 3.0에서 에러 — [day52 판다스 §4 cf)](day52_1116_pandas.ipynb)
 
 ### 환경·저장
 
