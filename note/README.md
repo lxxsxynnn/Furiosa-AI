@@ -64,6 +64,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day51 NPU](day51_1113_npu.ipynb) | 11/13 | 스케줄링 모드(eager와 overlap·`--enable-overlap-scheduling`·서버 재시작과 `EBUSY`) | `furiosa/furiosa2/f30_overlap_eager1.py` ~ `f30_overlap_eager2.py` |
 | [day51](day51_1113_keras.ipynb) | 11/13 | softmax(합이 1인 비율·파이 차트), 경사하강법(기울기 반대 방향으로 이동·`lr * 기울기`), `learning_rate`(고정 폭으로 옮겨 보기·진동), TensorBoard(`log_dir`·`tensorboard --logdir`) | `keras2/keras78_09_softmax.py` ~ `keras80_Tensorboard.py` |
 | [day52 판다스](day52_1116_pandas.ipynb) | 11/16 | 결측치 처리 방법(`dropna`·`fillna`·`ffill`/`bfill`·보간·모델), `interpolate`(앞뒤 값을 직선으로 이음·양 끝 처리), Imputer(`SimpleImputer`·`strategy`·`KNNImputer`·`IterativeImputer`), `loc`와 `iloc`(행 이름과 행 번호·콤마 인덱싱) | `pandas/pd01_imputation1_interpolate.py` ~ `pd06_loc_iloc2_range.py` |
+| [day53 판다스](day53_1117_pandas.ipynb) | 11/17 | 조건 인덱싱(`df[df['시가'] >= 1100]`·True/False Series), 이상치(`np.percentile`·IQR·1.5배 경계·`np.where`), 박스 플롯(`plt.boxplot`·`axhline`·`subplot`), 이상치 처리(NaN으로 바꿔 `interpolate`·`bfill`) | `pandas/pd06_loc_iloc3_condition.py` ~ `pd07_outlier2.py` |
 
 ## 주제별 찾아보기
 
@@ -98,6 +99,11 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `SimpleImputer` — 열마다 통계값 하나로 채움, `strategy`에 `'median'`·`'most_frequent'`·`'constant'`나 함수를 줌 — [day52 판다스 §3](day52_1116_pandas.ipynb)
 - `KNNImputer`·`IterativeImputer` — 다른 열의 값까지 보고 채움, 뒤는 `estimator`로 예측을 반복하고 `tol`에서 멈춤 — [day52 판다스 §3](day52_1116_pandas.ipynb)
 - `enable_iterative_imputer` — 실험 단계라 먼저 import해야 `IterativeImputer`를 불러올 수 있음 — [day52 판다스 §3 cf)](day52_1116_pandas.ipynb)
+- 이상치와 IQR — 1사분위와 3사분위의 차이를 1.5배 해 양쪽으로 벌린 바깥을 이상치로 봄, 사분위수는 극단값에 흔들리지 않음 — [day53 판다스 §2](day53_1117_pandas.ipynb)
+- `np.percentile`·`np.where` — 사분위를 한 번에 받고 경계 밖 위치를 찾음, 조건마다 괄호를 쳐야 `|`가 먼저 묶이지 않음 — [day53 판다스 §2](day53_1117_pandas.ipynb)
+- 박스 플롯 — `plt.boxplot`은 2차원을 열마다 그리므로 전치해서 넣고, 범위가 다르면 `subplot`으로 나눔 — [day53 판다스 §2 cf)](day53_1117_pandas.ipynb)
+- 이상치 처리 — 값이 들어 있어 `dropna`로는 안 지워지므로 NaN으로 바꿔 결측치 처리로 넘김 — [day53 판다스 §3](day53_1117_pandas.ipynb)
+- `interpolate` 다음 `bfill` — 순서가 바뀌면 양 끝이 먼저 채워져 보간이 들어갈 자리가 없어짐 — [day53 판다스 §3](day53_1117_pandas.ipynb)
 
 #### x·y 나누기
 - x / y 분리 (`drop(axis=1)`, `df['count']`) — [day04 §7](day04_0903_keras.ipynb)
@@ -497,6 +503,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 콤마 인덱싱 — `df.loc[행, 열]`은 이름끼리, `df.iloc[행, 열]`은 번호끼리만 쓰고 섞을 수 없음 — [day52 판다스 §4](day52_1116_pandas.ipynb)
 - `loc` 슬라이싱 — 끝 이름을 포함하고 `iloc`은 끝 번호를 포함하지 않음 — [day52 판다스 §4](day52_1116_pandas.ipynb)
 - 대괄호 나눠 쓰기 — 행을 먼저 꺼내면 Series라 이름·번호 둘 다 되고, `df.iloc[3][2]`는 pandas 3.0에서 에러 — [day52 판다스 §4 cf)](day52_1116_pandas.ipynb)
+- 조건 인덱싱 — 대괄호에 True/False Series를 넣으면 True인 행만 남음, 거른 결과도 DataFrame이라 뒤에 열을 붙여 꺼냄 — [day53 판다스 §1](day53_1117_pandas.ipynb)
+- 조건과 `loc` — `df[조건].loc['종가']`는 `loc`이 행을 보는 자리라 `KeyError`, 숫자로 둬야 크기 비교가 됨 — [day53 판다스 §1](day53_1117_pandas.ipynb)
 
 ### 환경·저장
 
