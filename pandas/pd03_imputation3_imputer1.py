@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+# SimpleImputer로 채우기 - 평균과 중위값
 data = pd.DataFrame([[2, np.nan, 6, 8, 10],
                     [2, 4, np.nan, 8, np.nan],
                     [2, 4, 6, 8, 10],

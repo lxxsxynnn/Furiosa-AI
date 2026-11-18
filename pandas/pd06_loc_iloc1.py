@@ -1,6 +1,7 @@
 import pandas as pd
 print(pd.__version__)   # 3.0.6
 
+# loc와 iloc으로 행 고르기
 data = [
     ['삼성', '1000', '2000'],
     ['현대', '1100', '3000'],

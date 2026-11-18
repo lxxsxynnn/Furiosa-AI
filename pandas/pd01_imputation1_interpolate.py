@@ -15,6 +15,7 @@
 6. 스케일링(Robust): 이상치에 자유로움
 '''
 import pandas as pd
+# 결측치 처리 방법과 interpolate로 보간하기
 import numpy as np
 
 dates = [

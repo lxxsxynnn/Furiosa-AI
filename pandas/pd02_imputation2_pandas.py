@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+# 판다스로 결측치 확인하고 삭제·채우기
 data = pd.DataFrame([[2, np.nan, 6, 8, 10],
                     [2, 4, np.nan, 8, np.nan],
                     [2, 4, 6, 8, 10],
