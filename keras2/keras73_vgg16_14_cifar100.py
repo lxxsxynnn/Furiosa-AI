@@ -14,6 +14,7 @@ from sklearn.metrics import accuracy_score
 import os
 import time
 
+# VGG16으로 전이 학습하기 - cifar100 데이터셋
 # 1. 데이터
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 

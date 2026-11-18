@@ -8,6 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.metrics import accuracy_score
 
+# VGG16으로 전이 학습하기 - 개와 고양이
 # 1. 데이터
 # train data 수치화 준비
 train_datagen = ImageDataGenerator(

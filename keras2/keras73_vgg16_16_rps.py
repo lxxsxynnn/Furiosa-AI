@@ -7,6 +7,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.metrics import accuracy_score
 
+# VGG16으로 전이 학습하기 - 가위바위보
 # 1. 데이터
 np_path = 'C:/study/_save/numpy/rps_npy/'
 

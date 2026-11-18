@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from keras.applications import VGG16
 
+# 층별 이름과 동결 여부를 표로 보기
 vgg16 = VGG16(
     weights='imagenet',
     include_top=False,

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 활성화 함수 그려보기 - leaky relu
 x = np.arange(-5, 5, 0.1)
 
 alpha = 0.01

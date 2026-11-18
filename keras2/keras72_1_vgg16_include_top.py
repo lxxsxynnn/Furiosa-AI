@@ -9,6 +9,7 @@ np.random.seed(333)
 tf.random.set_seed(333)
 
 from keras.applications import VGG16
+# VGG16 불러와서 include_top 확인하기
 # 2. 모델 구성
 # model = VGG16()
 

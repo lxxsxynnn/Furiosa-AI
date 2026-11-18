@@ -1,3 +1,4 @@
+# learning_rate만큼 직접 옮겨 보며 loss 비교하기
 x = 10
 y = 10
 w = 0.001

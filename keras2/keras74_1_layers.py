@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from keras.applications import VGG16
 
+# 전체 가중치와 훈련되는 가중치 개수 세어 보기
 vgg16 = VGG16(
     weights='imagenet',
     include_top=False,

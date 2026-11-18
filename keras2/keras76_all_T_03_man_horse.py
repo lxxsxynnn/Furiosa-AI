@@ -9,6 +9,7 @@ from keras.applications import NASNetMobile, NASNetLarge
 from keras.applications import EfficientNetB0, EfficientNetB1, EfficientNetB2
 from keras.applications import Xception
 
+# 전이 학습 모델 바꿔가며 비교하기 - 말과 사람
 model_list = [VGG19(include_top=False, input_shape=(100, 100, 3)),
               ResNet50(include_top=False, input_shape=(100, 100, 3)),
               ResNet101(include_top=False, input_shape=(100, 100, 3)),

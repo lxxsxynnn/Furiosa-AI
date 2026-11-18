@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 활성화 함수 그려보기 - sigmoid
 # def simoid(x):
 #     return 1 / (1 + np.exp(-x))
 

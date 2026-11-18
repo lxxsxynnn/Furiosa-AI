@@ -9,6 +9,7 @@ from tensorflow.keras.layers import Conv2D, Dense, GlobalAveragePooling2D, Dropo
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.metrics import accuracy_score
 
+# VGG16으로 전이 학습하기 - 성별 구분
 np_path = 'C:/study/_save/numpy/man-woman_npy/'
 
 start1 = time.time()

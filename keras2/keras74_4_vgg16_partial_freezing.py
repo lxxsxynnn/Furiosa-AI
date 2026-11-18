@@ -3,6 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from keras.applications import VGG16
 
+# VGG16 안의 층 하나만 골라서 동결하기
 model = VGG16(
     weights='imagenet',
     include_top=False,

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 최솟값이 하나인 2차 함수 그려보기
 x = np.linspace(-1, 6, 100)
 print(x, len(x))    # 100
 
@@ -11,5 +12,5 @@ plt.plot(x, y, 'k-')
 plt.plot(2, 2, 'sk', color='red')
 plt.grid()
 plt.xlabel('x')
-plt.xlabel('y')
+plt.ylabel('y')
 plt.show()

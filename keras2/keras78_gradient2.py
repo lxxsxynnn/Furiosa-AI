@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 경사하강법으로 최솟값 찾아가기
 x = np.linspace(-1, 6, 100)
 print(x, len(x))    # 100
 
