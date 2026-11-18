@@ -65,6 +65,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day51](day51_1113_keras.ipynb) | 11/13 | softmax(합이 1인 비율·파이 차트), 경사하강법(기울기 반대 방향으로 이동·`lr * 기울기`), `learning_rate`(고정 폭으로 옮겨 보기·진동), TensorBoard(`log_dir`·`tensorboard --logdir`) | `keras2/keras78_09_softmax.py` ~ `keras80_Tensorboard.py` |
 | [day52 판다스](day52_1116_pandas.ipynb) | 11/16 | 결측치 처리 방법(`dropna`·`fillna`·`ffill`/`bfill`·보간·모델), `interpolate`(앞뒤 값을 직선으로 이음·양 끝 처리), Imputer(`SimpleImputer`·`strategy`·`KNNImputer`·`IterativeImputer`), `loc`와 `iloc`(행 이름과 행 번호·콤마 인덱싱) | `pandas/pd01_imputation1_interpolate.py` ~ `pd06_loc_iloc2_range.py` |
 | [day53 판다스](day53_1117_pandas.ipynb) | 11/17 | 조건 인덱싱(`df[df['시가'] >= 1100]`·True/False Series), 이상치(`np.percentile`·IQR·1.5배 경계·`np.where`), 박스 플롯(`plt.boxplot`·`axhline`·`subplot`), 이상치 처리(NaN으로 바꿔 `interpolate`·`bfill`) | `pandas/pd06_loc_iloc3_condition.py` ~ `pd07_outlier2.py` |
+| [day54 NPU](day54_1118_npu.ipynb) | 11/18 | 도구 정의(`@tool`·타입 힌트·독스트링·`add.args`), 도구 등록(`--enable-auto-tool-choice`·`--tool-call-parser hermes`·`bind_tools`·`tool_calls`), 도구 실행(`add.invoke`), 추론에 밀려 잘리는 호출(`finish_reason`) | `furiosa/furiosa2/f31_tool_test.py` ~ `f33_tool_invoke.py` |
+| [day54 파이썬](day54_1118_python.ipynb) | 11/18 | 데코레이터(함수를 받아 기능을 덧붙여 돌려줌·`@deco`·`wrapper`·`return wrapper`), 실행 시간 측정 데코레이터(`time.perf_counter`) | `python/p03_Decorator.py` ~ `p04_Deco_timer.py` |
 
 ## 주제별 찾아보기
 
@@ -460,6 +462,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `map` — 함수를 값마다 한 번씩 적용, 함수는 이름만 넘기고 `list()`로 꺼냄, 한 번 꺼내면 비워짐 — [day48 파이썬 §1](day48_1110_python.ipynb)
 - `lambda` — 콜론 왼쪽이 매개변수, 오른쪽 식이 반환값, `return`을 적지 않고 식 하나만 들어감 — [day48 파이썬 §2](day48_1110_python.ipynb)
 - 조건식 — `값 if 조건 else 값` 순서, `lambda`나 `map` 안에 한 줄로 넣음 — [day48 파이썬 §2](day48_1110_python.ipynb)
+- 데코레이터 — 함수를 받아 기능을 덧붙인 함수를 돌려줌, `@deco`는 `hello2 = deco(hello2)`와 같고 `return wrapper`는 괄호 없이 함수 자체를 돌려줌 — [day54 파이썬 §1](day54_1118_python.ipynb)
+- 실행 시간 측정 데코레이터 — `func()` 앞뒤에서 `time.perf_counter()`로 재서 찍음, 재는 코드는 데코레이터에만 두고 꾸밀 함수에는 `@timer`만 붙임 — [day54 파이썬 §2](day54_1118_python.ipynb)
 
 #### 모듈·패키지
 - 모듈 — 함수·변수를 모아 둔 `.py` 파일, `import <모듈>`은 이름을 붙여 쓰고 `from <모듈> import <이름>`은 바로 씀, 같은 폴더면 경로를 안 적음 — [day45 파이썬 §1](day45_1105_python.ipynb)
@@ -687,6 +691,10 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 메트릭 거르기 — `requests.get`·`raise_for_status`로 받아 키워드로 줄을 남김, `num_requests_running`·`num_requests_waiting`으로 처리·대기 요청 수를 봄 — [day49 NPU §4](day49_1111_npu.ipynb)
 - 스케줄링 모드 — eager는 배치를 끝낸 뒤 다음 배치를 준비, `--enable-overlap-scheduling`은 NPU가 돌아가는 동안 CPU가 준비 — [day51 NPU §1](day51_1113_npu.ipynb)
 - 모드 바꿔 띄우기 — 서버를 내리지 않고 같은 장치로 다시 띄우면 `EBUSY`, 프로세스를 `kill`하고 `furiosa-smi status`로 확인 — [day51 NPU §1 cf)](day51_1113_npu.ipynb)
+- 도구 정의 — `@tool`을 붙여 LangChain 도구로 만듦, 타입 힌트가 자료형·독스트링이 설명이 되고 모델은 본문 없이 이름·설명·매개변수만 봄 — [day54 NPU §1](day54_1118_npu.ipynb)
+- 도구 등록 — `bind_tools([add])`로 도구 목록을 붙인 새 모델을 받고, 서버는 `--enable-auto-tool-choice`·`--tool-call-parser hermes`로 띄움, `tool_calls`에 `name`·`args`·`id` — [day54 NPU §2](day54_1118_npu.ipynb)
+- 도구 실행 — 모델은 호출 계획만 내놓고 `add.invoke(call['args'])`로 코드가 돌림 — [day54 NPU §3](day54_1118_npu.ipynb)
+- 잘린 도구 호출 — `<think>`로 적는 생각도 `max_tokens`에 들어가 모자라면 `tool_calls`가 비고 `finish_reason`이 `'length'`로 옴 — [day54 NPU §3 cf)](day54_1118_npu.ipynb)
 
 ## 작성 규칙
 
