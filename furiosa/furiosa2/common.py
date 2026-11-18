@@ -1,3 +1,13 @@
+'''
+furiosa-llm serve furiosa-ai/Qwen3-4B-FP8 \
+    --devices npu:6 \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --enable-overlap-scheduling \
+    --enable-auto-tool-choice \
+    --tool-call-parser hermes
+'''
+
 import time
 from langchain_openai import ChatOpenAI
 
