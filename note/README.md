@@ -67,6 +67,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day53 판다스](day53_1117_pandas.ipynb) | 11/17 | 조건 인덱싱(`df[df['시가'] >= 1100]`·True/False Series), 이상치(`np.percentile`·IQR·1.5배 경계·`np.where`), 박스 플롯(`plt.boxplot`·`axhline`·`subplot`), 이상치 처리(NaN으로 바꿔 `interpolate`·`bfill`) | `pandas/pd06_loc_iloc3_condition.py` ~ `pd07_outlier2.py` |
 | [day54 NPU](day54_1118_npu.ipynb) | 11/18 | 도구 정의(`@tool`·타입 힌트·독스트링·`add.args`), 도구 등록(`--enable-auto-tool-choice`·`--tool-call-parser hermes`·`bind_tools`·`tool_calls`), 도구 실행(`add.invoke`), 추론에 밀려 잘리는 호출(`finish_reason`) | `furiosa/furiosa2/f31_tool_test.py` ~ `f33_tool_invoke.py` |
 | [day54 파이썬](day54_1118_python.ipynb) | 11/18 | 데코레이터(함수를 받아 기능을 덧붙여 돌려줌·`@deco`·`wrapper`·`return wrapper`), 실행 시간 측정 데코레이터(`time.perf_counter`) | `python/p03_Decorator.py` ~ `p04_Deco_timer.py` |
+| [day56](day56_1120_keras.ipynb) | 11/20 | `BatchNormalization`(층을 지난 값을 배치 단위로 평균 0·분산 1), BN과 활성화 함수 순서(BN → ReLU와 ReLU → BN), XOR 문제(직선 하나로 가를 수 없는 문제·정답률 75%·AI 1차 겨울) | `keras2/keras81_BatchNormalization1.py` ~ `keras81_BatchNormalization2.py`, `ml/m11_1_and.py` ~ `m11_4_xor_unsolved.py` |
+| [day57 NPU](day57_1123_npu.ipynb) | 11/23 | Agent(`create_agent`·`messages`·도구 실행과 재투입까지 반복), 메시지 흐름(`HumanMessage`·`AIMessage`·`ToolMessage`), `system_prompt`, `config`(`recursion_limit`), 도구 실행 중 오류, 반복 입력(`while`·`input`) | `furiosa/furiosa2/f35_agent1.py` ~ `f39_agent_project.py` |
 
 ## 주제별 찾아보기
 
@@ -280,6 +282,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 #### Dropout·BatchNormalization
 - `Dropout` — 배치마다 랜덤하게 노드를 꺼서 과적합 줄이기 — [day11 §3](day11_0914_keras.ipynb)
 - `BatchNormalization`과 `Dropout` 순서 — 꺼진 상태의 통계를 배우면 예측 때와 안 맞음 — [day17 §3 cf)](day17_0922_keras.ipynb)
+- `BatchNormalization` — 층을 지난 값을 배치 단위로 평균 0·분산 1로 맞춤, 하는 일은 Standardization이고 데이터가 아니라 층 사이의 값에 적용함 — [day56 §1](day56_1120_keras.ipynb)
+- BN과 활성화 함수 순서 — ReLU가 음수를 0으로 잘라서 표준화에 들어가는 값이 달라짐, 정해진 답은 없고 CNN 계열에서는 대체로 BN → ReLU가 나았음 — [day56 §2](day56_1120_keras.ipynb)
 
 #### CNN
 - `Conv2D` — `kernel_size`(자르는 크기)와 `filters`(필터 개수 = 출력 채널 수) — [day12 §4](day12_0915_keras.ipynb)
@@ -422,6 +426,8 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - AI > ML > DL > LLM 포함 관계 — [day01 §4](day01_0831_keras.ipynb)
 - 학습(training) vs 추론(inference), NPU — [day03 §1](day03_0902_keras.ipynb)
 - 로스 = 에러 = 오차 = 코스트 — [day04 §1](day04_0903_keras.ipynb)
+- XOR 문제 — 퍼셉트론은 기준이 직선 하나라서, 1인 점 둘이 마주 보는 귀퉁이에 놓인 XOR은 직선을 어디에 그어도 넷 중 셋까지만 맞음(정답률 75%), 이 한계로 AI 1차 겨울이 옴 — [day56 §3](day56_1120_keras.ipynb)
+- 직선 하나로 가르는 모델 — `Perceptron`·`LinearSVC`·`Dense` 한 층은 AND·OR만 맞히고, XOR은 네 점을 모두 0으로 찍어 0.5가 나옴(75%는 상한일 뿐 학습이 가는 자리가 아님) — [day56 §3 cf)](day56_1120_keras.ipynb)
 
 #### 경사하강법
 - local minima와 global minima — [day07 §1](day07_0908_keras.ipynb)
@@ -695,6 +701,14 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 도구 등록 — `bind_tools([add])`로 도구 목록을 붙인 새 모델을 받고, 서버는 `--enable-auto-tool-choice`·`--tool-call-parser hermes`로 띄움, `tool_calls`에 `name`·`args`·`id` — [day54 NPU §2](day54_1118_npu.ipynb)
 - 도구 실행 — 모델은 호출 계획만 내놓고 `add.invoke(call['args'])`로 코드가 돌림 — [day54 NPU §3](day54_1118_npu.ipynb)
 - 잘린 도구 호출 — `<think>`로 적는 생각도 `max_tokens`에 들어가 모자라면 `tool_calls`가 비고 `finish_reason`이 `'length'`로 옴 — [day54 NPU §3 cf)](day54_1118_npu.ipynb)
+- Agent — `create_agent(model, tools, system_prompt)`로 만들고 `{"messages": [...]}`를 `invoke`에 넣음, `bind_tools`와 달리 도구 실행과 결과 재투입까지 반복 — [day57 NPU §1](day57_1123_npu.ipynb)
+- 메시지 흐름 — `HumanMessage` → `AIMessage`(`tool_calls`) → `ToolMessage` → `AIMessage`, `AIMessage`는 도구를 고른 자리와 최종 답 자리에 모두 나와 `tool_calls`가 있는지로 가름 — [day57 NPU §2](day57_1123_npu.ipynb)
+- 몰아 내는 도구 호출 — `AIMessage` 하나에 `tool_calls`가 여러 개, 중간 결과를 모델이 미리 계산해 다음 호출 인자에 넣음 — [day57 NPU §2 cf)](day57_1123_npu.ipynb)
+- `system_prompt` — 역할·도구를 쓸 조건·여러 단계일 때의 순서·오류일 때 할 일을 적어 둠, 한국어로 답하라는 지시가 없으면 수식 기호나 영어가 섞임 — [day57 NPU §3](day57_1123_npu.ipynb)
+- 괄호 안 문자열 이어 붙이기 — 쉼표 없이 나란히 두면 하나로 이어지고 쉼표를 넣으면 튜플, `content`에 튜플이 가면 블록 목록이 되어 서버가 400 — [day57 NPU §3 cf)](day57_1123_npu.ipynb)
+- `recursion_limit` — `config`로 넘기는 그래프 단계 수 상한, 닿으면 `GraphRecursionError`, 모델 호출과 도구 실행이 각각 한 단계라 도구를 한 번 쓰는 질문도 네 단계 — [day57 NPU §4](day57_1123_npu.ipynb)
+- 도구 실행 중 오류 — 도구가 낸 예외는 agent가 잡지 않고 `invoke`를 부른 자리까지 올라옴, 모델이 도구를 부르기 전에 거절하면 예외가 나지 않음 — [day57 NPU §5](day57_1123_npu.ipynb)
+- 반복 입력 — agent는 한 번 만들고 `while True` + `input()`으로 질문만 받음, 호출끼리 독립이라 앞 질문을 기억하지 않음 — [day57 NPU §6](day57_1123_npu.ipynb)
 
 ## 작성 규칙
 
