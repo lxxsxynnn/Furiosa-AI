@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" font-family="Malgun Gothic, Segoe UI, sans-serif">
+  <rect x="0" y="0" width="880" height="400" fill="#ffffff"/>
+  <text x="28" y="40" font-size="16" font-weight="bold" fill="#1a1a1a">예) 모델 네 개가 낸 「클래스 1일 확률」</text>
+  <text x="28" y="62" font-size="11.5" fill="#6b7280">같은 데이터를 네 모델에 넣고 각자 확률을 받음</text>
+  <line x1="249" y1="72" x2="249" y2="256" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="249" y="276" font-size="11" fill="#b91c1c" text-anchor="middle">0.5</text>
+  <text x="28" y="100.5" font-size="13" fill="#374151">XGB</text>
+  <rect x="104" y="85" width="290" height="22" rx="3" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="104" y="85" width="261" height="22" rx="3" fill="#1d4ed8"/>
+  <text x="406" y="100.5" font-size="12.5" fill="#374151">0.90</text>
+  <text x="452" y="100.5" font-size="12.5" fill="#6b7280">고른 쪽 1</text>
+  <text x="28" y="146.5" font-size="13" fill="#374151">LGBM</text>
+  <rect x="104" y="131" width="290" height="22" rx="3" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="104" y="131" width="130.5" height="22" rx="3" fill="#1d4ed8"/>
+  <text x="406" y="146.5" font-size="12.5" fill="#374151">0.45</text>
+  <text x="452" y="146.5" font-size="12.5" fill="#6b7280">고른 쪽 0</text>
+  <text x="28" y="192.5" font-size="13" fill="#374151">RF</text>
+  <rect x="104" y="177" width="290" height="22" rx="3" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="104" y="177" width="139.2" height="22" rx="3" fill="#1d4ed8"/>
+  <text x="406" y="192.5" font-size="12.5" fill="#374151">0.48</text>
+  <text x="452" y="192.5" font-size="12.5" fill="#6b7280">고른 쪽 0</text>
+  <text x="28" y="238.5" font-size="13" fill="#374151">CatBoost</text>
+  <rect x="104" y="223" width="290" height="22" rx="3" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="104" y="223" width="136.3" height="22" rx="3" fill="#1d4ed8"/>
+  <text x="406" y="238.5" font-size="12.5" fill="#374151">0.47</text>
+  <text x="452" y="238.5" font-size="12.5" fill="#6b7280">고른 쪽 0</text>
+  <rect x="548" y="76" width="304" height="112" rx="5" fill="#ffffff" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="566" y="102" font-size="14" font-weight="bold" fill="#6b7280">하드 보팅</text>
+  <text x="566" y="126" font-size="12" fill="#374151">고른 쪽을 한 표씩: 1, 0, 0, 0</text>
+  <text x="566" y="146" font-size="12" fill="#374151">0이 3표, 1이 1표</text>
+  <text x="834" y="172" font-size="15" font-weight="bold" fill="#6b7280" text-anchor="end">최종 0</text>
+  <rect x="548" y="212" width="304" height="112" rx="5" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="566" y="238" font-size="14" font-weight="bold" fill="#1d4ed8">소프트 보팅</text>
+  <text x="566" y="262" font-size="12" fill="#374151">확률 평균: (0.90 + 0.45 + 0.48 + 0.47) / 4</text>
+  <text x="566" y="282" font-size="12" fill="#374151">= 2.30 / 4 = 0.575</text>
+  <text x="834" y="308" font-size="15" font-weight="bold" fill="#1d4ed8" text-anchor="end">최종 1</text>
+  <text x="440.0" y="356" font-size="12.5" fill="#374151" text-anchor="middle">XGB가 0.90으로 확신해도 하드 보팅에서는 한 표, 소프트 보팅에서는 평균을 0.5 위로 끌어올림</text>
+  <text x="440.0" y="378" font-size="11.5" fill="#6b7280" text-anchor="middle">같은 확률인데도 두 방식의 최종 답이 갈림</text>
+</svg>

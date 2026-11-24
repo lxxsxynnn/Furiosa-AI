@@ -69,6 +69,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day54 파이썬](day54_1118_python.ipynb) | 11/18 | 데코레이터(함수를 받아 기능을 덧붙여 돌려줌·`@deco`·`wrapper`·`return wrapper`), 실행 시간 측정 데코레이터(`time.perf_counter`) | `python/p03_Decorator.py` ~ `p04_Deco_timer.py` |
 | [day56](day56_1120_keras.ipynb) | 11/20 | `BatchNormalization`(층을 지난 값을 배치 단위로 평균 0·분산 1), BN과 활성화 함수 순서(BN → ReLU와 ReLU → BN), XOR 문제(직선 하나로 가를 수 없는 문제·정답률 75%·AI 1차 겨울) | `keras2/keras81_BatchNormalization1.py` ~ `keras81_BatchNormalization2.py`, `ml/m11_1_and.py` ~ `m11_4_xor_unsolved.py` |
 | [day57 NPU](day57_1123_npu.ipynb) | 11/23 | Agent(`create_agent`·`messages`·도구 실행과 재투입까지 반복), 메시지 흐름(`HumanMessage`·`AIMessage`·`ToolMessage`), `system_prompt`, `config`(`recursion_limit`), 도구 실행 중 오류, 반복 입력(`while`·`input`) | `furiosa/furiosa2/f35_agent1.py` ~ `f39_agent_project.py` |
+| [day58 ML](day58_1124_ml.ipynb) | 11/24 | 앙상블(배깅·보팅·부스팅), 배깅(`BaggingClassifier`·`bootstrap`·`max_samples`·RandomForest와의 차이), 보팅(`VotingClassifier`·`estimators`), 하드 보팅과 소프트 보팅, 스태킹(예측값을 컬럼으로 모아 새 데이터셋), `StackingClassifier`·`StackingRegressor`(`cv`로 컬럼 만들기) | `ml/m12_Bagging01_california.py` ~ `m15_Stacking03_cancer.py` |
 
 ## 주제별 찾아보기
 
@@ -630,6 +631,15 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - `HalvingGridSearchCV` — 첫 iter에 샘플을 적게 주고 점수 낮은 조합을 버리면서 남은 조합에 샘플을 늘림, `factor`로 줄이는 비율과 늘리는 배수를 함께 정함 — [day47 ML §1](day47_1109_ml.ipynb)
 - `min_resources` — 첫 iter의 샘플 수, 기본값 `'exhaust'`의 하한은 `n_splits * 2 * 클래스 수`, iter 수는 `n_required_iterations`와 `n_possible_iterations` 중 작은 쪽 — [day47 ML §1](day47_1109_ml.ipynb)
 - Halving의 한계 — 초반 iter는 샘플이 적어 조합 점수가 흔들리고, 데이터가 적으면 iter를 늘릴 여유도 없어 전체를 쓰는 탐색을 씀 — [day47 ML §1 cf)](day47_1109_ml.ipynb)
+- 앙상블 — 모델을 여러 개 만들어 예측을 모음, 배깅은 데이터를 바꾸고 보팅은 모델을 바꿈, 분류는 다수결·회귀는 평균 — [day58 ML §1](day58_1124_ml.ipynb)
+- 배깅 — Bootstrap Aggregating, `BaggingClassifier(DecisionTreeClassifier(), n_estimators, max_samples)`, `bootstrap=True`가 기본으로 중복 허용 — [day58 ML §2](day58_1124_ml.ipynb)
+- RandomForest와 `BaggingClassifier` — 둘 다 트리 배깅이지만 RandomForest는 분기할 컬럼도 무작위로 골라 트리끼리 더 달라짐 — [day58 ML §2 cf)](day58_1124_ml.ipynb)
+- 보팅 — `VotingClassifier(estimators=[('이름', 모델)])`, 종류가 다른 모델은 틀리는 지점이 달라 서로 메움, `VotingRegressor`는 `voting` 인자가 없음 — [day58 ML §3](day58_1124_ml.ipynb)
+- 하드 보팅과 소프트 보팅 — 고른 클래스로 다수결 vs 클래스별 확률 평균, 하드는 확신의 크기가 버려져 통상 소프트를 쓰고 점수도 더 나은 편, 소프트는 `predict_proba`가 있어야 함 — [day58 ML §3-1](day58_1124_ml.ipynb)
+- LightGBM·CatBoost 훈련 로그 — 기본값이 과정을 찍는 설정, `LGBMClassifier(verbose=-1)`·`CatBoostClassifier(verbose=0)`로 끔 — [day58 ML §3-1 cf)](day58_1124_ml.ipynb)
+- 스태킹 — 모델들의 예측값을 컬럼으로 모아 새 데이터셋을 만들고 메타 모델을 한 번 더 훈련, `np.array(train_list).T`로 모델을 컬럼으로, `y`는 그대로 — [day58 ML §4](day58_1124_ml.ipynb)
+- `StackingClassifier`·`StackingRegressor` — `estimators`·`final_estimator`·`cv`·`n_jobs`, `cv`로 나눠 훈련에 쓰지 않은 부분의 예측으로 컬럼을 만듦, `fit` 한 번에 두 단계가 끝남 — [day58 ML §4-1](day58_1124_ml.ipynb)
+- 컬럼을 만드는 두 방식 — train 예측은 거의 안 틀려 오차 패턴이 안 담기고, 교차검증 예측은 남음, 샘플이 적으면 메타 모델이 과적합돼 기초 모델보다 낮아지기도 함 — [day58 ML §4 cf)](day58_1124_ml.ipynb)
 
 ### WSL·원격 접속
 
