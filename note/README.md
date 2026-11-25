@@ -70,6 +70,7 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 | [day56](day56_1120_keras.ipynb) | 11/20 | `BatchNormalization`(층을 지난 값을 배치 단위로 평균 0·분산 1), BN과 활성화 함수 순서(BN → ReLU와 ReLU → BN), XOR 문제(직선 하나로 가를 수 없는 문제·정답률 75%·AI 1차 겨울) | `keras2/keras81_BatchNormalization1.py` ~ `keras81_BatchNormalization2.py`, `ml/m11_1_and.py` ~ `m11_4_xor_unsolved.py` |
 | [day57 NPU](day57_1123_npu.ipynb) | 11/23 | Agent(`create_agent`·`messages`·도구 실행과 재투입까지 반복), 메시지 흐름(`HumanMessage`·`AIMessage`·`ToolMessage`), `system_prompt`, `config`(`recursion_limit`), 도구 실행 중 오류, 반복 입력(`while`·`input`) | `furiosa/furiosa2/f35_agent1.py` ~ `f39_agent_project.py` |
 | [day58 ML](day58_1124_ml.ipynb) | 11/24 | 앙상블(배깅·보팅·부스팅), 배깅(`BaggingClassifier`·`bootstrap`·`max_samples`·RandomForest와의 차이), 보팅(`VotingClassifier`·`estimators`), 하드 보팅과 소프트 보팅, 스태킹(예측값을 컬럼으로 모아 새 데이터셋), `StackingClassifier`·`StackingRegressor`(`cv`로 컬럼 만들기) | `ml/m12_Bagging01_california.py` ~ `m15_Stacking03_cancer.py` |
+| [day59 ML](day59_1125_ml.ipynb) | 11/25 | 모델 저장·불러오기(joblib·pickle·`save_model`), 파라미터 묶어 넘기기(`**`·`set_params`), 조기 종료(`early_stopping_rounds`·`eval_set`·`best_iteration`), 상관계수(`df.corr()`·히트맵·직선 관계만 봄) | `ml/m16_joblib1_save.py` ~ `m19_correlation_coefficient3.py` |
 
 ## 주제별 찾아보기
 
@@ -640,6 +641,12 @@ Keras 딥러닝 학습 노트. 날짜별 노트북 한 개 + 그날 실습한 �
 - 스태킹 — 모델들의 예측값을 컬럼으로 모아 새 데이터셋을 만들고 메타 모델을 한 번 더 훈련, `np.array(train_list).T`로 모델을 컬럼으로, `y`는 그대로 — [day58 ML §4](day58_1124_ml.ipynb)
 - `StackingClassifier`·`StackingRegressor` — `estimators`·`final_estimator`·`cv`·`n_jobs`, `cv`로 나눠 훈련에 쓰지 않은 부분의 예측으로 컬럼을 만듦, `fit` 한 번에 두 단계가 끝남 — [day58 ML §4-1](day58_1124_ml.ipynb)
 - 컬럼을 만드는 두 방식 — train 예측은 거의 안 틀려 오차 패턴이 안 담기고, 교차검증 예측은 남음, 샘플이 적으면 메타 모델이 과적합돼 기초 모델보다 낮아지기도 함 — [day58 ML §4 cf)](day58_1124_ml.ipynb)
+- 모델 저장·불러오기 — joblib(`dump`·`load`)·pickle(`open(경로, 'wb')`·`'rb'`)·XGBoost `save_model`/`load_model`, 세 방식 다 점수가 저장 전과 같음, 스케일러는 저장되지 않아 다시 해야 함 — [day59 ML §1](day59_1125_ml.ipynb)
+- 저장 파일 확장자 — joblib·pickle은 이름일 뿐이지만 XGBoost는 확장자를 보고 형식을 고름, `.json`·`.ubj`가 아니면 `load_model`에서 형식을 추측했다는 경고 — [day59 ML §1 cf)](day59_1125_ml.ipynb)
+- 파라미터 묶어 넘기기 — 딕셔너리에 모아 `**parameters`로 풀어 넘김, `*`는 튜플을 위치 인자로, `set_params`는 이미 만든 모델에 넣음 — [day59 ML §2](day59_1125_ml.ipynb)
+- 조기 종료 — `early_stopping_rounds`·`eval_set`, `n_estimators`는 상한이 되고 트리 수는 `best_iteration`보다 조기 종료 라운드만큼 큼, 점수는 `best_iteration`까지로 계산 — [day59 ML §2-1](day59_1125_ml.ipynb)
+- 상관계수 — `df.corr()`로 -1~1, 대각선은 1, `sns.heatmap(annot=True, square=True, cbar=True)`, 직선 관계만 봐서 곡선 관계는 0에 가깝게 나옴 — [day59 ML §3](day59_1125_ml.ipynb)
+- 데이터프레임 저장 — 모델과 같은 방식으로 `joblib.dump(df, 경로)`, `df['Target'] = y`로 붙이면 y와의 상관계수까지 한 표에서 봄 — [day59 ML §3 cf)](day59_1125_ml.ipynb)
 
 ### WSL·원격 접속
 
